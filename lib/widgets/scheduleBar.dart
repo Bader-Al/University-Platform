@@ -17,24 +17,7 @@ class ScheduleBanner extends StatelessWidget {
       title: PrimaryAppBarRow(),
       bottom: AppBar(title: SecondaryAppBarRow(), shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(appBarBorderRadius))),),
       flexibleSpace: FlexibleSpaceBar(
-        background: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(appBarBorderRadius)),
-              ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              SizedBox(
-                height: 50,
-              ),
-              Expanded(child: QuickCalendar()),
-              //SecondaryAppBarRow(),
-              SizedBox(
-                height: 40,
-              )
-            ],
-          ),
-        ),
+        background: QuickCalendar(),
       ),
       shape: kAppBarShape,
     );

@@ -5,19 +5,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 class QuickCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-        child: Container(
-          //MOTHERBOX
-          decoration: BoxDecoration(
-            color: Colors.white24,
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(appBarBorderRadius))
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 55,bottom: 45),
+      child: Container(
+        color: Colors.white24,
           child: QuickCalendarSlider(),
         ),
-      ),
     );
   }
 }

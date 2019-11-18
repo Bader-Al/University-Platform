@@ -41,40 +41,41 @@ class HorizentalDataListViewer extends StatelessWidget {
               ),
               SizedBox(height: 15),
               Container(
-                  child: Stack(
-                children: <Widget>[
-                  CustomExpansionTile(
-                    title: Container(
-                      // Contains the background
+                child: Stack(
+                  children: <Widget>[
+                    CustomExpansionTile(
+                      title: Container(
+                        // Contains the background
 
+                        height: 100,
+                        decoration: BoxDecoration(
+                          gradient: kMainLinear,
+                          //      color: kSecondColor,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                          ),
+                        ),
+                      ),
+                      children: <Widget>[CourseTile()],
+                    ),
+                    Container(
+                      // Contains the listView
                       height: 100,
-                      decoration: BoxDecoration(
-                        gradient: kMainLinear,
-                        //      color: kSecondColor,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.only(
+                            start: 3, top: 3, bottom: 3),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: dataBlocksList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return dataBlocksList[index];
+                          },
                         ),
                       ),
                     ),
-                    children: <Widget>[CourseTile()],
-                  ),
-                  Container(
-                    // Contains the listView
-                    height: 100,
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.only(
-                          start: 3, top: 3, bottom: 3),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: dataBlocksList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return dataBlocksList[index];
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ))
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -97,21 +98,13 @@ class _DataBlockState extends State<DataBlock> {
   bool isSelected = false;
   @override
   Widget build(BuildContext context) {
-    
     isSelected =
         widget.index == Provider.of<ExpansionData>(context).selectedIndex;
     String courseTitle = "${widget.title}";
     widget.code != null ? courseTitle += " ${widget.code}" : null;
 
-   Color buttonColor = Theme.of(context).primaryColor;
-
-   BorderSide circleBorder = BorderSide(width: 6, color: Colors.white);
-
-   if(isSelected){
-     buttonColor = kMainRed;
-     circleBorder = BorderSide(width: 2, color: Colors.white);
-   }
-
+    Color buttonColor = Theme.of(context).primaryColor;
+ 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -119,11 +112,10 @@ class _DataBlockState extends State<DataBlock> {
           width: 100,
           child: FlatButton(
               padding: EdgeInsets.all(15),
-              splashColor: kMainRed,
+              splashColor: Theme.of(context).accentColor,
               highlightColor: Theme.of(context).accentColor,
               color: buttonColor,
-              shape:
-                  CircleBorder(side: circleBorder),
+              shape: CircleBorder(side: isSelected? BorderSide(width: 2, color: Colors.white): BorderSide(width: 4, color: Theme.of(context).primaryColor) ),
               child: Center(
                 child: widget.section != null
                     ? Column(
@@ -155,7 +147,7 @@ class _DataBlockState extends State<DataBlock> {
                         style: kHorizentalListObjectMedium,
                       ),
               ),
-              onPressed: () {
+              onPressed: widget.title==null? (){} : () {
                 if (Provider.of<ExpansionData>(context).selectedIndex == null) {
                   setState(() {
                     print("object1");
@@ -171,10 +163,12 @@ class _DataBlockState extends State<DataBlock> {
                     Provider.of<ExpansionData>(context).switchExpansion();
                   });
                 } else {
-                  setState(() {
-                    print("object3");
-                    Provider.of<ExpansionData>(context).setSelectedIndex(widget.index);
-                  },
+                  setState(
+                    () {
+                      print("object3");
+                      Provider.of<ExpansionData>(context)
+                          .setSelectedIndex(widget.index);
+                    },
                   );
                 }
                 // isSelected=!isSelected;
@@ -229,7 +223,7 @@ class _CourseTileState extends State<CourseTile> with TickerProviderStateMixin {
       initialIndex: 0,
       child: Container(
         width: double.infinity,
-        height:350,
+        height: 350,
         decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.only(
@@ -238,14 +232,15 @@ class _CourseTileState extends State<CourseTile> with TickerProviderStateMixin {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Stack(alignment: Alignment.topCenter, children: [
+              child: Stack(alignment: Alignment.center, children: [
                 Container(
-                  //color: Theme.of(context).accentColor,
                   decoration: BoxDecoration(
-                    //color: Colors.white
-                    gradient: kMainLinearInverse
-                    ),
-                  height: 20,
+                      gradient: LinearGradient(colors: [
+                    Colors.white,
+                    Colors.white70,
+                    Colors.white54
+                  ])),
+                  height: 30,
                 ),
                 TabBar(
                   controller: _tabController,
@@ -258,16 +253,18 @@ class _CourseTileState extends State<CourseTile> with TickerProviderStateMixin {
                     Text("Deadlines"),
                     Text("Deadlines")
                   ],
-                  labelStyle: TextStyle(
-                    fontSize: 16,
-                  ),
-                  labelColor: Colors.black,
+                  labelStyle:
+                      TextStyle(fontSize: 21, fontWeight: FontWeight.w400),
+                  labelColor: Theme.of(context).primaryColor,
                   unselectedLabelColor: Colors.black45,
-                  indicator: BoxDecoration(
-                    color: Theme.of(context).accentColor,
-                    
-                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(10) , topLeft: Radius.circular(10)),
-                  ),
+                  indicatorColor: Theme.of(context).primaryColor,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorWeight: 2.0,
+                  // indicator: BoxDecoration(
+                  //   color: Theme.of(context).accentColor,
+
+                  //   borderRadius: BorderRadius.only(bottomRight: Radius.circular(10) , topLeft: Radius.circular(10)),
+                  // ),
                 ),
               ]),
             ),

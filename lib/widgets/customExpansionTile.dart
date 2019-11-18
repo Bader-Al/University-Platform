@@ -45,8 +45,11 @@ class _ExpansionTileState extends State<CustomExpansionTile>
       CurveTween(curve: Curves.easeIn);
   static final Animatable<double> _elasticOutTween =
       CurveTween(curve: Curves.elasticOut);
-  static final Animatable<double> _somethingTween =
+  static final Animatable<double> _fastOutSlowInTween =
       CurveTween(curve: Curves.fastOutSlowIn);
+  static final Animatable<double> _fastLinearToSlowEaseInTween =
+      CurveTween(curve: Curves.fastLinearToSlowEaseIn);
+
   static final Animatable<double> _halfTween =
       Tween<double>(begin: 0.0, end: 0.5);
 
@@ -90,14 +93,14 @@ class _ExpansionTileState extends State<CustomExpansionTile>
   }
 
   void expand() {
-    _heightFactor = _controller.drive(_elasticOutTween);
+    _heightFactor = _controller.drive(_fastLinearToSlowEaseInTween);
     setState(() {
       _controller.forward();
     });
   }
 
   void collapse() {
-    _heightFactor = _controller.drive(_somethingTween);
+    _heightFactor = _controller.drive(_fastOutSlowInTween);
     _controller.reverse().then<void>((void value) {
       if (!mounted) return;
       setState(() {

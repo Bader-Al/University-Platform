@@ -45,18 +45,14 @@ class FeedPage extends StatelessWidget {
                 TabBar(
                   isScrollable: true,
                   tabs: tabTitles,
-                  labelColor: Theme.of(context).primaryColor,
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.w500,
                   ),
-                  unselectedLabelColor: Theme.of(context).accentColor,
+                  unselectedLabelColor: Colors.white38,
+                  labelColor: Theme.of(context).accentColor,
                   labelPadding:
                       EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
-                  indicator: BoxDecoration(
-                    //boxShadow: [BoxShadow(color: kMainRed,offset: Offset(-5, 0)),BoxShadow(color: kMainRed,offset: Offset(5, 0))],
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(100)),
-                    color: Theme.of(context).accentColor,
-                  ),
+               
                 ),
               ],
             ),
@@ -177,7 +173,7 @@ class SoloTextBlock extends StatelessWidget {
 
 ////////////////////////////////////////////////  TABS
 class UniversityTab extends StatelessWidget {
-  final List<Widget> universityContent = [
+  final List<Widget> pageContent = [
     ImageWithTextBlock(title: "Imagee",),
     SoloTextBlock(title: "Header",),
     SoloTextBlock(),
@@ -187,18 +183,27 @@ class UniversityTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: CustomListViewBuilder(
-        items: universityContent,
+      child: PageContentBuilder(
+        items: pageContent,
       ),
     );
   }
 }
 
 class ClubsTab extends StatelessWidget {
+
+  final List<Widget> pageContent = [
+    Text("data"),
+    Text("data2")
+  ];
   @override
+  
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Clubs Page"),
+      child: PageContentBuilder(
+        items: pageContent,
+
+      ),
     );
   }
 }
@@ -225,8 +230,8 @@ class CollabTab extends StatelessWidget {
 
 ///////////////////////// Common ListView For All
 
-class CustomListViewBuilder extends StatelessWidget {
-  CustomListViewBuilder({@required this.items, this.reverse = true});
+class PageContentBuilder extends StatelessWidget {
+  PageContentBuilder({@required this.items, this.reverse = true});
   final List<Widget> items;
   final bool reverse;
   @override

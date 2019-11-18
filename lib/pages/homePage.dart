@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:psu_platform/widgets/customExpansionTile.dart';
 import '../widgets/HorizentalListViewer.dart';
-import '../constants.dart';
 import '../widgets/scheduleBar.dart';
 import '../widgets/events.dart';
 

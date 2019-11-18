@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
 
@@ -34,11 +36,11 @@ class FeedPage extends StatelessWidget {
       child: DefaultTabController(
         length: tabs.length,
         child: Scaffold(
-          backgroundColor: Theme.of(context).accentColor,
+         // backgroundColor: Theme.of(context).primaryColor,
           appBar: AppBar(
             elevation: 0,
             titleSpacing: 0.0,
-            
+            backgroundColor: Theme.of(context).appBarTheme.color,
             title: Column( // Tha Appbar is just wrapped in a column cz somehow tht automatically pads that mainaxis Start. Column could be removed but the top will be touched (Appbar edge top screen)
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -46,12 +48,13 @@ class FeedPage extends StatelessWidget {
                   isScrollable: true,
                   tabs: tabTitles,
                   labelStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                   ),
-                  unselectedLabelColor: Colors.white38,
-                  labelColor: Theme.of(context).accentColor,
+                  unselectedLabelColor: Colors.black38,
+                  labelColor: Colors.white,
                   labelPadding:
                       EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+                      indicatorColor: Colors.white,
                
                 ),
               ],

@@ -202,8 +202,27 @@ class ClubsTab extends StatelessWidget {
   @override
   
   Widget build(BuildContext context) {
-    return Container(
-      child: PageContentBuilder(
+    return NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              // title: Padding(
+              //   padding: const EdgeInsets.only(top: 10.0),
+              //   child: ListView(children: <Widget>[Container(height: 500, width: 200, color: Colors.red,)],  scrollDirection: Axis.horizontal,),
+              // ),
+              flexibleSpace: FlexibleSpaceBar(title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text("AI and Data Science Club "),
+                  Icon(Icons.arrow_drop_down, color: Colors.white,)
+                ],
+              ), titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), ),
+             
+            ),
+            
+          ];
+        },
+      body: PageContentBuilder(
         items: pageContent,
 
       ),

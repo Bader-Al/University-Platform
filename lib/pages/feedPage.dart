@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
 
@@ -11,9 +12,8 @@ class FeedPage extends StatelessWidget {
     CollabTab(),
   ];
   List<Widget> tabTitles = [
-    
     CustomTab(
-       text: "University",
+      text: "University",
       icon: Icon(Icons.school),
     ),
     CustomTab(
@@ -26,7 +26,8 @@ class FeedPage extends StatelessWidget {
     ),
     CustomTab(
       text: "Collaborations",
-      icon: Icon(Icons.forum), // icon should represent idea icon like lightbulb or handshake not search!
+      icon: Icon(Icons
+          .forum), // icon should represent idea icon like lightbulb or handshake not search!
     ),
   ];
 
@@ -36,12 +37,13 @@ class FeedPage extends StatelessWidget {
       child: DefaultTabController(
         length: tabs.length,
         child: Scaffold(
-         // backgroundColor: Theme.of(context).primaryColor,
+          // backgroundColor: Theme.of(context).primaryColor,
           appBar: AppBar(
             elevation: 0,
             titleSpacing: 0.0,
             backgroundColor: Theme.of(context).appBarTheme.color,
-            title: Column( // Tha Appbar is just wrapped in a column cz somehow tht automatically pads that mainaxis Start. Column could be removed but the top will be touched (Appbar edge top screen)
+            title: Column(
+              // Tha Appbar is just wrapped in a column cz somehow tht automatically pads that mainaxis Start. Column could be removed but the top will be touched (Appbar edge top screen)
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TabBar(
@@ -54,8 +56,7 @@ class FeedPage extends StatelessWidget {
                   labelColor: Colors.white,
                   labelPadding:
                       EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
-                      indicatorColor: Colors.white,
-               
+                  indicatorColor: Colors.white,
                 ),
               ],
             ),
@@ -69,7 +70,7 @@ class FeedPage extends StatelessWidget {
 
 ////////////////////// CustomTab
 class CustomTab extends StatelessWidget {
-  CustomTab({@required this.text,@required this.icon, this.flipped=false});
+  CustomTab({@required this.text, @required this.icon, this.flipped = false});
   final String text;
   final Icon icon;
   final bool flipped;
@@ -77,12 +78,10 @@ class CustomTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: !flipped?
-          [this.icon,Text(this.text)]
-          :
-          [Text(this.text), this.icon]
-      ),
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: !flipped
+              ? [this.icon, Text(this.text)]
+              : [Text(this.text), this.icon]),
     );
   }
 }
@@ -90,7 +89,6 @@ class CustomTab extends StatelessWidget {
 //////////////////////////////////////////// Widgets
 
 class ImageWithTextBlock extends StatelessWidget {
-  
   ImageWithTextBlock({this.title, this.paragraph});
 
   final String title, paragraph;
@@ -106,14 +104,13 @@ class ImageWithTextBlock extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                title!=null?"$title":"",
+                title != null ? "$title" : "",
                 style: TextStyle(fontSize: 26),
                 textAlign: TextAlign.start,
               ),
-
-              Row(children: <Widget>[
-                Icon(Icons.report)
-              ],)
+              Row(
+                children: <Widget>[Icon(Icons.report)],
+              )
             ],
           ),
           SizedBox(
@@ -125,7 +122,9 @@ class ImageWithTextBlock extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           Row(),
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
         ],
       ),
     );
@@ -133,7 +132,7 @@ class ImageWithTextBlock extends StatelessWidget {
 }
 
 class SoloTextBlock extends StatelessWidget {
-  SoloTextBlock({ this.title, this.paragraph});
+  SoloTextBlock({this.title, this.paragraph});
 
   final String title, paragraph;
   @override
@@ -148,14 +147,13 @@ class SoloTextBlock extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                title!=null?"$title":"",
+                title != null ? "$title" : "",
                 style: TextStyle(fontSize: 26),
                 textAlign: TextAlign.start,
               ),
-
-              Row(children: <Widget>[
-                Icon(Icons.report)
-              ],)
+              Row(
+                children: <Widget>[Icon(Icons.report)],
+              )
             ],
           ),
           SizedBox(
@@ -167,7 +165,9 @@ class SoloTextBlock extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           Row(),
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
         ],
       ),
     );
@@ -175,10 +175,17 @@ class SoloTextBlock extends StatelessWidget {
 }
 
 ////////////////////////////////////////////////  TABS
+///
+double bannerHeight = 500;
+
 class UniversityTab extends StatelessWidget {
   final List<Widget> pageContent = [
-    ImageWithTextBlock(title: "Imagee",),
-    SoloTextBlock(title: "Header",),
+    ImageWithTextBlock(
+      title: "Imagee",
+    ),
+    SoloTextBlock(
+      title: "Header",
+    ),
     SoloTextBlock(),
     SoloTextBlock(),
   ];
@@ -194,38 +201,135 @@ class UniversityTab extends StatelessWidget {
 }
 
 class ClubsTab extends StatelessWidget {
-
-  final List<Widget> pageContent = [
-    Text("data"),
-    Text("data2")
+  final List<Widget> favoriteClubs = [
+    Container(
+      child: FlatButton(
+        splashColor: kMainRed,
+        onPressed: (){},
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  "AI and Data Science",
+                  overflow: TextOverflow.clip,
+                  style: kBannerMediumText.copyWith(color: Colors.black),
+                ),
+                Row(
+                  
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Next Event", style: kBannerSmallText.copyWith(color: Colors.black45),),
+                    Text("17, October, 2019", style: kBannerSmallText.copyWith(color: Colors.black45),),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      width: 200,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(5),
+          boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(4, 4))]),
+          
+    )
   ];
+
+  final List<Widget> pageContent = [Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),];
   @override
-  
   Widget build(BuildContext context) {
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              // title: Padding(
-              //   padding: const EdgeInsets.only(top: 10.0),
-              //   child: ListView(children: <Widget>[Container(height: 500, width: 200, color: Colors.red,)],  scrollDirection: Axis.horizontal,),
-              // ),
-              flexibleSpace: FlexibleSpaceBar(title: Row(
+        return <Widget>[
+          SliverAppBar(
+            floating: true,
+            pinned: true,
+            snap: false,
+            expandedHeight: bannerHeight,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0 , vertical:15),
+                    child: Text(
+                      "Favorites",
+                      style: kBannerBigText,
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 125,
+                    color: Theme.of(context).accentColor,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: favoriteClubs.length,
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(child: favoriteClubs[index], padding: EdgeInsets.symmetric(horizontal: 2),);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+            bottom: AppBar(
+              title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("AI and Data Science Club "),
-                  Icon(Icons.arrow_drop_down, color: Colors.white,)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Next Event At 17th October",
+                        style: kBannerSmallText,
+                      ),
+                      Text(
+                        "AI and Data Science",
+                        style: kBannerMediumText,
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Organizer",
+                        style: kBannerSmallText,
+                      ),
+                      Icon(
+                        Icons.person,
+                        size: 26,
+                      )
+                    ],
+                  )
                 ],
-              ), titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), ),
-             
+              ),
+              elevation: 1,
             ),
-            
-          ];
-        },
-      body: PageContentBuilder(
-        items: pageContent,
-
+          ),
+        ];
+      },
+      body: ListView.builder(
+        itemCount: 500,
+        itemBuilder: (BuildContext context, int index) {
+        return Container(height: 100, child: Text("Data $index"),) ;
+       },
       ),
+      
+      
+      
+      
+      
+      
+      // PageContentBuilder(
+      //   items: pageContent,
+      // ),
     );
   }
 }
@@ -233,12 +337,13 @@ class ClubsTab extends StatelessWidget {
 class CoursesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        
-      ],
-    ),);}
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[],
+      ),
+    );
+  }
 }
 
 class CollabTab extends StatelessWidget {

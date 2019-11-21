@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/HorizentalListViewer.dart';
-import '../widgets/scheduleBar.dart';
-import '../widgets/events.dart';
+import 'homeWidgets/HorizentalListViewer.dart';
+import 'homeWidgets/scheduleBar.dart';
+import 'homeWidgets/events.dart';
 
 
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-double appBarBorderRadius = 30;
+double appBarBorderRadius = 15;
 
 Color kMainColor = Color(0xff5E7CE2);
 Color kSecondColor = Color(0xff63F5EF);
@@ -43,13 +43,10 @@ BorderRadius kCustomCardBorderRadius = BorderRadius.only(topLeft: Radius.circula
 
 ShapeBorder kAppBarShape = RoundedRectangleBorder(
   borderRadius: BorderRadius.only(
-    bottomLeft: Radius.circular(appBarBorderRadius),
+    bottomRight: Radius.circular(appBarBorderRadius),
   ),
 );
 
-ShapeBorder kAppBarSecondaryShape = RoundedRectangleBorder(
-    borderRadius:
-        BorderRadius.only(bottomRight: Radius.circular(appBarBorderRadius)));
 
 TextStyle kBannerSmallText =
     TextStyle(color: Color.fromARGB(150, 255, 255, 255), fontSize: 12);

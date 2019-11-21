@@ -14,9 +14,15 @@ class HorizontalClubView extends StatelessWidget {
          Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 15),
-                    child: Text(
-                      "Favorites",
-                      style: kBannerGiantText,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Favorites",
+                          style: kBannerGiantText,
+                        ),
+                        Icon(Icons.unfold_more, color: Colors.white,)
+                      ],
                     ),
                   ),
                   Container(

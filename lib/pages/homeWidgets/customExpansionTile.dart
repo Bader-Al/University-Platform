@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psu_platform/widgets/HorizentalListViewer.dart';
+import 'HorizentalListViewer.dart';
 import 'CourseContent/grades.dart';
 import 'CourseContent/material.dart';
 import 'package:psu_platform/constants.dart';

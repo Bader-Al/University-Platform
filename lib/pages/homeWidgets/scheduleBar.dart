@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/calendar.dart';
-import '../constants.dart';
+import 'quickCalendar.dart';
+import '../../constants.dart';
 
 class ScheduleBanner extends StatelessWidget {
   ScheduleBanner(this.boxIsScrolled);
@@ -8,14 +8,13 @@ class ScheduleBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      
       backgroundColor: Theme.of(context).primaryColor,
       expandedHeight: 600,
       floating: false,
       pinned: true,
       snap: false,
-      title: PrimaryAppBarRow(),
-      bottom: AppBar(title: SecondaryAppBarRow(), shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(appBarBorderRadius))),),
+      title: SecondaryAppBarRow(),
+      bottom: AppBar(title: PrimaryAppBarRow(), shape:kAppBarShape,),
       flexibleSpace: FlexibleSpaceBar(
         background: QuickCalendar(),
       ),

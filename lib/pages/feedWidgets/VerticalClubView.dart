@@ -15,43 +15,49 @@ class VerticalClubView extends StatelessWidget {
           ),
         ),
         Container(
-          height: 195,
+          height: 200,
+          color: Theme.of(context).accentColor,
           child: ListView.builder(
             itemCount: 25,
             itemBuilder: (BuildContext context, int index) {
               return Center(
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Club number $index",
-                            style: kBannerMediumText,
-                          ),
-                        ),
-                        Row(
+                    Container(
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: Colors.white),
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.person_outline),
-                            Text("${100 - index}"),
+                            Text(
+                              "Club number $index",
+                              style: kBannerMediumText.copyWith(color: Colors.black),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.person_outline),
+                                Text("${100 - index}"),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.add),
+                                SizedBox(width: 5,),
+                                Icon(Icons.star),
+                                SizedBox(width: 5,),
+                                Icon(Icons.info)
+                              ],
+                            )
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(Icons.add),
-                              Icon(Icons.star),
-                              Icon(Icons.info)
-                            ],
-                          ),
-                        )
-                      ],
+                      ),
                     ),
-                    Divider(color: Theme.of(context).accentColor,),
+                    Divider(thickness: 1, height: 1, endIndent: 25, indent: 25,),
                   ],
+                
                 ),
               );
             },

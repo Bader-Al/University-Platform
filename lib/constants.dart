@@ -57,6 +57,9 @@ TextStyle kBannerMediumText = TextStyle(color: Colors.white, fontSize: 14);
 
 TextStyle kBannerBigText =
     TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 16);
+    
+TextStyle kBannerGiantText =
+    TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 26);
 
 TextStyle kHorizentalListObjectMedium =
     TextStyle(color: Colors.white, fontSize: 16);

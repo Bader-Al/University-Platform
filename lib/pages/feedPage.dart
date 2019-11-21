@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
+import 'package:psu_platform/pages/feedWidgets/HorizontalClubView.dart';
+import 'package:psu_platform/pages/feedWidgets/VerticalClubView.dart';
 
 class FeedPage extends StatelessWidget {
   List<Widget> tabs = [
@@ -205,24 +207,29 @@ class ClubsTab extends StatelessWidget {
     Container(
       child: FlatButton(
         splashColor: kMainRed,
-        onPressed: (){},
+        onPressed: () {},
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
-                  "AI and Data Science",
+                  "AI and Data Science", //60 char max
                   overflow: TextOverflow.clip,
                   style: kBannerMediumText.copyWith(color: Colors.black),
                 ),
                 Row(
-                  
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text("Next Event", style: kBannerSmallText.copyWith(color: Colors.black45),),
-                    Text("17, October, 2019", style: kBannerSmallText.copyWith(color: Colors.black45),),
+                    Text(
+                      "Next Event:",
+                      style: kBannerSmallText.copyWith(color: Colors.black45),
+                    ),
+                    Text(
+                      "17 October 2019",
+                      style: kBannerSmallText.copyWith(color: Colors.black45),
+                    ),
                   ],
                 ),
               ],
@@ -232,13 +239,100 @@ class ClubsTab extends StatelessWidget {
       ),
       width: 200,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(5),
-          boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(4, 4))]),
-          
-    )
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(2, 2))]),
+    ),Container(
+      child: FlatButton(
+        splashColor: kMainRed,
+        onPressed: () {},
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  "AI and Data Science", //60 char max
+                  overflow: TextOverflow.clip,
+                  style: kBannerMediumText.copyWith(color: Colors.black),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Next Event:",
+                      style: kBannerSmallText.copyWith(color: Colors.black45),
+                    ),
+                    Text(
+                      "17 October 2019",
+                      style: kBannerSmallText.copyWith(color: Colors.black45),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      width: 200,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(2, 2))]),
+    ),Container(
+      child: FlatButton(
+        splashColor: kMainRed,
+        onPressed: () {},
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  "AI and Data Science", //60 char max
+                  overflow: TextOverflow.clip,
+                  style: kBannerMediumText.copyWith(color: Colors.black),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Next Event:",
+                      style: kBannerSmallText.copyWith(color: Colors.black45),
+                    ),
+                    Text(
+                      "17 October 2019",
+                      style: kBannerSmallText.copyWith(color: Colors.black45),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      width: 200,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(2, 2))]),
+    ),
   ];
 
-  final List<Widget> pageContent = [Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),Container(height: 100, width: double.infinity, child: Text("DATAAA"), ),];
+  final List<Widget> pageContent = [
+    Container(
+      height: 100,
+      width: double.infinity,
+      child: Text("DATAAA"),
+    ),
+    Container(
+      height: 100,
+      width: double.infinity,
+      child: Text("DATAAA"),
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -253,26 +347,8 @@ class ClubsTab extends StatelessWidget {
               background: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0 , vertical:15),
-                    child: Text(
-                      "Favorites",
-                      style: kBannerBigText,
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 125,
-                    color: Theme.of(context).accentColor,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: favoriteClubs.length,
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(child: favoriteClubs[index], padding: EdgeInsets.symmetric(horizontal: 2),);
-                      },
-                    ),
-                  )
+                 HorizontalClubView(title: "Favorites", items: favoriteClubs,),
+                 VerticalClubView(),
                 ],
               ),
             ),
@@ -318,15 +394,13 @@ class ClubsTab extends StatelessWidget {
       body: ListView.builder(
         itemCount: 500,
         itemBuilder: (BuildContext context, int index) {
-        return Container(height: 100, child: Text("Data $index"),) ;
-       },
+          return Container(
+            height: 100,
+            child: Text("Data $index"),
+          );
+        },
       ),
-      
-      
-      
-      
-      
-      
+
       // PageContentBuilder(
       //   items: pageContent,
       // ),

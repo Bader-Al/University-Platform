@@ -1,10 +1,9 @@
-import 'dart:math';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
-import 'package:psu_platform/pages/feedWidgets/HorizontalClubView.dart';
-import 'package:psu_platform/pages/feedWidgets/VerticalClubView.dart';
+import 'package:psu_platform/pages/feedWidgets/clubsBanner.dart';
+import 'package:psu_platform/pages/feedWidgets/horizontalClubView.dart';
+import 'package:psu_platform/pages/feedWidgets/verticalClubView.dart';
 
 class FeedPage extends StatelessWidget {
   List<Widget> tabs = [
@@ -337,57 +336,7 @@ class ClubsTab extends StatelessWidget {
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
         return <Widget>[
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            snap: false,
-            expandedHeight: kBannerHeight,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                 HorizontalClubView(title: "Favorites", items: favoriteClubs,),
-                 VerticalClubView(title: "All",),
-                ],
-              ),
-            ),
-            bottom: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Next Event At 17th October",
-                        style: kBannerSmallText,
-                      ),
-                      Text(
-                        "AI and Data Science",
-                        style: kBannerMediumText,
-                      )
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Organizer",
-                        style: kBannerSmallText,
-                      ),
-                      Icon(
-                        Icons.person,
-                        size: 26,
-                      )
-                    ],
-                  )
-                ],
-              ),
-              elevation: 1,
-            ),
-          ),
+          ClubsBanner(favoriteClubs: this.favoriteClubs,)
         ];
       },
       body: ListView.builder(
@@ -400,9 +349,6 @@ class ClubsTab extends StatelessWidget {
         },
       ),
 
-      // PageContentBuilder(
-      //   items: pageContent,
-      // ),
     );
   }
 }

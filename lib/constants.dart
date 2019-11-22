@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 double appBarBorderRadius = 15;
+double kBannerHeight = 550;
 
 Color kMainColor = Color(0xff5E7CE2);
 Color kSecondColor = Color(0xff63F5EF);

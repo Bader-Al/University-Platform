@@ -2,7 +2,7 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import './pages/homePage.dart';
 import './pages/feedPage.dart';
-import './pages/community.dart';
+import './pages/chats.dart';
 
 import './constants.dart';
 
@@ -46,7 +46,7 @@ class StudentScreenState extends State<StudentScreen> {
   List<Widget> navBarRoutes = [
     HomePage(),
     FeedPage(),
-    Community(),
+    Chats(),
   ];
   int _pageIndex =0;
   bool fabEnabled= true;

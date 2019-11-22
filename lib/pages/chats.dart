@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //TODO. MIGHT TURN THIS INTO DASHBOARD
-class Community extends StatelessWidget {
+class Chats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

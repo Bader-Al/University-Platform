@@ -9,7 +9,7 @@ class ScheduleBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Theme.of(context).primaryColor,
-      expandedHeight: 600,
+      expandedHeight: kBannerHeight,
       floating: false,
       pinned: true,
       snap: false,

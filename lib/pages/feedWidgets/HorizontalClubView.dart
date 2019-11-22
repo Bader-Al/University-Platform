@@ -13,12 +13,12 @@ class HorizontalClubView extends StatelessWidget {
       children: <Widget>[
          Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 15),
+                        horizontal: 15.0, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Favorites",
+                          "$title",
                           style: kBannerGiantText,
                         ),
                         Icon(Icons.unfold_more, color: Colors.white,)
@@ -27,17 +27,17 @@ class HorizontalClubView extends StatelessWidget {
                   ),
                   Container(
                     width: double.infinity,
-                    height: 125,
+                    height: 150,
                     color: Theme.of(context).accentColor,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: items.length,
                       padding:
-                          EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 3, vertical: 10),  
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           child: items[index],
-                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          padding: EdgeInsets.symmetric(horizontal: 3),
                         );
                       },
                     ),

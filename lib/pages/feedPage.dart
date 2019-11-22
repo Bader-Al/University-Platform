@@ -178,7 +178,6 @@ class SoloTextBlock extends StatelessWidget {
 
 ////////////////////////////////////////////////  TABS
 ///
-double bannerHeight = 500;
 
 class UniversityTab extends StatelessWidget {
   final List<Widget> pageContent = [
@@ -342,13 +341,13 @@ class ClubsTab extends StatelessWidget {
             floating: true,
             pinned: true,
             snap: false,
-            expandedHeight: bannerHeight,
+            expandedHeight: kBannerHeight,
             flexibleSpace: FlexibleSpaceBar(
               background: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                  HorizontalClubView(title: "Favorites", items: favoriteClubs,),
-                 VerticalClubView(),
+                 VerticalClubView(title: "All",),
                 ],
               ),
             ),

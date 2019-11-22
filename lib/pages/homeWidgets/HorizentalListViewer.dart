@@ -18,52 +18,53 @@ class HorizentalDataListViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ExpansionData>(
       builder: (context) => ExpansionData(),
-      child: Center(
-        child: Container(
-          padding: EdgeInsets.only(left: 0, top: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(
-                height: 25,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "$title",
-                        style: TextStyle(fontSize: 26),
-                      ),
-                      Icon(Icons.add),
-                    ]),
-              ),
-              SizedBox(height: 15),
-              Container(
-                child: Stack(
-                  children: <Widget>[
-                    CustomExpansionTile(
-                      title: Container(
-                        // Contains the background
-
-                        height: 100,
-                        decoration: BoxDecoration(
-                          gradient: kMainLinear,
-                          //      color: kSecondColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                      children: <Widget>[CourseTile()],
+      child: Container(
+        padding: EdgeInsets.only(left: 0, top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            SizedBox(
+              height: 25,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "$title",
+                      style: TextStyle(fontSize: 26),
                     ),
-                    Container(
-                      // Contains the listView
-                      height: 100,
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.only(
-                            start: 3, top: 3, bottom: 3),
+                    Icon(Icons.add),
+                  ]),
+            ),
+            SizedBox(height: 15),
+            Stack(
+              children: <Widget>[
+                CustomExpansionTile(
+                  title: Container(
+                    // Contains the background
+                    height: 100,
+                    decoration: BoxDecoration(
+                      gradient: kMainLinear,
+                      //      color: kSecondColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                      ),
+                    ),
+                  ),
+                  children: <Widget>[CourseTile()],
+                ),
+                Container(
+                  // Contains the listView
+                  height: 100,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                        start: 5, top: 3, bottom: 3),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 6),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), ),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: dataBlocksList.length,
@@ -73,11 +74,11 @@ class HorizentalDataListViewer extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

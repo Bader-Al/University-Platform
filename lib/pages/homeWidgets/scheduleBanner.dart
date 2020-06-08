@@ -7,18 +7,26 @@ class ScheduleBanner extends StatelessWidget {
   final bool boxIsScrolled;
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     return SliverAppBar(
       backgroundColor: Theme.of(context).primaryColor,
-      expandedHeight: kBannerHeight,
+      expandedHeight: queryData.size.height*0.80,
       floating: false,
       pinned: true,
       snap: false,
+      centerTitle: true,
+      
       title: SecondaryAppBarRow(),
-      bottom: AppBar(title: PrimaryAppBarRow(), shape:kAppBarShape,),
+      bottom: AppBar(
+        title: PrimaryAppBarRow(),
+        shape: kAppBarShape,
+      ),
       flexibleSpace: FlexibleSpaceBar(
         background: QuickCalendar(),
       ),
       shape: kAppBarShape,
+      elevation: 1,
     );
   }
 }
@@ -28,25 +36,24 @@ class PrimaryAppBarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
       children: <Widget>[
-        BannerColumn(topTitle: "Upcoming",bottomTitle: "CS285"), //TODO
-        
+        BannerColumn(topTitle: "ABSENCES", bottomTitle: "2/16"), //TODO
+
         BannerColumn(
-          topTitle: "location",
+          topTitle: "LOCATION",
           bottomTitle: "New Building", // TODO ONCLICK FLIP NAMING CONVENTION
         ),
         //add option in settings to choose which building convention they want highlighted
-        
+
         BannerColumn(
-          topTitle: "At",
+          topTitle: "ROOM",
+          bottomTitle: "A-12",
+        ),
+
+        BannerColumn(
+          topTitle: "TIME",
           bottomTitle: "1:50 pm",
         ), //TODO
-       
-        BannerColumn(
-          topTitle: "room",
-          bottomTitle: "A-12",
-        )
       ],
     );
   }
@@ -55,26 +62,13 @@ class PrimaryAppBarRow extends StatelessWidget {
 class SecondaryAppBarRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        BannerColumn(
-          topTitle: "Absences",
-          bottomTitle: "2",
-          color: Theme.of(context).accentColor,
-        ),
-        VerticalDivider(
-          thickness: 1,
-        ),
-        BannerColumn(
-          topTitle: "Section",
-          bottomTitle: "201",
-          color: Colors.white,
-        ),
-        SizedBox(
-          width: 5,
-        )
-      ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: kMainColor),
+      child: Text(
+      "CS285",
+      style: TextStyle(fontSize: 14 ,),
+    ),
     );
   }
 }
@@ -83,30 +77,39 @@ class BannerColumn extends StatelessWidget {
   final String topTitle;
   final String bottomTitle;
   final Color color;
+
+  final TextStyle upperStyle = TextStyle(
+      fontSize: 11,
+      fontWeight: FontWeight.w300,
+      color: kSurfaceColor.withOpacity(0.5));
+  final TextStyle lowerStyle = TextStyle(
+      fontSize: 14, fontWeight: FontWeight.w400, color: kSurfaceColor);
+
   BannerColumn(
       {@required this.bottomTitle, @required this.topTitle, this.color});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          "$topTitle",
-          style: this.color != null
-              ? kBannerSmallText.copyWith(color: this.color)
-              : kBannerSmallText,
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          "$bottomTitle",
-          style: this.color != null
-              ? kBannerBigText.copyWith(color: this.color)
-              : kBannerBigText,
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 5.0), // there is a previous 10px idk where so this makes 15 PX
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "$topTitle",
+            style: upperStyle.copyWith(),
+          ),
+          SizedBox(
+            height: 2,
+          ),
+          Text(
+            "$bottomTitle",
+            style: lowerStyle,
+          )
+        ],
+      ),
     );
   }
 }

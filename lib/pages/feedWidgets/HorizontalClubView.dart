@@ -19,7 +19,6 @@ class HorizontalClubView extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "$title",
-                          style: kBannerGiantText,
                         ),
                         Icon(Icons.unfold_more, color: Colors.white,)
                       ],

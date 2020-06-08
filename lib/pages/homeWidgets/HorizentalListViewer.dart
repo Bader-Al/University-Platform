@@ -17,9 +17,9 @@ class HorizentalDataListViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ExpansionData>(
-      builder: (context) => ExpansionData(),
+      create: (context) => ExpansionData(),
       child: Container(
-        padding: EdgeInsets.only(left: 0, top: 10),
+        padding: EdgeInsets.only(left: 5, top: 10), // there is a previous 10px idk where so this makes 15 PX
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -33,7 +33,7 @@ class HorizentalDataListViewer extends StatelessWidget {
                   children: [
                     Text(
                       "$title",
-                      style: TextStyle(fontSize: 26),
+                      style: kDashboardHeading,
                     ),
                     Icon(Icons.add),
                   ]),
@@ -136,7 +136,7 @@ class _DataBlockState extends State<DataBlock> {
                           Text(
                             "Sec. ${widget.section}",
                             style: kHorizentalListObjectSmall.copyWith(
-                                color: kSecondColor.withOpacity(0.75)),
+                                color: kAccentColor.withOpacity(0.75)),
                           ),
                         ],
                       )

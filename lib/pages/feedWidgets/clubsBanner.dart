@@ -9,11 +9,13 @@ class ClubsBanner extends StatelessWidget {
   final List favoriteClubs;
 
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     return SliverAppBar(
       floating: true,
       pinned: true,
       snap: false,
-      expandedHeight: kBannerHeight,
+      expandedHeight: queryData.size.height*0.60,
       flexibleSpace: FlexibleSpaceBar(
         background: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,11 +50,9 @@ class FloatingSelectedClubBarRow extends StatelessWidget {
           children: <Widget>[
             Text(
               "Next Event At 17th October",
-              style: kBannerSmallText,
             ),
             Text(
               "AI and Data Science",
-              style: kBannerMediumText,
             )
           ],
         ),
@@ -62,7 +62,6 @@ class FloatingSelectedClubBarRow extends StatelessWidget {
           children: <Widget>[
             Text(
               "Organizer",
-              style: kBannerSmallText,
             ),
             Icon(
               Icons.person,

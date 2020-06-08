@@ -215,18 +215,15 @@ class ClubsTab extends StatelessWidget {
                 Text(
                   "AI and Data Science", //60 char max
                   overflow: TextOverflow.clip,
-                  style: kBannerMediumText.copyWith(color: Colors.black),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       "Next Event:",
-                      style: kBannerSmallText.copyWith(color: Colors.black45),
                     ),
                     Text(
                       "17 October 2019",
-                      style: kBannerSmallText.copyWith(color: Colors.black45),
                     ),
                   ],
                 ),
@@ -253,18 +250,15 @@ class ClubsTab extends StatelessWidget {
                 Text(
                   "AI and Data Science", //60 char max
                   overflow: TextOverflow.clip,
-                  style: kBannerMediumText.copyWith(color: Colors.black),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       "Next Event:",
-                      style: kBannerSmallText.copyWith(color: Colors.black45),
                     ),
                     Text(
                       "17 October 2019",
-                      style: kBannerSmallText.copyWith(color: Colors.black45),
                     ),
                   ],
                 ),
@@ -291,18 +285,15 @@ class ClubsTab extends StatelessWidget {
                 Text(
                   "AI and Data Science", //60 char max
                   overflow: TextOverflow.clip,
-                  style: kBannerMediumText.copyWith(color: Colors.black),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       "Next Event:",
-                      style: kBannerSmallText.copyWith(color: Colors.black45),
                     ),
                     Text(
                       "17 October 2019",
-                      style: kBannerSmallText.copyWith(color: Colors.black45),
                     ),
                   ],
                 ),

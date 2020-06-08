@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'homeWidgets/HorizentalListViewer.dart';
 import 'homeWidgets/scheduleBanner.dart';
 import 'homeWidgets/events.dart';
+import 'homeWidgets/quickDeadlines.dart';
 
 
 
@@ -75,6 +76,7 @@ class HomePageSliver extends StatelessWidget {
         SizedBox(
           height: 80,
         ),
+        QuickDeadlines(),
         
         
         HorizentalDataListViewer(

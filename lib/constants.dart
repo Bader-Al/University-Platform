@@ -1,18 +1,36 @@
 import 'package:flutter/material.dart';
 
-double appBarBorderRadius = 15;
-double kBannerHeight = 550;
+double appBarBorderRadius = 25;
 
+////// INDICATION COLORS
+Color kYellowIndication = Color(0xffFFBC42); //YELLOW RANGE
+Color kGreenIndication = Color(0xff0CCE6B); //DODGY GREEN
+
+//////
+
+///THEME COLORS
 Color kMainColor = Color(0xff5E7CE2);
-Color kSecondColor = Color(0xff63F5EF);
+Color kAccentColor = Color(0xff63F5EF);
 Color kDeepBlueColor = Color(0xff0A369D);
+
+
+//LIGHTMODE COLORS
+Color kSurfaceColor = Colors.white;
+Color kCounterSurfaceColor = Colors.black;
+
+////////////////
+Color kSurfaceFirstShade = Color(0xffF2F2F2); //change to equation based on surfacecolor
+
+///INDICATOR COLORS  GET RID OF THIS SHIT
 Color kHighlightDark = Color(0xff4472CA);
 Color kHighlightLight = Color(0xff5E7CE2);
 Color kMainRed = Color(0xffFF206E);
 Color kMainDarkness = Color(0xff0C0F0A);
 
+
+/// STYLES DEPENDING ON THEME COLORS ABOVE 
 LinearGradient kMainLinear = LinearGradient(
-  colors: [kSecondColor, kSecondColor.withAlpha(50)],
+  colors: [kAccentColor, kAccentColor.withAlpha(50)],
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
 );
@@ -20,21 +38,21 @@ LinearGradient kMainLinear = LinearGradient(
 
 LinearGradient kMainLinearInverse = LinearGradient(colors: [
   kMainColor.withAlpha(150),
-  kSecondColor.withAlpha(150),
+  kAccentColor.withAlpha(150),
 ], begin: Alignment.topLeft, end: Alignment.bottomRight);
 
 
 LinearGradient kSecondaryLinear = LinearGradient(
-    colors: [kSecondColor, kHighlightLight, kHighlightLight],
+    colors: [kAccentColor, kHighlightLight, kHighlightLight],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter);
 
 
 LinearGradient kBannerScheduleLinear = LinearGradient(
   colors: [
-    kSecondColor.withAlpha(100),
+    kAccentColor.withAlpha(100),
     kMainColor,
-    kSecondColor.withAlpha(100),
+    kAccentColor.withAlpha(100),
   ],
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
@@ -46,31 +64,17 @@ ShapeBorder kAppBarShape = RoundedRectangleBorder(
   borderRadius: BorderRadius.only(
     bottomRight: Radius.circular(appBarBorderRadius),
   ),
+  
 );
 
 
-TextStyle kBannerSmallText =
-    TextStyle(color: Color.fromARGB(150, 255, 255, 255), fontSize: 12);
-TextStyle kBannerMediumText = TextStyle(color: Colors.white, fontSize: 14);
-
-TextStyle kBannerBigText =
-    TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 16);
-    
-TextStyle kBannerGiantText =
-    TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 26);
-
 TextStyle kHorizentalListObjectMedium =
-    TextStyle(color: Colors.white, fontSize: 16);
+    TextStyle(color: Colors.black, fontSize: 16);
 
 TextStyle kHorizentalListObjectSmall =
     TextStyle(color: Colors.white54, fontSize: 12);
 
 TextStyle kQuickCalendarHeader = 
-    TextStyle(color: Colors.white, fontSize: 21 ,fontWeight: FontWeight.w500);
+    TextStyle(color: Colors.black, fontSize: 21 ,fontWeight: FontWeight.w400);
 
-Border kContainerBorderFromRight = Border(
-  top: BorderSide(width: 4, color: Colors.red),
-  left: BorderSide(width: 4, color: Colors.red),
-  bottom: BorderSide(width: 4, color: Colors.red),
-  right: BorderSide(width: 4, color: Colors.red),
-); //TODO dealwith later
+TextStyle kDashboardHeading = TextStyle(color:kCounterSurfaceColor , fontWeight: FontWeight.w300, fontSize: 18);

@@ -29,7 +29,7 @@ class _PlatformState extends State<Platform> {
         title: 'PSU Smart Platform',
         theme: ThemeData(
           primaryColor: kMainColor,
-          accentColor: kSecondColor,
+          accentColor: kAccentColor,
         ),
         home: StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
       ),

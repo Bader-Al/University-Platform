@@ -15,7 +15,6 @@ class VerticalClubView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: Text(
             "$title",
-            style: kBannerGiantText,
           ),
         ),
         Container(
@@ -36,7 +35,7 @@ class VerticalClubView extends StatelessWidget {
                         Expanded(
                           child: Text(
                             "Club number $index",
-                            style: kBannerMediumText.copyWith(color: Colors.black),
+                           // style: kBannerMediumText.copyWith(color: Colors.black),
                           ),
                         ),
                       //  SizedBox(width: 30,),

@@ -6,11 +6,14 @@ class QuickCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 55,bottom: 45),
+      padding: const EdgeInsets.only(top: 45, bottom: 55),
       child: Container(
-        color: Colors.white24,
+        color: kSurfaceFirstShade,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: QuickCalendarSlider(),
         ),
+      ),
     );
   }
 }
@@ -18,16 +21,21 @@ class QuickCalendar extends StatelessWidget {
 class QuickCalendarSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     return CarouselSlider(
-      aspectRatio: 7 / 9,
+      height: queryData.size.height*0.64,
       initialPage: 0,
       enlargeCenterPage: false,
-      
+      viewportFraction: 0.90,
       enableInfiniteScroll: false,
       items: [1, 2, 3, 4, 5].map((i) {
         return Builder(
           builder: (BuildContext context) {
-            return DayBlock();
+            return Padding(
+              padding: const EdgeInsets.only(right: 20.0, top: 0, bottom: 5),
+              child: DayBlock(),
+            );
           },
         );
       }).toList(),
@@ -38,133 +46,122 @@ class QuickCalendarSlider extends StatelessWidget {
 class DayBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15 , vertical: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          SizedBox(
-            height: 5,
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(4, 8))
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(color: Colors.black12, offset: Offset(0, 1)),
+                ],
+                color: kSurfaceColor,
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    DayBlockHeader(),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: timeStamps.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return timeStamps[index];
+                        },
+                      ),
+                    )
                   ],
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: kCustomCardBorderRadius),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 5,right: 5,bottom: 5),
-                child: Container(
-                  decoration: BoxDecoration(borderRadius: kCustomCardBorderRadius, color: kMainRed),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: 70,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "Today",
-                                style: kQuickCalendarHeader,
-                              ),
-                              Text("2nd January 2019", style: kBannerMediumText.copyWith(color: Colors.white60),),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ClassTimeBlock(),
-                      ClassTimeBlock(
-                        title: "SE365",
-                        isUpcoming: true,
-                      ),
-                      ClassTimeBlock(
-                        title: "ISC 120",
-                        isQuiz: false,
-                      ),
-                      ClassTimeBlock(
-                        title: "PSY 420",
-                        isPresentation: false,
-                      ),
-                      ClassTimeBlock(
-                        title: "PSY 420",
-                        isExam: true,
-                      ),
-                      ClassTimeBlock(
-                        title: "PSY 420",
-                        isOther: false,
-                      ),
-                      ClassTimeBlock(
-                        title: "PSY 420",
-                        isOther: false,
-                      ),
-                      Container(height: 25,)
-                    ],
-                  ),
                 ),
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }
 
+List<ClassTimeBlock> timeStamps = [
+  ClassTimeBlock(
+    title: "CS285\nDiscrete Math",
+  ),
+  ClassTimeBlock(
+    title: "CS285\nDiscrete Math",
+    isUpcoming: true,
+    isHighlighted: true,
+  ),
+  ClassTimeBlock(),
+  ClassTimeBlock(),
+  ClassTimeBlock(),
+  ClassTimeBlock(
+    title: "CS285\nDiscrete Math",
+  ),
+  ClassTimeBlock(
+    title: "CS285\nDiscrete Math",
+  ),
+  ClassTimeBlock(),
+  ClassTimeBlock(),
+  ClassTimeBlock(),
+];
+
 class ClassTimeBlock extends StatelessWidget {
   ClassTimeBlock(
       {this.title,
+      this.isHighlighted = false,
       this.isUpcoming = false,
-      this.isQuiz = false,
-      this.isExam = false,
-      this.isPresentation = false,
-      this.isOther = false});
+      this.isImportant = false});
 
   final String title;
   final bool isUpcoming;
-  final bool isQuiz;
-  final bool isExam;
-  final bool isPresentation;
-  final bool isOther;
+  final bool isImportant;
+  bool isHighlighted;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            color: isExam
-                ? kMainRed
-                : isQuiz
-                    ? Colors.yellow
-                    : isPresentation
-                        ? Colors.blue
-                        : isOther ? Colors.orange : Colors.white,
-            border: isUpcoming
-                ? Border.all(
-                    width: 2,
-                    color: Colors.white,
-                  )
-                : Border.all(width: 0, color: Colors.white)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(title == null ? "CS285" : title),
-              TimeFrame(
-                timeStart: DateTime(2019, 9, 9, 10, 00),
-                timeEnd: DateTime(2019, 9, 9, 11, 30),
-              ),
-            ],
-          ),
+    if (isUpcoming || isImportant) {
+      isHighlighted = true;
+    }
+    return Container(
+      height: 65,
+      decoration: BoxDecoration(color: isUpcoming ? kMainColor : kSurfaceColor),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+                width: 120,
+                child: Text(
+                  title == null
+                      ? "CS101\nIntro To Software Engineeringrfwergwrgwrgwrgw"
+                      : title,
+                  style: kQuickCalendarHeader.copyWith(
+                      color:
+                          isHighlighted ? kSurfaceColor : kCounterSurfaceColor,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14),
+                      softWrap: true,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                )),
+            TimeFrame(
+              isHighlighted: isHighlighted,
+              textStyle: TextStyle(
+                  color: isHighlighted ? kSurfaceColor : kCounterSurfaceColor,
+                  fontWeight: FontWeight.w300),
+              timeStart: DateTime(2019, 9, 9, 10, 00),
+              timeEnd: DateTime(2019, 9, 9, 11, 30),
+            ),
+            Text(
+              "Major Exam",
+              style: TextStyle(
+                  color: isHighlighted ? kSurfaceColor : kCounterSurfaceColor,
+                  fontWeight: FontWeight.w300),
+            ),
+          ],
         ),
       ),
     );
@@ -172,25 +169,112 @@ class ClassTimeBlock extends StatelessWidget {
 }
 
 class TimeFrame extends StatelessWidget {
-  TimeFrame({this.timeStart, this.timeEnd});
-
+  TimeFrame({this.timeStart, this.timeEnd, this.textStyle, this.isHighlighted});
   final DateTime timeStart;
   final DateTime timeEnd;
+  final bool isHighlighted;
+  final TextStyle textStyle;
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(timeStart.hour.toString()),
+        StartToEndIndicator(isHighlighted: isHighlighted),
         SizedBox(
-          width: 25,
+          width: 5,
         ),
-        Icon(Icons.arrow_right),
-        SizedBox(
-          width: 25,
+        Text(
+          "8:00 AM\n9:00 PM",
+          style: this.textStyle.copyWith(fontSize: 14),
         ),
-        Text(timeEnd.hour.toString()),
       ],
+    );
+  }
+}
+
+class StartToEndIndicator extends StatelessWidget {
+  StartToEndIndicator({this.isHighlighted = false});
+  final bool isHighlighted;
+
+  @override
+  Widget build(BuildContext context) {
+    Color indicatorBorderColor =
+        isHighlighted ? kSurfaceColor : kCounterSurfaceColor;
+    Color indicatorSurfaceColor = isHighlighted ? kMainColor : kSurfaceColor;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          CircleAvatar(
+            radius: 5,
+            backgroundColor: indicatorBorderColor,
+            child: CircleAvatar(
+              backgroundColor: indicatorSurfaceColor,
+              radius: 4,
+            ),
+          ),
+          Container(height: 10, width: 1, color: isHighlighted?kSurfaceColor:kCounterSurfaceColor,),
+          CircleAvatar(
+            radius: 5,
+            backgroundColor: indicatorBorderColor,
+            child: CircleAvatar(
+              backgroundColor: indicatorSurfaceColor,
+              radius: 4,
+              child: CircleAvatar(radius: 3, backgroundColor: kSurfaceColor,),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DayBlockHeader extends StatelessWidget {
+  const DayBlockHeader({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Today",
+                style: kQuickCalendarHeader,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    "Monday ",
+                    style: kQuickCalendarHeader.copyWith(fontSize: 14, letterSpacing: 1.15 ),
+                  ),
+                  SizedBox(width:5),
+                  Text(
+                    "2nd January 2019",
+                    style: kQuickCalendarHeader.copyWith(
+                        fontSize: 14, fontWeight: FontWeight.w300, letterSpacing: 1.25),
+                  ),
+                ],
+              ),
+            ],
+          )),
+          Icon(
+            Icons.add,
+            color: kMainColor,
+          )
+        ],
+      ),
     );
   }
 }

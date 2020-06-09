@@ -70,7 +70,7 @@ class StudentScreenState extends State<StudentScreen> {
             });
           },
           currentIndex: _pageIndex,
-          opacity: .2,
+          opacity: 1,
           borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           elevation: 8,
           fabLocation: BubbleBottomBarFabLocation.end, //new
@@ -83,18 +83,18 @@ class StudentScreenState extends State<StudentScreen> {
                 backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(
                   Icons.home,
-                  color: Colors.black,
+                  color: kCounterSurfaceColor.withAlpha(95),
                 ),
                 activeIcon: Icon(
                   Icons.home,
-                  color: Theme.of(context).primaryColor,
+                  color: kSurfaceColor,
                 ),
-                title: Text("Home")),
+                title: Text("Dashboard" , style: TextStyle(color:kSurfaceColor),)),
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColor,
               icon: Icon(
                 Icons.rss_feed,
-                color: Colors.black,
+                color: kCounterSurfaceColor.withAlpha(95),
               ),
               activeIcon: Icon(
                 Icons.rss_feed,
@@ -106,7 +106,7 @@ class StudentScreenState extends State<StudentScreen> {
                 backgroundColor: Colors.indigo,
                 icon: Icon(
                   Icons.chat_bubble,
-                  color: Colors.black,
+                  color: kCounterSurfaceColor.withAlpha(95),
                 ),
                 activeIcon: Icon(
                   Icons.chat_bubble,
@@ -117,24 +117,14 @@ class StudentScreenState extends State<StudentScreen> {
                 backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(
                   Icons.dashboard,
-                  color: Colors.black,
+                  color: kCounterSurfaceColor.withAlpha(95),
                 ),
                 activeIcon: Icon(
                   Icons.dashboard,
                   color: Theme.of(context).primaryColor,
                 ),
                 title: Text("Dashboard")),
-                BubbleBottomBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-                activeIcon: Icon(
-                  Icons.menu,
-                  color: Theme.of(context).primaryColor,
-                ),
-                title: Text("Menu")),
+                
           ],
         ),
       );

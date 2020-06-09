@@ -10,8 +10,13 @@ class QuickDeadlines extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
+    double phoneHeight = queryData.size.height;
+    double height = phoneHeight*0.45;
+    if(phoneHeight<300){
+      height=0.55*phoneHeight;
+    }
     return Container(
-      height: 0.45 * queryData.size.height,
+      height: height,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +103,7 @@ class Date extends StatelessWidget {
                 fontWeight: FontWeight.w400),
           ),
           Text(
-            "September 21 2019",
+            "September 21",
             style: TextStyle(
                 fontSize: 12,
                 color: kSurfaceColor.withAlpha(100),
@@ -128,16 +133,14 @@ class DateSelector extends StatelessWidget {
   final scrollController;
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 156 / 400,
-      child: Container(
-        color: kMainColor,
-        child: ListView.builder(
-          itemCount: _dates.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _dates[index];
-          },
-        ),
+    return Container(
+      width: 120,
+      color: kMainColor,
+      child: ListView.builder(
+        itemCount: _dates.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _dates[index];
+        },
       ),
     );
   }
@@ -151,8 +154,7 @@ class DeadLinesContentViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        AspectRatio(
-            aspectRatio: 156 / 400, child: SizedBox()), // DEADSPACE IN BG
+        SizedBox(width: 120,), // DEADSPACE IN BG
         Expanded(
           child: Container(
               color: kSurfaceFirstShade,
@@ -296,12 +298,12 @@ class CompactFileViewer extends StatelessWidget {
 }
 
 class DeadBody extends StatelessWidget {
-  var height;
+
   @override
   Widget build(BuildContext context) {
-    print("PRINTING ${mainFrameHeight.toInt()}");
+    //print("PRINTING ${mainFrameHeight.toInt()}");
     return Container(
-      height: mainFrameHeight-95,
+      height: mainFrameHeight!=null? mainFrameHeight-95 : 295,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -414,7 +416,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
             setState(() {
               _items[index].isExpanded = !_items[index].isExpanded;
               _items[index].isExpanded?selectedIndex=index:selectedIndex=null;
-              print("Selected is $selectedIndex"); // 
+              //print("Selected is $selectedIndex"); // 
               //scrollController.animateTo(index*mainFrameHeight-(125*2) , duration: new Duration(seconds: 2), curve: Curves.ease);
              // _items[index].isExpanded?scrollController.jumpTo(index.toDouble()*(mainFrameHeight-(180+index+20))):null; //180 = header 85 + body 95 +++ padding 20
              // scrollController.attach(ScrollPosition(physics: ScrollPhysics(parent: ()), context: null));

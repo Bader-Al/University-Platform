@@ -19,15 +19,14 @@ class HorizentalDataListViewer extends StatelessWidget {
     return ChangeNotifierProvider<ExpansionData>(
       create: (context) => ExpansionData(),
       child: Container(
-        padding: EdgeInsets.only(left: 5, top: 10), // there is a previous 10px idk where so this makes 15 PX
+        padding: EdgeInsets.only(
+            left: 15,
+            top: 10), // there is a previous 10px idk where so this makes 15 PX
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(
-              height: 25,
-            ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(bottom: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -38,40 +37,42 @@ class HorizentalDataListViewer extends StatelessWidget {
                     Icon(Icons.add),
                   ]),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 10),
             Stack(
               children: <Widget>[
                 CustomExpansionTile(
                   title: Container(
                     // Contains the background
-                    height: 100,
+                    height: 150,
                     decoration: BoxDecoration(
-                      gradient: kMainLinear,
+                      color: kMainColor,
                       //      color: kSecondColor,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                      ),
+                          topLeft: Radius.circular(25),
+                          bottomLeft: Radius.circular(25)),
                     ),
                   ),
                   children: <Widget>[CourseTile()],
                 ),
                 Container(
                   // Contains the listView
-                  height: 100,
+                  height: 150,
                   child: Padding(
                     padding: EdgeInsetsDirectional.only(
-                        start: 5, top: 3, bottom: 3),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 6),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), ),
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: dataBlocksList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return dataBlocksList[index];
-                          },
-                        ),
+                      start: 10,
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          bottomLeft: Radius.circular(15)),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: dataBlocksList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return dataBlocksList[index];
+                        },
                       ),
                     ),
                   ),
@@ -104,76 +105,100 @@ class _DataBlockState extends State<DataBlock> {
     String courseTitle = "${widget.title}";
     widget.code != null ? courseTitle += " ${widget.code}" : null;
 
-    Color buttonColor = Theme.of(context).primaryColor;
- 
+    Color buttonColor = kSurfaceColor;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Container(
-          width: 100,
+          padding: EdgeInsets.only(right: 3),
+          width: 154,
           child: FlatButton(
-              padding: EdgeInsets.all(15),
-              splashColor: Theme.of(context).accentColor,
-              highlightColor: Theme.of(context).accentColor,
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8.5),
+              highlightColor: Theme.of(context).primaryColor,
               color: buttonColor,
-              shape: CircleBorder(side: isSelected? BorderSide(width: 2, color: Colors.white): BorderSide(width: 4, color: Theme.of(context).primaryColor) ),
-              child: Center(
-                child: widget.section != null
-                    ? Column(
-                        //Checks to see if section is inputted. this determines wether the table is for courses or for chats etc
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            widget.title == null
-                                ? "Err Fetching title"
-                                : "$courseTitle",
-                            style: kHorizentalListObjectMedium,
-                          ),
-                          SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            "Sec. ${widget.section}",
-                            style: kHorizentalListObjectSmall.copyWith(
-                                color: kAccentColor.withOpacity(0.75)),
-                          ),
-                        ],
-                      )
-                    : Text(
-                        widget.title == null
-                            ? "Error fetching"
-                            : "${widget.title}",
-                        textAlign: TextAlign.center,
-                        style: kHorizentalListObjectMedium,
-                      ),
-              ),
-              onPressed: widget.title==null? (){} : () {
-                if (Provider.of<ExpansionData>(context).selectedIndex == null) {
-                  setState(() {
-                    print("object1");
-                    Provider.of<ExpansionData>(context)
-                        .setSelectedIndex(widget.index);
-                    Provider.of<ExpansionData>(context).switchExpansion();
-                  });
-                } else if (widget.index ==
-                    Provider.of<ExpansionData>(context).selectedIndex) {
-                  setState(() {
-                    print("object2");
-                    Provider.of<ExpansionData>(context).setSelectedIndex(null);
-                    Provider.of<ExpansionData>(context).switchExpansion();
-                  });
-                } else {
-                  setState(
-                    () {
-                      print("object3");
-                      Provider.of<ExpansionData>(context)
-                          .setSelectedIndex(widget.index);
-                    },
-                  );
-                }
-                // isSelected=!isSelected;
-              }),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              child: widget.section != null
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Expanded(child: Icon(Icons.delete, size: 46,)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Column(
+                              //Checks to see if section is inputted. this determines wether the table is for courses or for chats etc
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  widget.title == null
+                                      ? "Err Fetching title"
+                                      : "$courseTitle",
+                                  style: TextStyle(fontSize:14, fontWeight: FontWeight.w300, color: kCounterSurfaceColor),
+                                ),
+                                Text(
+                                  "18 Jan 2018",
+                                  style: TextStyle(fontSize:12, fontWeight: FontWeight.w300, color: kCounterSurfaceColor.withAlpha(150)),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 14, vertical: 3),
+                              child: Text(
+                                "Quiz",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: kSurfaceColor),
+                              ),
+                              decoration:
+                                  BoxDecoration(color: kGreenIndication, borderRadius: BorderRadius.circular(50)),
+
+                            )
+                          ],
+                        ),
+                      ],
+                    )
+                  : Text(
+                      widget.title == null
+                          ? "Error fetching"
+                          : "${widget.title}",
+                      textAlign: TextAlign.center,
+                      style: kHorizentalListObjectMedium,
+                    ),
+              onPressed: widget.title == null
+                  ? () {}
+                  : () {
+                      if (Provider.of<ExpansionData>(context).selectedIndex ==
+                          null) {
+                        setState(() {
+                          print("object1");
+                          Provider.of<ExpansionData>(context)
+                              .setSelectedIndex(widget.index);
+                          Provider.of<ExpansionData>(context).switchExpansion();
+                        });
+                      } else if (widget.index ==
+                          Provider.of<ExpansionData>(context).selectedIndex) {
+                        setState(() {
+                          print("object2");
+                          Provider.of<ExpansionData>(context)
+                              .setSelectedIndex(null);
+                          Provider.of<ExpansionData>(context).switchExpansion();
+                        });
+                      } else {
+                        setState(
+                          () {
+                            print("object3");
+                            Provider.of<ExpansionData>(context)
+                                .setSelectedIndex(widget.index);
+                          },
+                        );
+                      }
+                      // isSelected=!isSelected;
+                    }),
         ),
         SizedBox(
           width: 3,

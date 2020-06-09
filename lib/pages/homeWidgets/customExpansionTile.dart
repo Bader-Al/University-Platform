@@ -111,7 +111,7 @@ class _ExpansionTileState extends State<CustomExpansionTile>
 
   Widget _buildChildren(BuildContext context, Widget child) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
+      padding: const EdgeInsets.only(left: 0.0, top: 0),
       child: Container(
         decoration: BoxDecoration(
           color: _backgroundColor.value ?? Colors.transparent,
@@ -130,8 +130,8 @@ class _ExpansionTileState extends State<CustomExpansionTile>
               ),
               ClipRRect(
 
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(appBarBorderRadius)),
+                // borderRadius:
+                //     BorderRadius.only(bottomLeft: Radius.circular(15), topLeft: Radius.circular(25)),
                 child: Align(
                   heightFactor: _heightFactor.value,
                   child: child,

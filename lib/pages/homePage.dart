@@ -37,9 +37,6 @@ class HomePage extends StatelessWidget {
 class HomePageSliver extends StatelessWidget {
   // template.. later these blocks should take data from actual
   final List courseBlocks = [
-    SizedBox(
-      width: 15,
-    ),
     DataBlock(
       title: "CS",
       section: "1002",
@@ -74,25 +71,27 @@ class HomePageSliver extends StatelessWidget {
     return SliverList(
       delegate: SliverChildListDelegate([
         SizedBox(
-          height: 80,
+          height: 100,
         ),
-        QuickDeadlines(),
-        
-        
         HorizentalDataListViewer(
           dataBlocksList: courseBlocks,
           title: "Courses",
         ),
-        HorizentalDataListViewer(
-          dataBlocksList: courseBlocks,
-          title: "Chatrooms",
+        SizedBox(
+          height: 25,
         ),
         HorizentalDataListViewer(
           dataBlocksList: courseBlocks,
           title: "Chatrooms",
         ),
         SizedBox(
-          height: 45,
+          height: 25,
+        ),
+        QuickDeadlines(),
+        
+        
+        SizedBox(
+          height: 25,
         ),
         LatestNews(),
         SizedBox(

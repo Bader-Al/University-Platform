@@ -12,8 +12,10 @@ class QuickDeadlines extends StatelessWidget {
     queryData = MediaQuery.of(context);
     double phoneHeight = queryData.size.height;
     double height = phoneHeight*0.45;
-    if(phoneHeight<300){
+    print(phoneHeight);
+    if(phoneHeight<600){ // nexus 4 is 592
       height=0.55*phoneHeight;
+      mainFrameHeight=height;
     }
     return Container(
       height: height,
@@ -159,7 +161,7 @@ class DeadLinesContentViewer extends StatelessWidget {
           child: Container(
               color: kSurfaceFirstShade,
               child: Padding(
-                padding: EdgeInsets.only(top: 5, right: 0, bottom: 5),
+                padding: EdgeInsets.only(top: 5, right: 5, bottom: 5),
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(15),
@@ -273,26 +275,23 @@ class CompactFileItem extends StatelessWidget {
 class CompactFileViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 26 / 14,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          SizedBox(width: 15),
-          CompactFileItem(
-            isDownloaded: true,
-          ),
-          SizedBox(width: 15),
-          CompactFileItem(),
-          SizedBox(width: 15),
-          CompactFileItem(),
-          SizedBox(width: 15),
-          CompactFileItem(),
-          SizedBox(width: 15),
-          CompactFileItem(),
-          SizedBox(width: 25),
-        ],
-      ),
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: <Widget>[
+        SizedBox(width: 15),
+        CompactFileItem(
+          isDownloaded: true,
+        ),
+        SizedBox(width: 15),
+        CompactFileItem(),
+        SizedBox(width: 15),
+        CompactFileItem(),
+        SizedBox(width: 15),
+        CompactFileItem(),
+        SizedBox(width: 15),
+        CompactFileItem(),
+        SizedBox(width: 25),
+      ],
     );
   }
 }

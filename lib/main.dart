@@ -1,8 +1,9 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:psu_platform/pages/academicsPage.dart';
 import './pages/homePage.dart';
 import './pages/feedPage.dart';
-import './pages/chats.dart';
+import './pages/chatsPage.dart';
 
 import './constants.dart';
 
@@ -20,7 +21,6 @@ class Platform extends StatefulWidget {
 class _PlatformState extends State<Platform> {
   
 
-  int _pageIndex = 0;
 
   Widget build(BuildContext context) {
     return Center(
@@ -30,6 +30,7 @@ class _PlatformState extends State<Platform> {
         theme: ThemeData(
           primaryColor: kMainColor,
           accentColor: kAccentColor,
+          
         ),
         home: StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
       ),
@@ -46,7 +47,8 @@ class StudentScreenState extends State<StudentScreen> {
   List<Widget> navBarRoutes = [
     HomePage(),
     FeedPage(),
-    Chats(),
+    ChatsPage(),
+    AcademicsPage()
   ];
   int _pageIndex =0;
   bool fabEnabled= true;

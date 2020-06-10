@@ -23,25 +23,48 @@ class QuickCalendarSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
-    return CarouselSlider(
+
+    return Container(
       height: queryData.size.height*0.64,
-      initialPage: 0,
-      enlargeCenterPage: false,
-      viewportFraction: 0.90,
-      enableInfiniteScroll: false,
-      items: [1, 2, 3, 4, 5].map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 20.0, top: 0, bottom: 5),
-              child: DayBlock(),
-            );
-          },
-        );
-      }).toList(),
+      width: double.infinity,
+      child: PageView.builder(itemBuilder: (context, index){
+        return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: _quickCalendarItems[index],
+              );
+      }),
     );
+   
+   // OLD CODE BELOW ::: TODO ::: Just get rid of it....
+    // return CarouselSlider(
+    //   height: queryData.size.height*0.64,
+    //   initialPage: 0,
+    //   enlargeCenterPage: false,
+    //   viewportFraction: 0.90,
+    //   enableInfiniteScroll: false,
+    //   items: [1, 2, 3, 4, 5].map((i) {
+    //     return Builder(
+    //       builder: (BuildContext context) {
+    //         return Padding(
+    //           padding: const EdgeInsets.only(right: 20.0, top: 0, bottom: 5),
+    //           child: DayBlock(),
+    //         );
+    //       },
+    //     );
+    //   }).toList(),
+    // );
   }
 }
+
+List _quickCalendarItems = [
+  DayBlock(),
+  DayBlock(),
+  DayBlock(),
+  DayBlock(),
+  DayBlock(),
+  DayBlock(),
+  
+];
 
 class DayBlock extends StatelessWidget {
   @override

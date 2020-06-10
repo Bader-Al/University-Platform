@@ -38,7 +38,7 @@ class StudentScreenState extends State<StudentScreen>
     with SingleTickerProviderStateMixin {
   bool isCollapsed = true;
   double screenWidth, screenHeight;
-  final Duration duration = const Duration(milliseconds: 100);
+  final Duration duration = const Duration(milliseconds:150);
   AnimationController _controller;
   Animation<double> _scaleAnimation;
   Animation<double> _menuScaleAnimation;
@@ -51,7 +51,8 @@ class StudentScreenState extends State<StudentScreen>
     _controller = AnimationController(vsync: this, duration: duration);
     _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
     _menuScaleAnimation =
-        Tween<double>(begin: 0.5, end: 1).animate(_controller);
+        Tween<double>(begin: 0, end: 0.5).animate(_controller);
+    
     _slideAnimation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
         .animate(_controller);
   }
@@ -79,6 +80,7 @@ class StudentScreenState extends State<StudentScreen>
 
   Widget mainScreen(context) {
     return AnimatedPositioned(
+      curve: Curves.easeOut,
       child: GestureDetector(
           onPanUpdate: (offset) => {_slideSideBar(offset.delta.dx)},
           child: ScaleTransition(
@@ -96,7 +98,7 @@ class StudentScreenState extends State<StudentScreen>
       top: 0,
       bottom: 0,
       left: isCollapsed ? 0 : 0.5 * screenWidth,
-      right: isCollapsed ? 0 : -0.6 * screenWidth,
+      right: isCollapsed ? 0 : -0.5 * screenWidth,
       duration: duration,
     );
   }
@@ -116,9 +118,8 @@ class StudentScreenState extends State<StudentScreen>
   void _slideSideBar(dx) {
     setState(() {
       if (dx > 0) {
-        print("Open!");
         _controller.forward();
-        isCollapsed = false;
+       isCollapsed = false;
       } else if (dx < 0) {
         isCollapsed = true;
         _controller.reverse();

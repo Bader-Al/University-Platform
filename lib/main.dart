@@ -77,7 +77,7 @@ class StudentScreenState extends State<StudentScreen> {
           hasNotch: true, //new
           hasInk: true, //new, gives a cute ink effect
           inkColor: Theme.of(context)
-              .accentColor, //optional, uses theme color if not specified
+              .primaryColor, //optional, uses theme color if not specified
           items: <BubbleBottomBarItem>[
             BubbleBottomBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
@@ -98,9 +98,9 @@ class StudentScreenState extends State<StudentScreen> {
               ),
               activeIcon: Icon(
                 Icons.rss_feed,
-                color: Theme.of(context).primaryColor,
+                color: kSurfaceColor,
               ),
-              title: Text("Feed"),
+              title: Text("Feed", style: TextStyle(color:kSurfaceColor),),
             ),
             BubbleBottomBarItem(
                 backgroundColor: Colors.indigo,
@@ -110,9 +110,9 @@ class StudentScreenState extends State<StudentScreen> {
                 ),
                 activeIcon: Icon(
                   Icons.chat_bubble,
-                  color: Colors.indigo,
+                  color: kSurfaceColor,
                 ),
-                title: Text("Chats"),),
+                title: Text("Chats", style: TextStyle(color:kSurfaceColor),),),
             BubbleBottomBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(
@@ -120,10 +120,10 @@ class StudentScreenState extends State<StudentScreen> {
                   color: kCounterSurfaceColor.withAlpha(95),
                 ),
                 activeIcon: Icon(
-                  Icons.dashboard,
-                  color: Theme.of(context).primaryColor,
+                  Icons.library_books,
+                  color: kSurfaceColor,
                 ),
-                title: Text("Dashboard")),
+                title: Text("Academic", style: TextStyle(color:kSurfaceColor),)),
                 
           ],
         ),

@@ -14,8 +14,8 @@ class QuickDeadlines extends StatelessWidget {
     double height = phoneHeight*0.45;
     print(phoneHeight);
     if(phoneHeight<600){ // nexus 4 is 592
-      height=0.55*phoneHeight;
-      mainFrameHeight=height;
+      height=0.60*phoneHeight;
+      //mainFrameHeight=height;
     }
     return Container(
       height: height,
@@ -100,7 +100,7 @@ class Date extends StatelessWidget {
           Text(
             "Due 5 days",
             style: TextStyle(
-                fontSize: 14,
+                fontSize: 15,
                 color: kSurfaceFirstShade,
                 fontWeight: FontWeight.w400),
           ),
@@ -108,7 +108,7 @@ class Date extends StatelessWidget {
             "September 21",
             style: TextStyle(
                 fontSize: 12,
-                color: kSurfaceColor.withAlpha(100),
+                color: kSurfaceColor.withAlpha(150),
                 fontWeight: FontWeight.w300),
           ),
         ],
@@ -136,7 +136,7 @@ class DateSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
+      width: 100,
       color: kMainColor,
       child: ListView.builder(
         itemCount: _dates.length,
@@ -156,7 +156,7 @@ class DeadLinesContentViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        SizedBox(width: 120,), // DEADSPACE IN BG
+        SizedBox(width: 100,), // DEADSPACE IN BG
         Expanded(
           child: Container(
               color: kSurfaceFirstShade,
@@ -231,37 +231,25 @@ class CompactFileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(0),
+      padding: EdgeInsets.only(top: isDownloaded? 0 : 10, bottom: 5),
       width: 150,
       child: FlatButton(
-        color: isDownloaded ? kMainColor : kMainColor.withAlpha(200),
+        color: isDownloaded ? kMainColor : kSurfaceFirstShade,
         onPressed: (() {}),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Icon(
-                    Icons.folder,
-                    color: kSurfaceColor,
-                    size: 34,
-                  ),
-                  Icon(
-                    Icons.file_download,
-                    color: kSurfaceColor,
-                  ),
-                ],
+              Icon(
+                isDownloaded?Icons.delete:Icons.file_download,
+                color: isDownloaded?kSurfaceColor:kMainColor,
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10,),
               Text(
                 "A_very_loooong_assignment_descriptiooon.docxx",
                 style: TextStyle(
-                    color: kSurfaceColor, fontWeight: FontWeight.w300),
+                    color: isDownloaded?kSurfaceColor:kMainColor, fontWeight: FontWeight.w300,), maxLines: 3, overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

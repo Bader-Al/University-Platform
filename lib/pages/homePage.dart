@@ -38,14 +38,14 @@ class HomePageSliver extends StatelessWidget {
   // template.. later these blocks should take data from actual
   final List courseBlocks = [
     DataBlock(
-      title: "CS",
-      section: "1002",
+      title: "MATH",
+      section: "113",
       code: 112,
       index: 0,
     ),
     DataBlock(
-      title: "CS",
-      section: "1002",
+      title: "ISC",
+      section: "120",
       code: 112,
       index: 1,
     ),

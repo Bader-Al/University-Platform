@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import 'package:provider/provider.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'CourseContent/grades.dart';
 import 'CourseContent/material.dart';
 import 'customExpansionTile.dart';
@@ -43,7 +44,7 @@ class HorizentalDataListViewer extends StatelessWidget {
                 CustomExpansionTile(
                   title: Container(
                     // Contains the background
-                    height: 150,
+                    height: 155,
                     decoration: BoxDecoration(
                       color: kMainColor,
                       //      color: kSecondColor,
@@ -56,7 +57,7 @@ class HorizentalDataListViewer extends StatelessWidget {
                 ),
                 Container(
                   // Contains the listView
-                  height: 150,
+                  height: 155,
                   child: Padding(
                     padding: EdgeInsetsDirectional.only(
                       start: 10,
@@ -112,7 +113,7 @@ class _DataBlockState extends State<DataBlock> {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(right: 3),
-          width: 154,
+          width: 150,
           child: FlatButton(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8.5),
               highlightColor: Theme.of(context).primaryColor,
@@ -121,10 +122,27 @@ class _DataBlockState extends State<DataBlock> {
                   borderRadius: BorderRadius.all(Radius.circular(15))),
               child: widget.section != null
                   ? Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Expanded(child: Icon(Icons.delete, size: 46,)),
+                        Expanded(
+                            child: CircularPercentIndicator(
+                          radius: 75,
+                          lineWidth: 4,
+                          backgroundColor: kSurfaceColor,
+                          percent: 0.75,
+                          circularStrokeCap: CircularStrokeCap.round,
+                          progressColor: kMainColor,
+                          center: Column(
+                            mainAxisAlignment: MainAxisAlignment.center ,
+                            children: <Widget>[
+                              Text("4", textAlign: TextAlign.center, style: TextStyle(color:kCounterSurfaceColor, fontWeight: FontWeight.w300, fontSize: 24),),
+                              Text("Days Left", textAlign: TextAlign.center, style: TextStyle(color:kCounterSurfaceColor, fontWeight: FontWeight.w300, fontSize: 12),),
+                              SizedBox(height:7)
+                            ],
+                          ),
+                        )),
+                        SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -137,11 +155,18 @@ class _DataBlockState extends State<DataBlock> {
                                   widget.title == null
                                       ? "Err Fetching title"
                                       : "$courseTitle",
-                                  style: TextStyle(fontSize:14, fontWeight: FontWeight.w300, color: kCounterSurfaceColor),
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                      color: kCounterSurfaceColor),
                                 ),
                                 Text(
                                   "18 Jan 2018",
-                                  style: TextStyle(fontSize:12, fontWeight: FontWeight.w300, color: kCounterSurfaceColor.withAlpha(150)),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300,
+                                      color:
+                                          kCounterSurfaceColor.withAlpha(150)),
                                 ),
                               ],
                             ),
@@ -154,9 +179,9 @@ class _DataBlockState extends State<DataBlock> {
                                     fontWeight: FontWeight.w400,
                                     color: kSurfaceColor),
                               ),
-                              decoration:
-                                  BoxDecoration(color: kGreenIndication, borderRadius: BorderRadius.circular(50)),
-
+                              decoration: BoxDecoration(
+                                  color: kGreenIndication,
+                                  borderRadius: BorderRadius.circular(50)),
                             )
                           ],
                         ),

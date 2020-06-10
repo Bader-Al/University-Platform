@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'homeWidgets/HorizentalListViewer.dart';
-import 'homeWidgets/scheduleBanner.dart';
-import 'homeWidgets/events.dart';
-import 'homeWidgets/quickDeadlines.dart';
+import '../homeWidgets/HorizentalListViewer.dart';
+import '../homeWidgets/scheduleBanner.dart';
+import '../homeWidgets/events.dart';
+import '../homeWidgets/quickDeadlines.dart';
 
 
 
 
-class HomePage extends StatelessWidget {
+class DashboardPage extends StatelessWidget {
   final List courses = [];
   ScrollController scrollController = new ScrollController();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-    child: Scaffold(
+    return Scaffold(
       body: NestedScrollView(
         controller: scrollController,
         headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
@@ -23,18 +22,17 @@ class HomePage extends StatelessWidget {
         },
         body: CustomScrollView(
           slivers: <Widget>[
-            HomePageSliver(),
+            DashboardPageSliver(),
           ],
         ),
       ),
-    ),
     );
     
    
   }
 }
 
-class HomePageSliver extends StatelessWidget {
+class DashboardPageSliver extends StatelessWidget {
   // template.. later these blocks should take data from actual
   final List courseBlocks = [
     DataBlock(

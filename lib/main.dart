@@ -1,15 +1,10 @@
-import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:psu_platform/pages/academicsPage.dart';
-import './pages/homePage.dart';
-import './pages/feedPage.dart';
-import './pages/chatsPage.dart';
+
+import './pages/StudentHome/studentHomeHandler.dart';
 
 import './constants.dart';
 
-void main() => runApp(
-  
-  Platform());
+void main() => runApp(Platform());
 
 //put back in homepage class
 
@@ -19,20 +14,16 @@ class Platform extends StatefulWidget {
 }
 
 class _PlatformState extends State<Platform> {
-  
-
-
   Widget build(BuildContext context) {
     return Center(
       child: MaterialApp(
-        
         title: 'PSU Smart Platform',
         theme: ThemeData(
           primaryColor: kMainColor,
           accentColor: kAccentColor,
-          
         ),
-        home: StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
+        home:
+            StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
       ),
     );
   }
@@ -43,94 +34,133 @@ class StudentScreen extends StatefulWidget {
   StudentScreenState createState() => StudentScreenState();
 }
 
-class StudentScreenState extends State<StudentScreen> {
-  List<Widget> navBarRoutes = [
-    HomePage(),
-    FeedPage(),
-    ChatsPage(),
-    AcademicsPage()
-  ];
-  int _pageIndex =0;
-  bool fabEnabled= true;
+class StudentScreenState extends State<StudentScreen>
+    with SingleTickerProviderStateMixin {
+  bool isCollapsed = true;
+  double screenWidth, screenHeight;
+  final Duration duration = const Duration(milliseconds: 100);
+  AnimationController _controller;
+  Animation<double> _scaleAnimation;
+  Animation<double> _menuScaleAnimation;
+  Animation<Offset> _slideAnimation;
+  var queryData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: duration);
+    _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
+    _menuScaleAnimation =
+        Tween<double>(begin: 0.5, end: 1).animate(_controller);
+    _slideAnimation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
+        .animate(_controller);
+  }
+
+  void dispose() {
+    // TODO: implement dispose
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: navBarRoutes[_pageIndex],
-        floatingActionButton: FloatingActionButton( // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
-          onPressed: !fabEnabled? null :() {/* Should depend on navBarRoute[index] */},
-          child: Icon(_pageIndex==0?Icons.navigation:_pageIndex==1?Icons.add: Icons.help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
-          backgroundColor: fabEnabled?kMainRed:Colors.grey,
-          elevation: fabEnabled?6:0,
+    Size size = MediaQuery.of(context).size;
+    screenHeight = size.height;
+    screenWidth = size.width;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kMainColor,
+        body: Stack(
+          children: <Widget>[menu(context), mainScreen(context)],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: BubbleBottomBar(
-          onTap: (index){
-            setState(() {
-             _pageIndex = index;
-             if(_pageIndex==1){fabEnabled=false;}
-             else fabEnabled=true;
-            });
-          },
-          currentIndex: _pageIndex,
-          opacity: 1,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-          elevation: 8,
-          fabLocation: BubbleBottomBarFabLocation.end, //new
-          hasNotch: true, //new
-          hasInk: true, //new, gives a cute ink effect
-          inkColor: Theme.of(context)
-              .primaryColor, //optional, uses theme color if not specified
-          items: <BubbleBottomBarItem>[
-            BubbleBottomBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(
-                  Icons.home,
-                  color: kCounterSurfaceColor.withAlpha(95),
+      ),
+    );
+  }
+
+  Widget mainScreen(context) {
+    return AnimatedPositioned(
+      child: GestureDetector(
+          onPanUpdate: (offset) => {_slideSideBar(offset.delta.dx)},
+          child: ScaleTransition(
+              scale: _scaleAnimation,
+              child: Stack(children: [
+                ClipRRect(child: StudentHome(), borderRadius: isCollapsed?BorderRadius.circular(0):BorderRadius.circular(25),),
+                Positioned(
+                  child: GestureDetector(
+                      onTap: _toggleSideBar,
+                      child: Icon(Icons.menu, color: Colors.white)),
+                  top: 15,
+                  left: 15,
                 ),
-                activeIcon: Icon(
-                  Icons.home,
-                  color: kSurfaceColor,
-                ),
-                title: Text("Dashboard" , style: TextStyle(color:kSurfaceColor),)),
-            BubbleBottomBarItem(
-              backgroundColor: Theme.of(context).primaryColor,
-              icon: Icon(
-                Icons.rss_feed,
-                color: kCounterSurfaceColor.withAlpha(95),
+              ]))),
+      top: 0,
+      bottom: 0,
+      left: isCollapsed ? 0 : 0.5 * screenWidth,
+      right: isCollapsed ? 0 : -0.6 * screenWidth,
+      duration: duration,
+    );
+  }
+
+  void _toggleSideBar() {
+    setState(() {
+      if (isCollapsed) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+
+      isCollapsed = !isCollapsed;
+    });
+  }
+
+  void _slideSideBar(dx) {
+    setState(() {
+      if (dx > 0) {
+        print("Open!");
+        _controller.forward();
+        isCollapsed = false;
+      } else if (dx < 0) {
+        isCollapsed = true;
+        _controller.reverse();
+      }
+    });
+  }
+
+  Widget menu(context) {
+    return SlideTransition(
+      position: _slideAnimation,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Home",
+                style: TextStyle(color: Colors.white, fontSize: 22),
               ),
-              activeIcon: Icon(
-                Icons.rss_feed,
-                color: kSurfaceColor,
+              SizedBox(height: 10),
+              Text(
+                "Calendar",
+                style: TextStyle(color: Colors.white, fontSize: 22),
               ),
-              title: Text("Feed", style: TextStyle(color:kSurfaceColor),),
-            ),
-            BubbleBottomBarItem(
-                backgroundColor: Colors.indigo,
-                icon: Icon(
-                  Icons.chat_bubble,
-                  color: kCounterSurfaceColor.withAlpha(95),
-                ),
-                activeIcon: Icon(
-                  Icons.chat_bubble,
-                  color: kSurfaceColor,
-                ),
-                title: Text("Chats", style: TextStyle(color:kSurfaceColor),),),
-            BubbleBottomBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(
-                  Icons.dashboard,
-                  color: kCounterSurfaceColor.withAlpha(95),
-                ),
-                activeIcon: Icon(
-                  Icons.library_books,
-                  color: kSurfaceColor,
-                ),
-                title: Text("Academic", style: TextStyle(color:kSurfaceColor),)),
-                
-          ],
+              SizedBox(height: 10),
+              Text(
+                "People",
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+              SizedBox(height: 10),
+              Text(
+                "Tools",
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ],
+          ),
         ),
-      );
+      ),
+    );
   }
 }
-
-

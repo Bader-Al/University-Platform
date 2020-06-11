@@ -23,6 +23,7 @@ class ScheduleBanner extends StatelessWidget {
         shape: kAppBarShape,
       ),
       flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.pin,
         background: QuickCalendar(),
       ),
       shape: kAppBarShape,

@@ -92,7 +92,7 @@ class DashboardPageSliver extends StatelessWidget {
         SizedBox(
           height: 25,
         ),
-        QuickDeadlines(),
+         QuickDeadlines(),
         
         
         SizedBox(

@@ -9,39 +9,52 @@ import 'chatsPage.dart';
 
 import '../../constants.dart';
 
-
 class StudentHome extends StatefulWidget {
   @override
   StudentHomeState createState() => StudentHomeState();
 }
 
 class StudentHomeState extends State<StudentHome> {
-
   List<Widget> navBarRoutes = [
     DashboardPage(),
     FeedPage(),
     ChatsPage(),
     AcademicsPage()
   ];
-  int _pageIndex =0;
-  bool fabEnabled= true;
+  int _pageIndex = 0;
+  bool fabEnabled = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: navBarRoutes[_pageIndex],
-    floatingActionButton: FloatingActionButton( // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
-      onPressed: !fabEnabled? null :() {/* Should depend on navBarRoute[index] */},
-      child: Icon(_pageIndex==0?Icons.navigation:_pageIndex==1?Icons.add: Icons.help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
-      backgroundColor: fabEnabled?Theme.of(context).primaryColor:Colors.grey,
-      elevation: fabEnabled?6:0,
-    ),
-    floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-    bottomNavigationBar: BubbleBottomBar(
-      onTap: (index){
+        body: navBarRoutes[_pageIndex],
+        floatingActionButton: FloatingActionButton(
+          // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
+          onPressed: !fabEnabled
+              ? null
+              : () {/* Should depend on navBarRoute[index] */},
+          child: Icon(_pageIndex == 0
+              ? Icons.navigation
+              : _pageIndex == 1
+                  ? Icons.add
+                  : Icons
+                      .help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
+          backgroundColor:
+              fabEnabled ? Theme.of(context).primaryColor : Colors.grey,
+          elevation: fabEnabled ? 6 : 0,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        bottomNavigationBar: homeBottomNavigationBar());
+  }
+
+  Widget homeBottomNavigationBar() {
+    return BubbleBottomBar(
+      onTap: (index) {
         setState(() {
-         _pageIndex = index;
-         if(_pageIndex==1){fabEnabled=false;}
-         else fabEnabled=true;
+          _pageIndex = index;
+          if (_pageIndex == 1) {
+            fabEnabled = false;
+          } else
+            fabEnabled = true;
         });
       },
       currentIndex: _pageIndex,
@@ -57,14 +70,17 @@ class StudentHomeState extends State<StudentHome> {
         BubbleBottomBarItem(
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(
-              Icons.home,
+              Icons.dashboard,
               color: kCounterSurfaceColor.withAlpha(95),
             ),
             activeIcon: Icon(
-              Icons.home,
+              Icons.dashboard,
               color: kSurfaceColor,
             ),
-            title: Text("Dashboard" , style: TextStyle(color:kSurfaceColor),)),
+            title: Text(
+              "Dashboard",
+              style: TextStyle(color: kSurfaceColor),
+            )),
         BubbleBottomBarItem(
           backgroundColor: Theme.of(context).primaryColor,
           icon: Icon(
@@ -75,19 +91,26 @@ class StudentHomeState extends State<StudentHome> {
             Icons.rss_feed,
             color: kSurfaceColor,
           ),
-          title: Text("Feed", style: TextStyle(color:kSurfaceColor),),
+          title: Text(
+            "Posts",
+            style: TextStyle(color: kSurfaceColor),
+          ),
         ),
         BubbleBottomBarItem(
-            backgroundColor: Colors.indigo,
-            icon: Icon(
-              Icons.chat_bubble,
-              color: kCounterSurfaceColor.withAlpha(95),
-            ),
-            activeIcon: Icon(
-              Icons.chat_bubble,
-              color: kSurfaceColor,
-            ),
-            title: Text("Chats", style: TextStyle(color:kSurfaceColor),),),
+          backgroundColor: Colors.indigo,
+          icon: Icon(
+            Icons.chat_bubble,
+            color: kCounterSurfaceColor.withAlpha(95),
+          ),
+          activeIcon: Icon(
+            Icons.chat_bubble,
+            color: kSurfaceColor,
+          ),
+          title: Text(
+            "Chats",
+            style: TextStyle(color: kSurfaceColor),
+          ),
+        ),
         BubbleBottomBarItem(
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(
@@ -98,12 +121,11 @@ class StudentHomeState extends State<StudentHome> {
               Icons.library_books,
               color: kSurfaceColor,
             ),
-            title: Text("Academic", style: TextStyle(color:kSurfaceColor),)),
-            
+            title: Text(
+              "Academic",
+              style: TextStyle(color: kSurfaceColor),
+            )),
       ],
-    ),
-        );
+    );
   }
 }
-
-

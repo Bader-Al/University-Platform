@@ -38,7 +38,7 @@ class StudentScreenState extends State<StudentScreen>
     with SingleTickerProviderStateMixin {
   bool isCollapsed = true;
   double screenWidth, screenHeight;
-  final Duration duration = const Duration(milliseconds:150);
+  final Duration duration = const Duration(milliseconds:350);
   AnimationController _controller;
   Animation<double> _scaleAnimation;
   Animation<double> _menuScaleAnimation;
@@ -80,9 +80,10 @@ class StudentScreenState extends State<StudentScreen>
 
   Widget mainScreen(context) {
     return AnimatedPositioned(
-      curve: Curves.easeOut,
+      
+      curve: Curves.slowMiddle,
       child: GestureDetector(
-          onPanUpdate: (offset) => {_slideSideBar(offset.delta.dx)},
+          onHorizontalDragUpdate: (offset) => {_slideSideBar(offset.delta.direction)},
           child: ScaleTransition(
               scale: _scaleAnimation,
               child: Stack(children: [
@@ -116,11 +117,12 @@ class StudentScreenState extends State<StudentScreen>
   }
 
   void _slideSideBar(dx) {
+    //print(dx);
     setState(() {
-      if (dx > 0) {
+      if (dx == 0) {
         _controller.forward();
        isCollapsed = false;
-      } else if (dx < 0) {
+      } else{
         isCollapsed = true;
         _controller.reverse();
       }
@@ -128,40 +130,45 @@ class StudentScreenState extends State<StudentScreen>
   }
 
   Widget menu(context) {
-    return SlideTransition(
-      position: _slideAnimation,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Home",
-                style: TextStyle(color: Colors.white, fontSize: 22),
+    return AnimatedBuilder(
+      animation: _slideAnimation,
+      builder: (context,child){
+        return Transform.translate(
+      offset: Offset(30 * _controller.value, 0), // 30*_controller.value :: Treat as if Left Padding
+      child: child,);
+      },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Home",
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Calendar",
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "People",
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Tools",
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                ],
               ),
-              SizedBox(height: 10),
-              Text(
-                "Calendar",
-                style: TextStyle(color: Colors.white, fontSize: 22),
-              ),
-              SizedBox(height: 10),
-              Text(
-                "People",
-                style: TextStyle(color: Colors.white, fontSize: 22),
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Tools",
-                style: TextStyle(color: Colors.white, fontSize: 22),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
     );
   }
 }

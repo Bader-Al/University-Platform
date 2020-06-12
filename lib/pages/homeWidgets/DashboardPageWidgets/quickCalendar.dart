@@ -148,7 +148,7 @@ class ClassTimeBlock extends StatelessWidget {
     }
     return Container(
       height: 65,
-      decoration: BoxDecoration(color: isUpcoming ? kMainColor : kSurfaceColor),
+      decoration: BoxDecoration(color: isUpcoming ? Theme.of(context).colorScheme.primary : kSurfaceColor),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Row(
@@ -224,7 +224,7 @@ class StartToEndIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     Color indicatorBorderColor =
         isHighlighted ? kSurfaceColor : kCounterSurfaceColor;
-    Color indicatorSurfaceColor = isHighlighted ? kMainColor : kSurfaceColor;
+    Color indicatorSurfaceColor = isHighlighted ? Theme.of(context).colorScheme.primary : kSurfaceColor;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1),
       child: Column(
@@ -294,7 +294,7 @@ class DayBlockHeader extends StatelessWidget {
           )),
           Icon(
             Icons.add,
-            color: kMainColor,
+            color: Theme.of(context).colorScheme.primary,
           )
         ],
       ),

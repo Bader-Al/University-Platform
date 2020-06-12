@@ -91,13 +91,13 @@ class DateTab extends StatelessWidget {
     isSelected =
         index == Provider.of<DateSelectionData>(context).selectedIndex;
     return Material(
-      color: kSurfaceColor.withAlpha(0),
+      color: Theme.of(context).colorScheme.background.withAlpha(0),
           child: InkWell(
-        highlightColor: kAccentColor,
-        splashColor: kAccentColor,
+        highlightColor: Theme.of(context).accentColor,
+        splashColor: Theme.of(context).accentColor,
         onTap: () {Provider.of<DateSelectionData>(context).setSelectedIndex(index);},
         child: Container(
-          color: isSelected ? kSurfaceColor.withAlpha(50) : kMainColor,
+          color: isSelected ? Theme.of(context).colorScheme.background.withAlpha(50) : Theme.of(context).colorScheme.primary,
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -107,14 +107,14 @@ class DateTab extends StatelessWidget {
                 "Due 5 days",
                 style: TextStyle(
                     fontSize: 15,
-                    color: kSurfaceFirstShade,
+                    color: Theme.of(context).colorScheme.surface,
                     fontWeight: FontWeight.w400),
               ),
               Text(
                 "September 21",
                 style: TextStyle(
                     fontSize: 12,
-                    color: kSurfaceColor.withAlpha(150),
+                    color: Theme.of(context).colorScheme.background.withAlpha(150),
                     fontWeight: FontWeight.w300),
               ),
             ],
@@ -152,7 +152,7 @@ class _DateSelectorState extends State<DateSelector> {
       create: (context) => DateSelectionData(),
       child: Container(
         width: 100,
-        color: kMainColor,
+        color: Theme.of(context).colorScheme.primary,
         child: ListView.builder(
           itemCount: 7,
           itemBuilder: (BuildContext context, int index) {
@@ -187,7 +187,7 @@ class DeadLinesContentViewer extends StatelessWidget {
         ), // DEADSPACE IN BG
         Expanded(
           child: Container(
-              color: kSurfaceFirstShade,
+              color: Theme.of(context).colorScheme.surface,
               child: Padding(
                 padding: EdgeInsets.only(top: 5, right: 5, bottom: 5),
                 child: ClipRRect(
@@ -212,7 +212,7 @@ class CompactFileItem extends StatelessWidget {
       padding: EdgeInsets.only(top: isDownloaded ? 0 : 10, bottom: 5),
       width: 150,
       child: FlatButton(
-        color: isDownloaded ? kMainColor : kSurfaceFirstShade,
+        color: isDownloaded ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
         onPressed: (() {}),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -221,7 +221,7 @@ class CompactFileItem extends StatelessWidget {
             children: <Widget>[
               Icon(
                 isDownloaded ? Icons.delete : Icons.file_download,
-                color: isDownloaded ? kSurfaceColor : kMainColor,
+                color: isDownloaded ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 height: 10,
@@ -229,7 +229,7 @@ class CompactFileItem extends StatelessWidget {
               Text(
                 "A_very_loooong_assignment_description.pdf",
                 style: TextStyle(
-                  color: isDownloaded ? kSurfaceColor : kMainColor,
+                  color: isDownloaded ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w300,
                 ),
                 maxLines: 3,
@@ -351,7 +351,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                   child: Container(
                 height: 45,
                 child: FlatButton(
-                  color: kSurfaceFirstShade,
+                  color: Theme.of(context).colorScheme.surface,
                   onPressed: () {},
                   shape: RoundedRectangleBorder(
                     borderRadius:
@@ -362,7 +362,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
                         fontSize: 12,
-                        color: kCounterSurfaceColor),
+                        color: Theme.of(context).colorScheme.onSurface),
                     textAlign: TextAlign.end,
                   ),
                 ),
@@ -374,7 +374,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                   child: Container(
                 height: 45,
                 child: FlatButton(
-                  color: kMainColor,
+                  color: Theme.of(context).colorScheme.primary,
                   onPressed: () {},
                   shape: RoundedRectangleBorder(
                     borderRadius:
@@ -385,7 +385,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
                         fontSize: 12,
-                        color: kSurfaceColor),
+                        color: Theme.of(context).colorScheme.background),
                   ),
                 ),
               ))
@@ -414,12 +414,12 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
-                        color: kCounterSurfaceColor,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 12)),
                 Text(
                   "Assignment Submission",
                   style: TextStyle(
-                      fontWeight: FontWeight.w300, color: kCounterSurfaceColor),
+                      fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
@@ -433,7 +433,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                 "Due 21 September",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
-                    color: kCounterSurfaceColor,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 12),
               ))
         ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../homeWidgets/HorizentalListViewer.dart';
-import '../homeWidgets/scheduleBanner.dart';
-import '../homeWidgets/events.dart';
-import '../homeWidgets/quickDeadlines.dart';
+import '../homeWidgets/DashboardPageWidgets/HorizentalListViewer.dart';
+import '../homeWidgets/DashboardPageWidgets/scheduleBanner.dart';
+import '../homeWidgets/DashboardPageWidgets/events.dart';
+import '../homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
 
 
 

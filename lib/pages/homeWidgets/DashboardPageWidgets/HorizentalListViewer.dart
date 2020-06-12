@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../constants.dart';
+import '../../../constants.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'CourseContent/grades.dart';
-import 'CourseContent/material.dart';
 import 'customExpansionTile.dart';
 
 class HorizentalDataListViewer extends StatelessWidget {
@@ -46,7 +44,7 @@ class HorizentalDataListViewer extends StatelessWidget {
                     // Contains the background
                     height: 155,
                     decoration: BoxDecoration(
-                      color: kMainColor,
+                      color: Theme.of(context).colorScheme.primary,
                       //      color: kSecondColor,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25),
@@ -132,7 +130,7 @@ class _DataBlockState extends State<DataBlock> {
                           backgroundColor: kSurfaceColor,
                           percent: 0.75,
                           circularStrokeCap: CircularStrokeCap.round,
-                          progressColor: kMainColor,
+                          progressColor: Theme.of(context).colorScheme.primary,
                           center: Column(
                             mainAxisAlignment: MainAxisAlignment.center ,
                             children: <Widget>[
@@ -260,7 +258,7 @@ class CourseTile extends StatefulWidget {
 class _CourseTileState extends State<CourseTile> with TickerProviderStateMixin {
   TabController _tabController;
 
-  final courseContentPages = [CourseGrades(), CourseMaterial()];
+  final courseContentPages = [Container(child: Text("FINDME 1"),), Container(child: Text("FINDME 1"),)];
 
   List<Widget> _tabBarTitles = [Text("Grades"), Text("Material")];
 

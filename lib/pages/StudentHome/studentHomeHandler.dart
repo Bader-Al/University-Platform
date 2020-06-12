@@ -32,14 +32,15 @@ class StudentHomeState extends State<StudentHome> {
           onPressed: !fabEnabled
               ? null
               : () {/* Should depend on navBarRoute[index] */},
-          child: Icon(_pageIndex == 0
-              ? Icons.navigation
-              : _pageIndex == 1
-                  ? Icons.add
-                  : Icons
-                      .help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
+          child: Icon(Icons.arrow_drop_up, color: Theme.of(context).colorScheme.onPrimary,),
+            // _pageIndex == 0
+            //   ? Icons.navigation
+            //   : _pageIndex == 1
+            //       ? Icons.add
+            //       : Icons
+            //           .help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
           backgroundColor:
-              fabEnabled ? Theme.of(context).primaryColor : Colors.grey,
+              fabEnabled ? Theme.of(context).colorScheme.primary : Colors.grey,
           elevation: fabEnabled ? 6 : 0,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -65,65 +66,65 @@ class StudentHomeState extends State<StudentHome> {
       hasNotch: true, //new
       hasInk: true, //new, gives a cute ink effect
       inkColor: Theme.of(context)
-          .primaryColor, //optional, uses theme color if not specified
+          .colorScheme.primary, //optional, uses theme color if not specified
       items: <BubbleBottomBarItem>[
         BubbleBottomBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             icon: Icon(
               Icons.dashboard,
-              color: kCounterSurfaceColor.withAlpha(95),
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
             ),
             activeIcon: Icon(
               Icons.dashboard,
-              color: kSurfaceColor,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
             title: Text(
               "Dashboard",
-              style: TextStyle(color: kSurfaceColor),
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)
             )),
         BubbleBottomBarItem(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           icon: Icon(
             Icons.rss_feed,
-            color: kCounterSurfaceColor.withAlpha(95),
+            color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
           ),
           activeIcon: Icon(
             Icons.rss_feed,
-            color: kSurfaceColor,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           title: Text(
             "Posts",
-            style: TextStyle(color: kSurfaceColor),
+            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
           ),
         ),
         BubbleBottomBarItem(
-          backgroundColor: Colors.indigo,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           icon: Icon(
             Icons.chat_bubble,
-            color: kCounterSurfaceColor.withAlpha(95),
+            color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
           ),
           activeIcon: Icon(
             Icons.chat_bubble,
-            color: kSurfaceColor,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           title: Text(
             "Chats",
-            style: TextStyle(color: kSurfaceColor),
+            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,),
           ),
         ),
         BubbleBottomBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             icon: Icon(
               Icons.dashboard,
-              color: kCounterSurfaceColor.withAlpha(95),
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
             ),
             activeIcon: Icon(
               Icons.library_books,
-              color: kSurfaceColor,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
             title: Text(
               "Academic",
-              style: TextStyle(color: kSurfaceColor),
+             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)
             )),
       ],
     );

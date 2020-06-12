@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psu_platform/appTheme.dart';
 
 import './pages/StudentHome/studentHomeHandler.dart';
 
@@ -18,10 +19,7 @@ class _PlatformState extends State<Platform> {
     return Center(
       child: MaterialApp(
         title: 'PSU Smart Platform',
-        theme: ThemeData(
-          primaryColor: kMainColor,
-          accentColor: kAccentColor,
-        ),
+        theme: AppTheme.lightTheme,
         home:
             StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
       ),
@@ -70,7 +68,7 @@ class StudentScreenState extends State<StudentScreen>
     screenWidth = size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kMainColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Stack(
           children: <Widget>[menu(context), mainScreen(context)],
         ),

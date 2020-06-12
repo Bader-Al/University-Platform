@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quickCalendar.dart';
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class ScheduleBanner extends StatelessWidget {
   ScheduleBanner(this.boxIsScrolled);
@@ -10,7 +10,7 @@ class ScheduleBanner extends StatelessWidget {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     return SliverAppBar(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       expandedHeight: queryData.size.height*0.80,
       floating: false,
       pinned: true,
@@ -21,6 +21,7 @@ class ScheduleBanner extends StatelessWidget {
       bottom: AppBar(
         title: PrimaryAppBarRow(),
         shape: kAppBarShape,
+        backgroundColor: Theme.of(context).colorScheme.primary
       ),
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.pin,
@@ -65,7 +66,7 @@ class SecondaryAppBarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: kMainColor),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: Theme.of(context).colorScheme.primary),
       child: Text(
       "CS285",
       style: TextStyle(fontSize: 14 ,),
@@ -79,18 +80,19 @@ class BannerColumn extends StatelessWidget {
   final String bottomTitle;
   final Color color;
 
-  final TextStyle upperStyle = TextStyle(
-      fontSize: 11,
-      fontWeight: FontWeight.w300,
-      color: kSurfaceColor.withOpacity(0.5));
-  final TextStyle lowerStyle = TextStyle(
-      fontSize: 14, fontWeight: FontWeight.w400, color: kSurfaceColor);
-
+ 
   BannerColumn(
       {@required this.bottomTitle, @required this.topTitle, this.color});
 
   @override
   Widget build(BuildContext context) {
+     final TextStyle upperStyle = TextStyle(
+      fontSize: 11,
+      fontWeight: FontWeight.w300,
+      color:  Theme.of(context).colorScheme.onPrimary.withOpacity(0.5));
+  final TextStyle lowerStyle = TextStyle(
+      fontSize: 14, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onPrimary);
+
     return Padding(
       padding: const EdgeInsets.only(
           left: 5.0), // there is a previous 10px idk where so this makes 15 PX

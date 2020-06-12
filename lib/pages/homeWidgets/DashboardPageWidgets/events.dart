@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:psu_platform/constants.dart';
 
-class LatestEventsBox extends StatelessWidget {
-  final double boxHeight = 450.0, boxWidth = 350.0;
-  final double cardPadding = 24, boxPadding = 50;
+class EventBox extends StatelessWidget {
+  double boxHeight = 450.0, boxWidth = 350.0;
+  double cardPadding = 24, boxPadding = 50;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor,
+      color: Theme.of(context).colorScheme.primary,
       height: boxHeight + boxPadding,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {

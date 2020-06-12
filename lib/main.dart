@@ -7,7 +7,10 @@ import './pages/StudentHome/studentHomeHandler.dart';
 
 import './constants.dart';
 
-void main() => runApp(ChangeNotifierProvider<AppState>(create: (context) => AppState(), child: Platform(),));
+void main() => runApp(ChangeNotifierProvider<AppState>(
+      create: (context) => AppState(),
+      child: Platform(),
+    ));
 
 //put back in homepage class
 
@@ -19,16 +22,16 @@ class Platform extends StatefulWidget {
 class _PlatformState extends State<Platform> {
   Widget build(BuildContext context) {
     return Consumer<AppState>(
-      builder: (context,appState,child){
-        return  MaterialApp(
-        title: 'PSU Smart Platform',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: appState.isDarkMode? ThemeMode.dark:ThemeMode.light,
-        
-        home:
-            StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
-      );
+      builder: (context, appState, child) {
+        return MaterialApp(
+          title: 'PSU Smart Platform',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+
+          home:
+              StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
+        );
       },
     );
   }
@@ -43,7 +46,7 @@ class StudentScreenState extends State<StudentScreen>
     with SingleTickerProviderStateMixin {
   bool isCollapsed = true;
   double screenWidth, screenHeight;
-  final Duration duration = const Duration(milliseconds:350);
+  final Duration duration = const Duration(milliseconds: 350);
   AnimationController _controller;
   Animation<double> _scaleAnimation;
   Animation<double> _sideBarScaleAnimation;
@@ -57,7 +60,7 @@ class StudentScreenState extends State<StudentScreen>
     _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
     _sideBarScaleAnimation =
         Tween<double>(begin: 0, end: 0.5).animate(_controller);
-    
+
     _slideAnimation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
         .animate(_controller);
   }
@@ -85,14 +88,19 @@ class StudentScreenState extends State<StudentScreen>
 
   Widget mainScreen(context) {
     return AnimatedPositioned(
-      
       curve: Curves.slowMiddle,
       child: GestureDetector(
-          onHorizontalDragUpdate: (offset) => {_slideSideBar(offset.delta.direction)},
+          onHorizontalDragUpdate: (offset) =>
+              {_slideSideBar(offset.delta.direction)},
           child: ScaleTransition(
               scale: _scaleAnimation,
               child: Stack(children: [
-                ClipRRect(child: StudentHome(), borderRadius: isCollapsed?BorderRadius.circular(0):BorderRadius.circular(25),),
+                ClipRRect(
+                  child: StudentHome(),
+                  borderRadius: isCollapsed
+                      ? BorderRadius.circular(0)
+                      : BorderRadius.circular(25),
+                ),
                 Positioned(
                   child: GestureDetector(
                       onTap: _toggleSideBar,
@@ -126,8 +134,8 @@ class StudentScreenState extends State<StudentScreen>
     setState(() {
       if (dx == 0) {
         _controller.forward();
-       isCollapsed = false;
-      } else{
+        isCollapsed = false;
+      } else {
         isCollapsed = true;
         _controller.reverse();
       }
@@ -135,46 +143,99 @@ class StudentScreenState extends State<StudentScreen>
   }
 
   Widget sideBar(context) {
+    Brightness phonesDarkMode = MediaQuery.of(context).platformBrightness;
+
     return AnimatedBuilder(
       animation: _slideAnimation,
-      builder: (context,child){
+      builder: (context, child) {
         return Transform.translate(
-      offset: Offset(30 * _controller.value, 0), // 30*_controller.value :: Treat as if Left Padding
-      child: child,);
+          offset: Offset(25 * _controller.value,
+              0), // 30*_controller.value :: Treat as if Left Padding
+          child: child,
+        );
       },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Home",
-                    style: TextStyle(color: Colors.white, fontSize: 22),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          height: screenHeight*0.78,
+          width: 0.5 * screenWidth,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Spacer(flex: 1),
+                Text(
+                  "Home",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+                Spacer(
+                  flex: 1,
+                ),
+                Text(
+                  "Calendar",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+
+                Spacer(
+                  flex: 1,
+                ),
+                Text(
+                  "People",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+
+                Spacer(
+                  flex: 1,
+                ),
+                Text(
+                  "Tools",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+                Spacer(flex: 1),
+
+                Container(
+                  decoration: BoxDecoration(color:Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(25)),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      InkWell(
+                          onTap: () =>
+                              Provider.of<AppState>(context).setDarkMode(false),
+                          child: CircleAvatar(
+                            backgroundColor: Theme.of(context).backgroundColor,
+                            child: Icon(Icons.surround_sound),
+                          )),
+                      InkWell(
+                          child: Container(
+                            color: Theme.of(context).colorScheme.background,
+                            child: Text("AUTO"),
+                          ),
+                          onTap: () {
+                            bool isSystemDark =
+                                phonesDarkMode == Brightness.dark;
+                            print(isSystemDark);
+                            return Provider.of<AppState>(context)
+                                .setDarkMode(isSystemDark);
+                          }),
+                      InkWell(
+                          onTap: () =>
+                              Provider.of<AppState>(context).setDarkMode(true),
+                          child: CircleAvatar(
+                            backgroundColor: Theme.of(context).backgroundColor,
+                            child: Icon(Icons.lightbulb_outline),
+                          )),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Calendar",
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "People",
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Tools",
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                  FlatButton(onPressed: ()=> Provider.of<AppState>(context).toggleDarkMode(), child: Text("DARK MODE!"))
-                ],
-              ),
+                ),
+                //Spacer(flex:2)
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 }

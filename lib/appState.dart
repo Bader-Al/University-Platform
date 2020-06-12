@@ -4,8 +4,8 @@ class AppState extends ChangeNotifier{
 
   bool isDarkMode = false;
 
-  void updateTheme(bool isDarkModeOn){
-    this.isDarkMode = isDarkMode;
+  void setDarkMode(bool isDarkModeOn){
+    this.isDarkMode = isDarkModeOn;
     notifyListeners(); 
 
   }

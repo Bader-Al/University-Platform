@@ -58,6 +58,7 @@ class StudentHomeState extends State<StudentHome> {
             fabEnabled = true;
         });
       },
+      backgroundColor: Theme.of(context).colorScheme.surface,
       currentIndex: _pageIndex,
       opacity: 1,
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

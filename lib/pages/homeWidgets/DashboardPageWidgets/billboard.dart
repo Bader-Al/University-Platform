@@ -2,7 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:psu_platform/constants.dart';
 
-class EventBox extends StatelessWidget {
+
+
+class Billboard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text("Billboard", style: kDashboardHeading.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Body()
+          ],
+        ),
+    );
+  }
+}
+
+class Body extends StatelessWidget {
   double boxHeight = 450.0, boxWidth = 350.0;
   double cardPadding = 24, boxPadding = 50;
 
@@ -12,6 +35,7 @@ class EventBox extends StatelessWidget {
       color: Theme.of(context).colorScheme.primary,
       height: boxHeight + boxPadding,
       child: Swiper(
+        // change to pageview builder
         itemBuilder: (BuildContext context, int index) {
           return Container(
             decoration: BoxDecoration(
@@ -28,15 +52,16 @@ class EventBox extends StatelessWidget {
                     child: Container(
                   alignment: AlignmentDirectional.topStart,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(25),
                   ),
                   width: double.infinity,
                   child: Container(
                     alignment: AlignmentDirectional.center,
                       child: Image(
+
                     image: NetworkImage(
-                        "https://www.unicef.org.uk/babyfriendly/wp-content/uploads/sites/2/2018/03/2000x1000-Conference-2016.jpg"),
+                        "http://wallpapersqq.net/wp-content/uploads/2016/01/Trafalgar-Square-8.jpg"),
                     fit: BoxFit.contain,
                   )),
                 )),

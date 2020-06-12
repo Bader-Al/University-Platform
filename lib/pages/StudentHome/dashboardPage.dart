@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../homeWidgets/DashboardPageWidgets/HorizentalListViewer.dart';
 import '../homeWidgets/DashboardPageWidgets/scheduleBanner.dart';
-import '../homeWidgets/DashboardPageWidgets/events.dart';
+import '../homeWidgets/DashboardPageWidgets/billboard.dart';
 import '../homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
 
 
@@ -83,22 +83,22 @@ class DashboardPageSliver extends StatelessWidget {
           title: "Courses",
         ),
         SizedBox(
-          height: 25,
+          height: 75,
         ),
         HorizentalDataListViewer(
           dataBlocksList: courseBlocks,
           title: "Chatrooms",
         ),
         SizedBox(
-          height: 25,
+          height: 75,
         ),
          QuickDeadlines(),
         
         
         SizedBox(
-          height: 25,
+          height: 75,
         ),
-        LatestNews(),
+        Billboard(),
         SizedBox(
           height: 50,
         ),
@@ -107,27 +107,4 @@ class DashboardPageSliver extends StatelessWidget {
   }
 }
 
-class LatestNews extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left: 15, top: 10),
-          child: Container(
-            child: Text(
-              "Latest Events",
-              style: TextStyle(fontSize: 26),
-            ),
-            alignment: AlignmentDirectional.centerStart,
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        EventBox()
-      ],
-    );
-  }
-}
 

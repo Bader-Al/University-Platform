@@ -26,7 +26,7 @@ class QuickDeadlines extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("Deadlines", style: kDashboardHeading),
+          Text("Deadlines", style: kDashboardHeading.copyWith(color: Theme.of(context).colorScheme.onSurface)),
           SizedBox(
             height: _spaceBetweenTitleAndBody,
           ),
@@ -305,6 +305,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
       controller: scrollController,
       children: <Widget>[
         ExpansionPanelList(
+          
           expandedHeaderPadding: EdgeInsets.all(0),
           expansionCallback: (int index, bool isExpanded) {
             setState(() {
@@ -320,6 +321,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
           },
           children: _items.map((ExpandingDeadline item) {
             return ExpansionPanel(
+
                 canTapOnHeader: true,
                 headerBuilder: (BuildContext ctx, bool isExpanded) {
                   return deadlineCardHeader();

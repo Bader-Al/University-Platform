@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
 
 import './pages/StudentHome/studentHomeHandler.dart';
 
 import './constants.dart';
 
-void main() => runApp(Platform());
+void main() => runApp(ChangeNotifierProvider<AppState>(create: (context) => AppState(), child: Platform(),));
 
 //put back in homepage class
 
@@ -16,13 +18,18 @@ class Platform extends StatefulWidget {
 
 class _PlatformState extends State<Platform> {
   Widget build(BuildContext context) {
-    return Center(
-      child: MaterialApp(
+    return Consumer<AppState>(
+      builder: (context,appState,child){
+        return  MaterialApp(
         title: 'PSU Smart Platform',
         theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: appState.isDarkMode? ThemeMode.dark:ThemeMode.light,
+        
         home:
             StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
-      ),
+      );
+      },
     );
   }
 }
@@ -39,7 +46,7 @@ class StudentScreenState extends State<StudentScreen>
   final Duration duration = const Duration(milliseconds:350);
   AnimationController _controller;
   Animation<double> _scaleAnimation;
-  Animation<double> _menuScaleAnimation;
+  Animation<double> _sideBarScaleAnimation;
   Animation<Offset> _slideAnimation;
   var queryData;
   @override
@@ -48,7 +55,7 @@ class StudentScreenState extends State<StudentScreen>
     super.initState();
     _controller = AnimationController(vsync: this, duration: duration);
     _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
-    _menuScaleAnimation =
+    _sideBarScaleAnimation =
         Tween<double>(begin: 0, end: 0.5).animate(_controller);
     
     _slideAnimation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
@@ -70,7 +77,7 @@ class StudentScreenState extends State<StudentScreen>
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
         body: Stack(
-          children: <Widget>[menu(context), mainScreen(context)],
+          children: <Widget>[sideBar(context), mainScreen(context)],
         ),
       ),
     );
@@ -127,7 +134,7 @@ class StudentScreenState extends State<StudentScreen>
     });
   }
 
-  Widget menu(context) {
+  Widget sideBar(context) {
     return AnimatedBuilder(
       animation: _slideAnimation,
       builder: (context,child){
@@ -163,6 +170,7 @@ class StudentScreenState extends State<StudentScreen>
                     "Tools",
                     style: TextStyle(color: Colors.white, fontSize: 22),
                   ),
+                  FlatButton(onPressed: ()=> Provider.of<AppState>(context).toggleDarkMode(), child: Text("DARK MODE!"))
                 ],
               ),
             ),

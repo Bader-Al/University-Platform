@@ -19,11 +19,13 @@ class ScheduleBanner extends StatelessWidget {
       
       title: SecondaryAppBarRow(),
       bottom: AppBar(
+        
         title: PrimaryAppBarRow(),
         shape: kAppBarShape,
-        backgroundColor: Theme.of(context).colorScheme.primary
+        backgroundColor: Theme.of(context).colorScheme.background
       ),
       flexibleSpace: FlexibleSpaceBar(
+        
         collapseMode: CollapseMode.pin,
         background: QuickCalendar(),
       ),
@@ -69,7 +71,7 @@ class SecondaryAppBarRow extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: Theme.of(context).colorScheme.primary),
       child: Text(
       "CS285",
-      style: TextStyle(fontSize: 14 ,),
+      style: TextStyle(fontSize: 14 , color: Theme.of(context).colorScheme.surface),
     ),
     );
   }
@@ -89,9 +91,9 @@ class BannerColumn extends StatelessWidget {
      final TextStyle upperStyle = TextStyle(
       fontSize: 11,
       fontWeight: FontWeight.w300,
-      color:  Theme.of(context).colorScheme.onPrimary.withOpacity(0.5));
+      color:  Theme.of(context).colorScheme.onSurface.withOpacity(0.5));
   final TextStyle lowerStyle = TextStyle(
-      fontSize: 14, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onPrimary);
+      fontSize: 14, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface);
 
     return Padding(
       padding: const EdgeInsets.only(

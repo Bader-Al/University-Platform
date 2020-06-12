@@ -31,9 +31,9 @@ class HorizentalDataListViewer extends StatelessWidget {
                   children: [
                     Text(
                       "$title",
-                      style: kDashboardHeading,
+                      style: kDashboardHeading.copyWith(color:Theme.of(context).colorScheme.onBackground),
                     ),
-                    Icon(Icons.add),
+                    Icon(Icons.add, ),
                   ]),
             ),
             SizedBox(height: 10),
@@ -104,7 +104,7 @@ class _DataBlockState extends State<DataBlock> {
     String courseTitle = "${widget.title}";
     widget.code != null ? courseTitle += " ${widget.code}" : null;
 
-    Color buttonColor = kSurfaceColor;
+    Color cardItem = Theme.of(context).colorScheme.background;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,8 +114,8 @@ class _DataBlockState extends State<DataBlock> {
           width: 150,
           child: FlatButton(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8.5),
-              highlightColor: Theme.of(context).primaryColor,
-              color: buttonColor,
+              highlightColor: Theme.of(context).colorScheme.surface,
+              color: cardItem,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15))),
               child: widget.section != null
@@ -127,15 +127,15 @@ class _DataBlockState extends State<DataBlock> {
                             child: CircularPercentIndicator(
                           radius: 75,
                           lineWidth: 4,
-                          backgroundColor: kSurfaceColor,
+                          backgroundColor: Theme.of(context).colorScheme.background,
                           percent: 0.75,
                           circularStrokeCap: CircularStrokeCap.round,
                           progressColor: Theme.of(context).colorScheme.primary,
                           center: Column(
                             mainAxisAlignment: MainAxisAlignment.center ,
                             children: <Widget>[
-                              Text("4", textAlign: TextAlign.center, style: TextStyle(color:kCounterSurfaceColor, fontWeight: FontWeight.w300, fontSize: 24),),
-                              Text("Days Left", textAlign: TextAlign.center, style: TextStyle(color:kCounterSurfaceColor, fontWeight: FontWeight.w300, fontSize: 12),),
+                              Text("4", textAlign: TextAlign.center, style: TextStyle(color:Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.w300, fontSize: 24),),
+                              Text("Days Left", textAlign: TextAlign.center, style: TextStyle(color:Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.w300, fontSize: 12),),
                               SizedBox(height:7)
                             ],
                           ),
@@ -156,7 +156,7 @@ class _DataBlockState extends State<DataBlock> {
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w300,
-                                      color: kCounterSurfaceColor),
+                                      color: Theme.of(context).colorScheme.onBackground),
                                 ),
                                 Text(
                                   "18 Jan 2018",
@@ -164,7 +164,7 @@ class _DataBlockState extends State<DataBlock> {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w300,
                                       color:
-                                          kCounterSurfaceColor.withAlpha(150)),
+                                          Theme.of(context).colorScheme.onBackground.withAlpha(150)),
                                 ),
                               ],
                             ),
@@ -175,7 +175,7 @@ class _DataBlockState extends State<DataBlock> {
                                 "Quiz",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    color: kSurfaceColor),
+                                    color: Theme.of(context).colorScheme.background),
                               ),
                               decoration: BoxDecoration(
                                   color: kGreenIndication,
@@ -274,7 +274,7 @@ class _CourseTileState extends State<CourseTile> with TickerProviderStateMixin {
         width: double.infinity,
         height: 350,
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(appBarBorderRadius))),
         child: Column(
@@ -304,9 +304,9 @@ class _CourseTileState extends State<CourseTile> with TickerProviderStateMixin {
                   ],
                   labelStyle:
                       TextStyle(fontSize: 21, fontWeight: FontWeight.w400),
-                  labelColor: Theme.of(context).primaryColor,
+                  labelColor: Theme.of(context).colorScheme.surface,
                   unselectedLabelColor: Colors.black45,
-                  indicatorColor: Theme.of(context).primaryColor,
+                  indicatorColor: Theme.of(context).colorScheme.surface,
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorWeight: 2.0,
                   // indicator: BoxDecoration(

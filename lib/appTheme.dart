@@ -13,6 +13,9 @@ class AppTheme {
   static const Color _lightOnSurfaceColor = Color(0xff333333);
 
   static final ThemeData lightTheme = ThemeData(
+    iconTheme: IconThemeData(
+      color: _lightSurfaceColor
+    ),
       scaffoldBackgroundColor:
           _lightSurfaceColor, // might need to be main color due to sidebar
       colorScheme: ColorScheme(
@@ -26,8 +29,43 @@ class AppTheme {
           onPrimary: _lightSurfaceColor,
           onSecondary: _lightOnSurfaceColor,
           onSurface: _lightOnSurfaceColor,
-          onBackground: _lightSurfaceColor,
+          onBackground: _lightOnSurfaceColor,
           onError: _lightSurfaceColor,
-          brightness: Brightness.dark
+          brightness: Brightness.light
           ));
+
+  static final ThemeData darkTheme = ThemeData(
+    cardColor: _darkSurfaceColor,
+    iconTheme: IconThemeData(
+      color: _darkSurfaceColor
+    ),
+      scaffoldBackgroundColor:
+          _darkSurfaceColor, // might need to be main color due to sidebar
+      colorScheme: ColorScheme(
+          primary: _darkPrimaryColor,
+          primaryVariant: _darkPrimaryVariantColor,
+          secondary: _darkSecondaryColor,
+          secondaryVariant: _darkSecondaryVariantColor,
+          surface: _darkSurfaceVariantColor,
+          background: _darkSurfaceColor,
+          error: Colors.red, //TODO:: change
+          onPrimary: _darkSurfaceVariantColor,
+          onSecondary: _darkOnSurfaceColor,
+          onSurface: _darkOnSurfaceColor,
+          onBackground: _darkOnSurfaceColor,
+          onError: _darkSurfaceColor,
+          brightness: Brightness.dark,
+
+          
+          ));
+
+  static const Color _darkSurfaceColor = Color(0xff303030);
+  static const Color _darkSurfaceVariantColor = Color(0xff212121);
+
+  static const Color _darkPrimaryColor = Color(0xff5E7CE2);
+  static const Color _darkPrimaryVariantColor = Color(0xff6841dc);
+  static const Color _darkSecondaryColor = Color(0xffbfe25e);
+  static const Color _darkSecondaryVariantColor = Color(0xffb5dd43);
+  static const Color _darkOnSurfaceColor = Color(0xfff9f9f9);
+  
 }

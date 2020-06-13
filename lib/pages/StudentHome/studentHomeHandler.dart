@@ -62,7 +62,7 @@ class StudentHomeState extends State<StudentHome> {
       currentIndex: _pageIndex,
       opacity: 1,
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      elevation: 8,
+      elevation: 1,
       fabLocation: BubbleBottomBarFabLocation.end, //new
       hasNotch: true, //new
       hasInk: true, //new, gives a cute ink effect

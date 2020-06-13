@@ -143,13 +143,14 @@ class StudentScreenState extends State<StudentScreen>
   }
 
   Widget sideBar(context) {
-    Brightness phonesDarkMode = MediaQuery.of(context).platformBrightness;
+    Brightness phonesCurrentBrightnessMode = MediaQuery.of(context)
+        .platformBrightness; // Brightness as in Night/Light Mode
 
     return AnimatedBuilder(
       animation: _slideAnimation,
       builder: (context, child) {
         return Transform.translate(
-          offset: Offset(25 * _controller.value,
+          offset: Offset(15 * _controller.value,
               0), // 30*_controller.value :: Treat as if Left Padding
           child: child,
         );
@@ -157,7 +158,7 @@ class StudentScreenState extends State<StudentScreen>
       child: Align(
         alignment: Alignment.centerLeft,
         child: Container(
-          height: screenHeight*0.78,
+          height: screenHeight * 0.78,
           width: 0.5 * screenWidth,
           child: Center(
             child: Column(
@@ -196,37 +197,17 @@ class StudentScreenState extends State<StudentScreen>
                 Spacer(flex: 1),
 
                 Container(
-                  decoration: BoxDecoration(color:Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(25)),
+                  width: 175,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background,
+                      borderRadius: BorderRadius.circular(25)),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      InkWell(
-                          onTap: () =>
-                              Provider.of<AppState>(context).setDarkMode(false),
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).backgroundColor,
-                            child: Icon(Icons.surround_sound),
-                          )),
-                      InkWell(
-                          child: Container(
-                            color: Theme.of(context).colorScheme.background,
-                            child: Text("AUTO"),
-                          ),
-                          onTap: () {
-                            bool isSystemDark =
-                                phonesDarkMode == Brightness.dark;
-                            print(isSystemDark);
-                            return Provider.of<AppState>(context)
-                                .setDarkMode(isSystemDark);
-                          }),
-                      InkWell(
-                          onTap: () =>
-                              Provider.of<AppState>(context).setDarkMode(true),
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).backgroundColor,
-                            child: Icon(Icons.lightbulb_outline),
-                          )),
+                      lightButton(),
+                      autoButton(phonesCurrentBrightnessMode),
+                      darkButton(),
                     ],
                   ),
                 ),
@@ -237,5 +218,66 @@ class StudentScreenState extends State<StudentScreen>
         ),
       ),
     );
+  }
+
+  Widget darkButton() {
+    return InkWell(
+        onTap: setLightModeToDark,
+        child: CircleAvatar(
+          radius: 18,
+          backgroundColor: Provider.of<AppState>(context).isDarkMode
+              ? Theme.of(context).colorScheme.surface
+              : Theme.of(context).colorScheme.onSurface,
+          child: Icon(
+            Icons.lightbulb_outline,
+          ),
+        ));
+  }
+
+  Widget lightButton() {
+    return InkWell(
+        onTap: setLightModeToLight,
+        child: CircleAvatar(
+          radius: 18,
+          backgroundColor: Provider.of<AppState>(context).isDarkMode
+              ? Theme.of(context).colorScheme.onSurface
+              : Theme.of(context).colorScheme.surface,
+          child: Icon(Icons.surround_sound),
+        ));
+  }
+  Widget autoButton(Brightness phonesCurrentBrightnessMode){
+    return InkWell(
+                          child: Container(
+                            //color: Theme.of(context).colorScheme.background,
+                            child: Text(
+                              "AUTO",
+                              style: TextStyle(
+                                  color: Provider.of<AppState>(context)
+                                          .isAutoModeForBrightness
+                                      ? Theme.of(context).colorScheme.onSurface
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .background),
+                            ),
+                          ),
+                          onTap: () => setLightModeToAuto(
+                              phonesCurrentBrightnessMode));
+  }
+
+
+
+  void setLightModeToAuto(Brightness phonesCurrentBrightnessMode) {
+    bool isSystemDark = phonesCurrentBrightnessMode == Brightness.dark;
+    Provider.of<AppState>(context).setBrightnessAutoMode(true);
+    Provider.of<AppState>(context).setDarkMode(isSystemDark);
+  }
+
+  void setLightModeToDark() {
+    Provider.of<AppState>(context).setDarkMode(true);
+    Provider.of<AppState>(context).setBrightnessAutoMode(false);
+  }
+  void setLightModeToLight() {
+    Provider.of<AppState>(context).setDarkMode(false);
+    Provider.of<AppState>(context).setBrightnessAutoMode(false);
   }
 }

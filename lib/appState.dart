@@ -5,6 +5,7 @@ class AppState extends ChangeNotifier{
   bool isDarkMode = false;
   bool isAutoModeForBrightness = true;
 
+
   void setDarkMode(bool isDarkModeOn){
     this.isDarkMode = isDarkModeOn;
     notifyListeners(); 

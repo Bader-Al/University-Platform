@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
+import 'package:psu_platform/pages/homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import './pages/StudentHome/studentHomeHandler.dart';
 
@@ -49,17 +51,16 @@ class StudentScreenState extends State<StudentScreen>
   final Duration duration = const Duration(milliseconds: 350);
   AnimationController _controller;
   Animation<double> _scaleAnimation;
-  Animation<double> _sideBarScaleAnimation;
+
   Animation<Offset> _slideAnimation;
   var queryData;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _controller = AnimationController(vsync: this, duration: duration);
     _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
-    _sideBarScaleAnimation =
-        Tween<double>(begin: 0, end: 0.5).animate(_controller);
 
     _slideAnimation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
         .animate(_controller);
@@ -74,8 +75,10 @@ class StudentScreenState extends State<StudentScreen>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     screenHeight = size.height;
     screenWidth = size.width;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -88,7 +91,7 @@ class StudentScreenState extends State<StudentScreen>
 
   Widget mainScreen(context) {
     return AnimatedPositioned(
-      curve: Curves.slowMiddle,
+      curve: Curves.fastLinearToSlowEaseIn,
       child: GestureDetector(
           onHorizontalDragUpdate: (offset) =>
               {_slideSideBar(offset.delta.direction)},
@@ -142,80 +145,163 @@ class StudentScreenState extends State<StudentScreen>
     });
   }
 
-  Widget sideBar(context) {
+  Widget sideBar(
+    context,
+  ) {
     Brightness phonesCurrentBrightnessMode = MediaQuery.of(context)
         .platformBrightness; // Brightness as in Night/Light Mode
 
-    return AnimatedBuilder(
-      animation: _slideAnimation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(15 * _controller.value,
-              0), // 30*_controller.value :: Treat as if Left Padding
-          child: child,
-        );
-      },
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          height: screenHeight * 0.78,
-          width: 0.5 * screenWidth,
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Spacer(flex: 1),
-                Text(
-                  "Home",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-                Text(
-                  "Calendar",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-
-                Spacer(
-                  flex: 1,
-                ),
-                Text(
-                  "People",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-
-                Spacer(
-                  flex: 1,
-                ),
-                Text(
-                  "Tools",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-                Spacer(flex: 1),
-
-                Container(
-                  width: 175,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      lightButton(),
-                      autoButton(phonesCurrentBrightnessMode),
-                      darkButton(),
-                    ],
+    return Stack(
+      children: <Widget>[
+        
+       sideBarBackgroundScenary(),
+        
+        AnimatedBuilder(
+          animation: _slideAnimation,
+          builder: (context, child) {
+            return Transform.translate(
+              offset: Offset(30 * _controller.value,
+                  0), // 30*_controller.value :: Treat as if Left Padding
+              child: child,
+            );
+          },
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height:((0.2 * screenHeight) / 2) ,),
+                  sideBarItems(),
+                  Container(
+                    height: (((0.2 * screenHeight) / 2)),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        darkModeWidget(phonesCurrentBrightnessMode),
+                      ],
+                    ),
                   ),
-                ),
-                //Spacer(flex:2)
-              ],
-            ),
-          ),
+                ],
+              )),
         ),
+         sideBarHeader(),
+
+       Positioned(child:  Icon(Icons.exit_to_app, color: Theme.of(context).colorScheme.onSurface, size: 26,), right: 30, top: 30,) // TODO :: change icon
+      ],
+    );
+  }
+
+  Widget sideBarBackgroundScenary(){
+    return Container(
+                    height: (((0.7* screenHeight) / 2) ),
+                    width: 0.75 * screenWidth,
+                    decoration: BoxDecoration( color: Colors.red ,image: DecorationImage( image: CachedNetworkImageProvider(
+                            "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg"), fit: BoxFit.cover)),
+                  );
+  }
+
+  Widget sideBarHeader(){
+    return Container(
+          padding: EdgeInsets.only(left: 15, bottom: 15),
+          height: (((0.2 * screenHeight) / 2) + 35),
+          // screen is reduced to 0.8 from animation.. leaving with 0.2... divide by 2 cz theres upper and lower sides
+          // then add 35 which seems to be the upper app-bar's height
+
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface.withAlpha(200)),
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.fitHeight,
+                        image: CachedNetworkImageProvider(
+                            "http://southparkstudios.mtvnimages.com/shared/characters/kids/eric-cartman.png"))),
+              ), SizedBox(width: 5,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Bader Al Alami",
+                    style: TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w300,
+                        color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  Text("217210641",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                          color: Theme.of(context).colorScheme.onSurface))
+                ],
+              )
+            ],
+          ),
+        );
+  }
+
+  Widget sideBarItems(){
+    return Container(
+                    height: 350,
+                    width: 0.45 * screenWidth,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(flex: 1),
+                        Text(
+                          "Home",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        SizedBox(height:50),
+                        Text(
+                          "Calendar",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        SizedBox(height:50),
+                        Text(
+                          "People",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+
+                        SizedBox(height:50),
+                        Text(
+                          "Tools",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+
+                        //Spacer(flex:2)
+                      ],
+                    ),
+                  );
+  }
+
+  Widget darkModeWidget(phonesCurrentBrightnessMode) {
+    return Container(
+      
+      width: 0.45*screenWidth,
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: BorderRadius.circular(25)),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          darkButton(),
+          autoButton(phonesCurrentBrightnessMode),
+          lightButton(),
+        ],
       ),
     );
   }
@@ -245,26 +331,30 @@ class StudentScreenState extends State<StudentScreen>
           child: Icon(Icons.surround_sound),
         ));
   }
-  Widget autoButton(Brightness phonesCurrentBrightnessMode){
+
+  Widget autoButton(Brightness phonesCurrentBrightnessMode) {
+    bool isAuto = Provider.of<AppState>(context).isAutoModeForBrightness;
+    bool isDark = Provider.of<AppState>(context).isDarkMode;
     return InkWell(
-                          child: Container(
-                            //color: Theme.of(context).colorScheme.background,
-                            child: Text(
-                              "AUTO",
-                              style: TextStyle(
-                                  color: Provider.of<AppState>(context)
-                                          .isAutoModeForBrightness
-                                      ? Theme.of(context).colorScheme.onSurface
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .background),
-                            ),
-                          ),
-                          onTap: () => setLightModeToAuto(
-                              phonesCurrentBrightnessMode));
+        child: Container(
+          //color: Theme.of(context).colorScheme.background,
+          child: Text(
+            "AUTO",
+            style: TextStyle(
+                color: isAuto
+                    ? Theme.of(context).colorScheme.onSurface
+                    : // max contrast to highlight IT IS AUTO
+                    isDark
+                        ? Colors
+                            .black26 // Low contrast in manual dark mode to signify it's not auto but click me for auto
+                        : Colors.grey.withAlpha(
+                            120) // Low contrast in light mode for the same reason
+
+                ),
+          ),
+        ),
+        onTap: () => setLightModeToAuto(phonesCurrentBrightnessMode));
   }
-
-
 
   void setLightModeToAuto(Brightness phonesCurrentBrightnessMode) {
     bool isSystemDark = phonesCurrentBrightnessMode == Brightness.dark;
@@ -276,6 +366,7 @@ class StudentScreenState extends State<StudentScreen>
     Provider.of<AppState>(context).setDarkMode(true);
     Provider.of<AppState>(context).setBrightnessAutoMode(false);
   }
+
   void setLightModeToLight() {
     Provider.of<AppState>(context).setDarkMode(false);
     Provider.of<AppState>(context).setBrightnessAutoMode(false);

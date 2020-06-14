@@ -5,6 +5,8 @@ class AppState extends ChangeNotifier{
   bool isDarkMode = false;
   bool isAutoModeForBrightness = true;
 
+  bool sideBarIsCollapsed = true;
+
 
   void setDarkMode(bool isDarkModeOn){
     this.isDarkMode = isDarkModeOn;
@@ -20,6 +22,10 @@ class AppState extends ChangeNotifier{
   void toggleDarkMode(){
     this.isDarkMode = !isDarkMode;
     notifyListeners();
+  }
+
+  void toggleSideBar(){
+
   }
 
 }

@@ -314,9 +314,13 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                   ? selectedIndex = index
                   : selectedIndex = null;
               //print("Selected is $selectedIndex"); //
-              //scrollController.animateTo(index*mainFrameHeight-(125*2) , duration: new Duration(seconds: 2), curve: Curves.ease);
+              print(mainFrameHeight);
+              double jumptoValue = (index.toDouble()*107 ) ;
+              print("jumptoValue: $jumptoValue");
+              scrollController.animateTo(jumptoValue , duration: Duration(seconds: 2), curve: Curves.ease);
               // _items[index].isExpanded?scrollController.jumpTo(index.toDouble()*(mainFrameHeight-(180+index+20))):null; //180 = header 85 + body 95 +++ padding 20
               // scrollController.attach(ScrollPosition(physics: ScrollPhysics(parent: ()), context: null));
+             
             });
           },
           children: _items.map((ExpandingDeadline item) {

@@ -188,7 +188,7 @@ class StudentScreenState extends State<StudentScreen>
         ),
          sideBarHeader(),
 
-       Positioned(child:  Icon(Icons.exit_to_app, color: Theme.of(context).colorScheme.onSurface, size: 26,), right: 30, top: 30,) // TODO :: change icon
+       Positioned(child:Container(height:(screenHeight*0.2)/2 , child: Icon(Icons.exit_to_app, color: Theme.of(context).colorScheme.onSurface, size: 26,), ) ,  right: 30, ) // TODO :: change icon
       ],
     );
   }
@@ -197,7 +197,7 @@ class StudentScreenState extends State<StudentScreen>
     return Container(
                     height: (((0.7* screenHeight) / 2) ),
                     width: 0.75 * screenWidth,
-                    decoration: BoxDecoration( color: Colors.red ,image: DecorationImage( image: CachedNetworkImageProvider(
+                    decoration: BoxDecoration( color: Theme.of(context).colorScheme.primary ,image: DecorationImage( image: CachedNetworkImageProvider(
                             "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg"), fit: BoxFit.cover)),
                   );
   }

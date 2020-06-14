@@ -17,6 +17,7 @@ class ScheduleBanner extends StatelessWidget {
       snap: false,
       centerTitle: true,
       
+      
       title: SecondaryAppBarRow(),
       bottom: AppBar(
         
@@ -25,8 +26,8 @@ class ScheduleBanner extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.background
       ),
       flexibleSpace: FlexibleSpaceBar(
-        
-        collapseMode: CollapseMode.pin,
+       // title: Container(height: 100, width: 100, color: Colors.red,child: Text("data")),
+        collapseMode: CollapseMode.parallax,
         background: QuickCalendar(),
       ),
       shape: kAppBarShape,

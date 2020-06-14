@@ -205,7 +205,7 @@ class StudentScreenState extends State<StudentScreen>
   Widget sideBarHeader(){
     return Container(
           padding: EdgeInsets.only(left: 15, bottom: 15),
-          height: (((0.2 * screenHeight) / 2) + 35),
+          height: (((0.2 * screenHeight) / 2) + 42),
           // screen is reduced to 0.8 from animation.. leaving with 0.2... divide by 2 cz theres upper and lower sides
           // then add 35 which seems to be the upper app-bar's height
 

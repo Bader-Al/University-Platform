@@ -6,7 +6,7 @@ class QuickCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 45, bottom: 55),
+      padding: const EdgeInsets.only(top: 56, bottom: 55),
       child: Container(
         color: Theme.of(context).colorScheme.surface,
         child: Padding(

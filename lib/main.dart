@@ -23,9 +23,12 @@ class Platform extends StatefulWidget {
 
 class _PlatformState extends State<Platform> {
   Widget build(BuildContext context) {
+    
+    
     return Consumer<AppState>(
       builder: (context, appState, child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'PSU Smart Platform',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
@@ -104,13 +107,18 @@ class StudentScreenState extends State<StudentScreen>
                       ? BorderRadius.circular(0)
                       : BorderRadius.circular(25),
                 ),
-                Positioned(
-                  child: GestureDetector(
-                      onTap: _toggleSideBar,
-                      child: Icon(Icons.menu, color: Colors.white)),
-                  top: 15,
-                  left: 15,
-                ),
+                // Positioned(
+                //   child: GestureDetector(
+                //       onTap: _toggleSideBar,
+                //       child: Container(
+                //         decoration: BoxDecoration(
+                          
+                //           borderRadius: BorderRadius.only(bottomRight: Radius.circular(15)) , ),
+                //         padding: EdgeInsets.symmetric(horizontal: 15),
+                //         height: 50,
+                //         child:Icon(Icons.menu, color: Colors.white)),),
+                //   top: 0,
+                // ),
               ]))),
       top: 0,
       bottom: 0,

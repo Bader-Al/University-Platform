@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../homeWidgets/DashboardPageWidgets/HorizentalListViewer.dart';
-import '../homeWidgets/DashboardPageWidgets/scheduleBanner.dart';
+import 'package:psu_platform/constants.dart';
+import '../homeWidgets/DashboardPageWidgets/dashboardHeader/scheduleBanner.dart';
 import '../homeWidgets/DashboardPageWidgets/billboard.dart';
 import '../homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
+import '../homeWidgets/DashboardPageWidgets/horizontal_viewers/upComingExams.dart';
 
 
 
@@ -34,43 +35,7 @@ class DashboardPage extends StatelessWidget {
 
 class DashboardPageSliver extends StatelessWidget {
   // template.. later these blocks should take data from actual
-  final List courseBlocks = [
-    DataBlock(
-      title: "MATH",
-      section: "113",
-      code: 112,
-      index: 0,
-    ),
-    DataBlock(
-      title: "ISC",
-      section: "120",
-      code: 112,
-      index: 1,
-    ),
-    DataBlock(
-      title: "CS",
-      section: "1002",
-      code: 112,
-      index: 2,
-    ),
-    DataBlock(
-      title: "CS",
-      section: "1002",
-      code: 112,
-      index: 3,
-    ),
-    
-    DataBlock(
-      title: "HI",
-      section: "1002",
-      code: 112,
-      index: 3,
-    ),
-    DataBlock(
-
-    ),
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
     return SliverList(
@@ -78,16 +43,14 @@ class DashboardPageSliver extends StatelessWidget {
         SizedBox(
           height: 100,
         ),
-        HorizentalDataListViewer(
-          dataBlocksList: courseBlocks,
-          title: "Courses",
+        UpComingExamsViewer(
+          children: cardItems,
         ),
         SizedBox(
           height: 75,
         ),
-        HorizentalDataListViewer(
-          dataBlocksList: courseBlocks,
-          title: "Chatrooms",
+        UpComingExamsViewer(
+          children: cardItems,
         ),
         SizedBox(
           height: 75,
@@ -107,4 +70,12 @@ class DashboardPageSliver extends StatelessWidget {
   }
 }
 
+List cardItems = [
+  
+  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
+  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
+  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
+  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
+  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
+];
 

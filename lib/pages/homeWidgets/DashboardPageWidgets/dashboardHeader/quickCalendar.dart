@@ -6,7 +6,7 @@ class QuickCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 56, bottom: 55),
+      padding: const EdgeInsets.only(top: 0, bottom: 55),
       child: Container(
         color: Theme.of(context).colorScheme.surface,
         child: Padding(
@@ -29,7 +29,7 @@ class QuickCalendarSlider extends StatelessWidget {
       width: double.infinity,
       child: PageView.builder(itemBuilder: (context, index){
         return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: _quickCalendarItems[index],
               );
       }),

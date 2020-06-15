@@ -6,6 +6,7 @@ import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 import 'dashboardPage.dart';
 import 'feedPage.dart';
 import 'chatsPage.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 import '../../constants.dart';
 
@@ -23,8 +24,12 @@ class StudentHomeState extends State<StudentHome> {
   ];
   int _pageIndex = 0;
   bool fabEnabled = true;
+
+  
   @override
   Widget build(BuildContext context) {
+   // FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).colorScheme.primary) ;
+    
     return Scaffold(
         body: navBarRoutes[_pageIndex],
         floatingActionButton: FloatingActionButton(

@@ -212,7 +212,7 @@ class CompactFileItem extends StatelessWidget {
       padding: EdgeInsets.only(top: isDownloaded ? 0 : 10, bottom: 5),
       width: 150,
       child: FlatButton(
-        color: isDownloaded ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        color: isDownloaded ? Theme.of(context).colorScheme.onSurface.withAlpha(200): Theme.of(context).colorScheme.surface,
         onPressed: (() {}),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -229,7 +229,7 @@ class CompactFileItem extends StatelessWidget {
               Text(
                 "A_very_loooong_assignment_description.pdf",
                 style: TextStyle(
-                  color: isDownloaded ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.primary,
+                  color: isDownloaded ? Theme.of(context).colorScheme.surface : Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w300,
                 ),
                 maxLines: 3,

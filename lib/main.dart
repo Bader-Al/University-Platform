@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
@@ -187,6 +189,7 @@ class StudentScreenState extends State<StudentScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+                      //  DarkModeSwitch(),
                         darkModeWidget(phonesCurrentBrightnessMode),
                       ],
                     ),
@@ -204,59 +207,64 @@ class StudentScreenState extends State<StudentScreen>
   Widget sideBarBackgroundScenary(){
     return Container(
                     height: (((0.7* screenHeight) / 2) ),
-                    width: 0.75 * screenWidth,
+                    width: screenWidth,
                     decoration: BoxDecoration( color: Theme.of(context).colorScheme.primary ,image: DecorationImage( image: CachedNetworkImageProvider(
                             "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg"), fit: BoxFit.cover)),
                   );
   }
 
   Widget sideBarHeader(){
-    return Container(
-          padding: EdgeInsets.only(left: 15, bottom: 15),
-          height: (((0.2 * screenHeight) / 2) + 42),
-          // screen is reduced to 0.8 from animation.. leaving with 0.2... divide by 2 cz theres upper and lower sides
-          // then add 35 which seems to be the upper app-bar's height
+    return ClipRect(
+          child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+            child: Container(
+              padding: EdgeInsets.only(left: 15, bottom: 15),
+              height: (((0.2 * screenHeight) / 2) + 42),
+              // screen is reduced to 0.8 from animation.. leaving with 0.2... divide by 2 cz theres upper and lower sides
+              // then add 35 which seems to be the upper app-bar's height
 
-          width: double.infinity,
-          decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface.withAlpha(200)),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface.withAlpha(50)),
 
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fitHeight,
-                        image: CachedNetworkImageProvider(
-                            "http://southparkstudios.mtvnimages.com/shared/characters/kids/eric-cartman.png"))),
-              ), SizedBox(width: 5,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  Text(
-                    "Bader Al Alami",
-                    style: TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.w300,
-                        color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  Text("217210641",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w300,
-                          color: Theme.of(context).colorScheme.onSurface))
+                  Container(
+                    
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.fitHeight,
+                            image: CachedNetworkImageProvider(
+                                "http://southparkstudios.mtvnimages.com/shared/characters/kids/eric-cartman.png"))),
+                  ), SizedBox(width: 5,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Bader Al Alami",
+                        style: TextStyle(
+                            fontSize: 21,
+                            fontWeight: FontWeight.w300,
+                            color: Theme.of(context).colorScheme.onSurface),
+                      ),
+                      Text("217210641",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
+                              color: Theme.of(context).colorScheme.onSurface))
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        );
+              ),
+            ),
+      ),
+    );
   }
 
   Widget sideBarItems(){
@@ -296,7 +304,8 @@ class StudentScreenState extends State<StudentScreen>
   }
 
   Widget darkModeWidget(phonesCurrentBrightnessMode) {
-    return Container(
+    return 
+    Container(
       
       width: 0.45*screenWidth,
       decoration: BoxDecoration(
@@ -380,3 +389,33 @@ class StudentScreenState extends State<StudentScreen>
     Provider.of<AppState>(context).setBrightnessAutoMode(false);
   }
 }
+ 
+// class DarkModeSwitch extends StatefulWidget {
+//   @override
+//   _State createState() => _State();
+// }
+ 
+// class _State extends State<DarkModeSwitch> {
+//   bool isSwitched = false;
+ 
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: <Widget>[
+//         Text("Use System Setting"),
+//         Switch(
+//               value: isSwitched,
+//               onChanged: (value) {
+//                 setState(() {
+//                   isSwitched = value;
+//                   print(isSwitched);
+//                 });
+//               },
+//               activeTrackColor: Colors.lightGreenAccent,
+//               activeColor: Colors.green,
+//             ),
+//       ],
+//     );
+    
+//   }
+// }

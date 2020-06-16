@@ -62,8 +62,8 @@ class UpComingExamsViewer extends StatelessWidget {
   }
 }
 
-class CardItem extends StatelessWidget {
-  CardItem(
+class UpcomingExamCard extends StatelessWidget {
+  UpcomingExamCard(
       {this.courseFullTitle, this.daysLeft, this.examType, this.splashColor});
   final int daysLeft;
   final String courseFullTitle;

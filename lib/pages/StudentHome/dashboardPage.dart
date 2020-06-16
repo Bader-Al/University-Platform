@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
+import 'package:psu_platform/pages/homeWidgets/DashboardPageWidgets/horizontal_viewers/postedGrades.dart';
 import '../homeWidgets/DashboardPageWidgets/dashboardHeader/scheduleBanner.dart';
 import '../homeWidgets/DashboardPageWidgets/billboard.dart';
 import '../homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
@@ -44,13 +45,13 @@ class DashboardPageSliver extends StatelessWidget {
           height: 100,
         ),
         UpComingExamsViewer(
-          children: cardItems,
+          children: upcomingExams,
         ),
         SizedBox(
           height: 75,
         ),
-        UpComingExamsViewer(
-          children: cardItems,
+        PostedGradesViewer(
+          children: postedGrades,
         ),
         SizedBox(
           height: 75,
@@ -70,12 +71,19 @@ class DashboardPageSliver extends StatelessWidget {
   }
 }
 
-List cardItems = [
+List upcomingExams = [
   
-  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
-  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
-  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
-  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
-  CardItem(courseFullTitle: "CS 112", daysLeft: 7,),
+  UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
+  UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
+  UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
+  UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
+  UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
 ];
 
+List postedGrades = [
+  PostedGradeCard(courseFullTitle: "ISC 101", gradeAttained: 5, gradePossible: 10, examType: "Quiz",),
+  PostedGradeCard(courseFullTitle: "CS 101", gradeAttained: 7, gradePossible: 10, examType: "Quiz",),
+  PostedGradeCard(courseFullTitle: "PSY 101", gradeAttained: 8, gradePossible: 10, examType: "Quiz",),
+  PostedGradeCard(courseFullTitle: "ISC 101", gradeAttained: 2, gradePossible: 10, examType: "Quiz",),
+
+];

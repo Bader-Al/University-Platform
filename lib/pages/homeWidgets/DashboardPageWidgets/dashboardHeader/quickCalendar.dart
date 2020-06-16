@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -32,7 +33,11 @@ class QuickCalendarSlider extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: _quickCalendarItems[index],
               );
-      }),
+      } ,
+      physics: ScrollPhysics(parent: BouncingScrollPhysics()) ,
+      
+      itemCount: _quickCalendarItems.length,
+      ),
     );
    
    // OLD CODE BELOW ::: TODO ::: Just get rid of it....
@@ -292,10 +297,7 @@ class DayBlockHeader extends StatelessWidget {
               ),
             ],
           )),
-          Icon(
-            Icons.add,
-            color: Theme.of(context).colorScheme.primary,
-          )
+          IconButton(icon: Icon(Icons.add_circle, color: Theme.of(context).colorScheme.primary,), onPressed: null),
         ],
       ),
     );

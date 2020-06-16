@@ -30,7 +30,7 @@ class ScheduleBanner extends StatelessWidget {
       //     )
       //   ],
       // ),
-      bottom: AppBar(
+      bottom: AppBar( 
           titleSpacing: 0,
           elevation: 1,
           title: PrimaryAppBarRow(isFlipped: true,),
@@ -123,7 +123,7 @@ class SecondaryAppBarRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           // Container(
           //   padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
           //   //decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: Theme.of(context).colorScheme.primary),

@@ -13,7 +13,7 @@ class QuickDeadlines extends StatelessWidget {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     double phoneHeight = queryData.size.height;
-    double height = phoneHeight * 0.45;
+    double height = phoneHeight * 0.5;
 
     if (phoneHeight < 600) {
       // nexus 4 is 592
@@ -26,7 +26,9 @@ class QuickDeadlines extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("Deadlines", style: kDashboardHeading.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+          Text("Deadlines",
+              style: kDashboardHeading.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface)),
           SizedBox(
             height: _spaceBetweenTitleAndBody,
           ),
@@ -56,26 +58,32 @@ class Body extends StatelessWidget {
     mainFrameScrollController = _scrollController;
 
     return Expanded(
-        key: _mainFrameKey,
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Stack(
-              fit: StackFit.passthrough,
-              children: <Widget>[
-                DateSelector(
-                  scrollController: this._scrollController,
-                ),
-                DeadLinesContentViewer(
-                  scrollController: this._scrollController,
-                ),
-              ],
-            ),
+        child: Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      padding: const EdgeInsets.all(2.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Container(
+          // padding: EdgeInsets.all(2),
+
+          child: Stack(
+            key: _mainFrameKey,
+            fit: StackFit.passthrough,
+            children: <Widget>[
+              DateSelector(
+                scrollController: this._scrollController,
+              ),
+              DeadLinesContentViewer(
+                scrollController: this._scrollController,
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }
 
@@ -88,33 +96,45 @@ class DateTab extends StatelessWidget {
   int index;
   @override
   Widget build(BuildContext context) {
-    isSelected =
-        index == Provider.of<DateSelectionData>(context).selectedIndex;
-    return Material(
-      color: Theme.of(context).colorScheme.background.withAlpha(0),
-          child: InkWell(
-        highlightColor: Theme.of(context).accentColor,
-        splashColor: Theme.of(context).accentColor,
-        onTap: () {Provider.of<DateSelectionData>(context).setSelectedIndex(index);},
-        child: Container(
-          color: isSelected ? Theme.of(context).colorScheme.background.withAlpha(50) : Theme.of(context).colorScheme.primary,
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+    isSelected = index == Provider.of<DateSelectionData>(context).selectedIndex;
+    return Container(
+      height: isSelected ? 150 : 80,
+      //color: Theme.of(context).colorScheme.background.withAlpha(0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surface,
+        ),
+        child: FlatButton(
+          padding:
+              const EdgeInsets.only(top: 14, bottom: 10, left: 5, right: 30),
+          highlightColor: Theme.of(context).colorScheme.secondary,
+          splashColor: Theme.of(context).colorScheme.secondary,
+          onPressed: () {
+            Provider.of<DateSelectionData>(context).setSelectedIndex(index);
+          },
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment:
+                isSelected ? MainAxisAlignment.center : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 "Due 5 days",
                 style: TextStyle(
                     fontSize: 15,
-                    color: Theme.of(context).colorScheme.surface,
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.background
+                        : Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w400),
               ),
               Text(
                 "September 21",
                 style: TextStyle(
                     fontSize: 12,
-                    color: Theme.of(context).colorScheme.background.withAlpha(150),
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.background
+                        : Theme.of(context).colorScheme.primary.withAlpha(150),
                     fontWeight: FontWeight.w300),
               ),
             ],
@@ -151,8 +171,8 @@ class _DateSelectorState extends State<DateSelector> {
     return ChangeNotifierProvider<DateSelectionData>(
       create: (context) => DateSelectionData(),
       child: Container(
-        width: 100,
-        color: Theme.of(context).colorScheme.primary,
+        width: 117,
+        // color: Theme.of(context).colorScheme.background,
         child: ListView.builder(
           itemCount: 7,
           itemBuilder: (BuildContext context, int index) {
@@ -183,19 +203,16 @@ class DeadLinesContentViewer extends StatelessWidget {
     return Row(
       children: <Widget>[
         SizedBox(
-          width: 100,
+          width: 105,
         ), // DEADSPACE IN BG
         Expanded(
           child: Container(
               color: Theme.of(context).colorScheme.surface,
-              child: Padding(
-                padding: EdgeInsets.only(top: 5, right: 5, bottom: 5),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15)),
-                  child: ExpandingDeadlineListView(),
-                ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    bottomRight: Radius.circular(15)),
+                child: ExpandingDeadlineListView(),
               )),
         )
       ],
@@ -209,10 +226,12 @@ class CompactFileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: isDownloaded ? 0 : 10, bottom: 5),
+      padding: EdgeInsets.only(top: isDownloaded ? 10 : 10, bottom: 5),
       width: 150,
       child: FlatButton(
-        color: isDownloaded ? Theme.of(context).colorScheme.onSurface.withAlpha(200): Theme.of(context).colorScheme.surface,
+        color: isDownloaded
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.surface,
         onPressed: (() {}),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -221,15 +240,16 @@ class CompactFileItem extends StatelessWidget {
             children: <Widget>[
               Icon(
                 isDownloaded ? Icons.delete : Icons.file_download,
-                color: isDownloaded ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.primary,
-              ),
-              SizedBox(
-                height: 10,
+                color: isDownloaded
+                    ? Theme.of(context).colorScheme.background
+                    : Theme.of(context).colorScheme.primary,
               ),
               Text(
                 "A_very_loooong_assignment_description.pdf",
                 style: TextStyle(
-                  color: isDownloaded ? Theme.of(context).colorScheme.surface : Theme.of(context).colorScheme.primary,
+                  color: isDownloaded
+                      ? Theme.of(context).colorScheme.surface
+                      : Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w300,
                 ),
                 maxLines: 3,
@@ -305,7 +325,6 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
       controller: scrollController,
       children: <Widget>[
         ExpansionPanelList(
-          
           expandedHeaderPadding: EdgeInsets.all(0),
           expansionCallback: (int index, bool isExpanded) {
             setState(() {
@@ -315,47 +334,53 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                   : selectedIndex = null;
               //print("Selected is $selectedIndex"); //
               print(mainFrameHeight);
-              double jumptoValue = (index.toDouble()*107 ) ;
+              double jumptoValue = (index.toDouble() * 100);
               print("jumptoValue: $jumptoValue");
-              scrollController.animateTo(jumptoValue , duration: Duration(seconds: 2), curve: Curves.ease);
+              scrollController.jumpTo(
+                jumptoValue,
+              );
+              // , duration: Duration(seconds: 2), curve: Curves.ease);
               // _items[index].isExpanded?scrollController.jumpTo(index.toDouble()*(mainFrameHeight-(180+index+20))):null; //180 = header 85 + body 95 +++ padding 20
               // scrollController.attach(ScrollPosition(physics: ScrollPhysics(parent: ()), context: null));
-             
             });
           },
           children: _items.map((ExpandingDeadline item) {
             return ExpansionPanel(
-
                 canTapOnHeader: true,
                 headerBuilder: (BuildContext ctx, bool isExpanded) {
                   return deadlineCardHeader();
                 },
                 isExpanded: item.isExpanded,
-                body: deadlineCardBody());
+                body: deadlineCardBody(context));
           }).toList(),
         )
       ],
     );
   }
 
-  Widget deadlineCardBody() {
+  Widget deadlineCardBody(context) {
+    // RenderBox _fullViewBox = _expansionListKey.currentContext.findRenderObject();
+    // Size _fullViewBoxSize = _fullViewBox.size;
+    // RenderBox _expansionHeaderBox = _expansionHeaderKey.currentContext.findRenderObject();
+    // Size _expansionHeaderSize = _expansionHeaderBox.size;
+
     return Container(
-      height: mainFrameHeight != null ? mainFrameHeight - 95 : 200,
+      height: mainFrameHeight != null ? mainFrameHeight - 100 : 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Expanded(
-              child: Padding(
+        children: <Widget>[Spacer(flex: 2, ), // you could completely replace spacer with Expanded... same exact thing but with a child
+          Container( height: 200,
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: CompactFileViewer(),
-          )),
+          ), Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
                   child: Container(
-                height: 45,
+                height:
+                    45, // The expanded only expands horizontally.. leave this here
                 child: FlatButton(
                   color: Theme.of(context).colorScheme.surface,
                   onPressed: () {},
@@ -404,11 +429,11 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
 
   Widget deadlineCardHeader() {
     return Container(
-      height: 85,
+      height: 100,
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 2.0),
@@ -416,17 +441,21 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Text(
+                  "Assignment Submission",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 16),
+                ),
                 Text("Introduction To Software Engineering",
+                    maxLines: 1,
+                    softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
                         color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 12)),
-                Text(
-                  "Assignment Submission",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.onSurface),
-                ),
               ],
             ),
           ),

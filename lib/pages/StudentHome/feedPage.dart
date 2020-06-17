@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
-import 'package:psu_platform/pages/feedWidgets/clubsBanner.dart';
-import 'package:psu_platform/pages/feedWidgets/horizontalClubView.dart';
-import 'package:psu_platform/pages/feedWidgets/verticalClubView.dart';
+import 'package:psu_platform/pages/homeWidgets/feedWidgets/clubsBanner.dart';
+import 'package:psu_platform/pages/homeWidgets/feedWidgets/horizontalClubView.dart';
+import 'package:psu_platform/pages/homeWidgets/feedWidgets/verticalClubView.dart';
 
 class FeedPage extends StatelessWidget {
   List<Widget> tabs = [

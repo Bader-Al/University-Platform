@@ -24,7 +24,7 @@ class DashboardPage extends StatelessWidget {
         },
         body: CustomScrollView(
           slivers: <Widget>[
-            DashboardPageSliver(),
+            DashboardPageSliver(),// TODO: maybe change to sliverlist fill remaining and us listview builder... test for performance diff
           ],
         ),
       ),

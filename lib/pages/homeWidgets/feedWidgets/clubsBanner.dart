@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/constants.dart';
-import 'package:psu_platform/pages/feedWidgets/horizontalClubView.dart';
-import 'package:psu_platform/pages/feedWidgets/verticalClubView.dart';
+import 'package:psu_platform/pages/homeWidgets/feedWidgets/horizontalClubView.dart';
+import 'package:psu_platform/pages/homeWidgets/feedWidgets/verticalClubView.dart';
 
 class ClubsBanner extends StatelessWidget {
   @override

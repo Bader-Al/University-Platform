@@ -3,6 +3,35 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+Widget headerButton({context, bool hideShadow = false, Function onPressed}) {
+  return Container(
+    decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0, 1),
+              blurRadius: 0.25,
+              spreadRadius: 0.1,
+              color:
+                  hideShadow ? Colors.transparent : Colors.black.withAlpha(25)),
+        ],
+        borderRadius: BorderRadius.circular(50),
+        color: Theme.of(context).colorScheme.background),
+    height: 32,
+    width: 53,
+    child: ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: FlatButton(
+            onPressed: onPressed,
+            child: Icon(
+              Icons.calendar_today,
+              size: 18,
+              color: Theme.of(context).colorScheme.primary,
+            ))),
+  );
+}
+
+///////////////////////////////////// above is not in a class because it's used by two classes that are not linked
+
 class DraggableBottomSheet extends StatelessWidget {
   DraggableBottomSheet({this.pageContent, this.pageIndex});
   final List pageContent;
@@ -65,58 +94,125 @@ class SheetHeader extends StatelessWidget {
           height: 60,
           width: MediaQuery.of(context).size.width,
           child: Padding(
-            padding: const EdgeInsets.only(top:5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Spacer(flex:3),
-                headerButton(context: context), Spacer(),
-                searchButton(context),Spacer(),
-                headerButton(context: context), Spacer(flex: 3,)
-              ],
-            ),
-          )
-          
-          ),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  PositionedDirectional(
+                    child: headerButton(
+                        context: context, onPressed: () => print("AH!!!!")),
+                    end: 15,
+                  ),
+                  PositionedDirectional(
+                    child: headerButton(context: context),
+                    start: 15,
+                  ),
+                  SearchButton(),
+                ],
+              ))),
     );
-  }
-
-  Widget headerButton({context, bool hideShadow=false}) {
-    return Container(
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                offset: Offset(0, 1),
-                blurRadius: 0.25,
-                spreadRadius: 0.1,
-                color: hideShadow?Colors.transparent: Colors.black.withAlpha(25)),
-          ],
-          borderRadius: BorderRadius.circular(50),
-          color: Theme.of(context).colorScheme.background),
-      height: 32,
-      width: 53,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-          child:
-              FlatButton(onPressed: () {}, child: Icon(Icons.calendar_today, size: 18, color: Theme.of(context).colorScheme.primary,))),
-    );
-  }
-
-  Widget searchButton(context){
-    return InnerShadow(
-  child: headerButton(context: context, hideShadow: true),
-  shadows: [
-            BoxShadow(
-                offset: Offset(0, 1),
-                blurRadius: 0.25,
-                spreadRadius: 0.1,
-                color:  Colors.black.withAlpha(25)),
-          ], 
-);
   }
 }
 
+List headingItems(context) => [
+      Spacer(flex: 3),
+      headerButton(context: context),
+      Spacer(),
+      SearchButton(),
+      Spacer(),
+      headerButton(context: context),
+      Spacer(
+        flex: 3,
+      )
+    ];
 
+class SearchButton extends StatefulWidget {
+  @override
+  _SearchButtonState createState() => _SearchButtonState();
+}
 
+class _SearchButtonState extends State<SearchButton> {
+  double _width = 53;
+  bool _searchButtonIsExpanded = false;
+
+  void expandSearchBar(context) {
+    setState(() {
+      _searchButtonIsExpanded = true;
+      _width = (MediaQuery.of(context).size.width - 30);
+    });
+  }
+
+  void collapSearchBar() {
+    setState(() {
+      _searchButtonIsExpanded = false;
+      _width = 53;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InnerShadow(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 250),
+        curve: Curves.decelerate,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Theme.of(context).colorScheme.background),
+        height: 32,
+        width: _width,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Stack(
+                alignment: Alignment.center,
+                fit: StackFit.expand,
+                children: 
+                _searchButtonIsExpanded
+                    ? [
+                        PositionedDirectional(
+                          start:-15,
+                          child: FlatButton(
+                              onPressed: collapSearchBar,
+                              child: Icon(
+                                Icons.close,
+                                size: 18,
+                                color: Theme.of(context).colorScheme.primary,
+                              )),
+                        ),
+                        PositionedDirectional(
+                            end: -15,
+                            child: FlatButton(
+                                onPressed: () =>  expandSearchBar(context),
+                                child: Icon(
+                                  Icons.search,
+                                  size: 18,
+                                  color: Theme.of(context).colorScheme.primary,
+                                )),
+                          )
+                      ]
+                    : [
+                        FlatButton(
+                              onPressed: () => _searchButtonIsExpanded
+                                  ? collapSearchBar()
+                                  : expandSearchBar(context),
+                              child: Icon(
+                                Icons.search,
+                                size: 18,
+                                color: Theme.of(context).colorScheme.primary,
+                              )),
+                      ]
+                      
+                      )),
+      ),
+      shadows: [
+        BoxShadow(
+            offset: Offset(0, 1),
+            blurRadius: 0.25,
+            spreadRadius: 0.1,
+            color: Colors.black.withAlpha(25)),
+      ],
+    );
+  }
+}
 
 class InnerShadow extends SingleChildRenderObjectWidget {
   const InnerShadow({
@@ -135,7 +231,8 @@ class InnerShadow extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, _RenderInnerShadow renderObject) {
+  void updateRenderObject(
+      BuildContext context, _RenderInnerShadow renderObject) {
     renderObject.shadows = shadows;
   }
 }
@@ -157,7 +254,8 @@ class _RenderInnerShadow extends RenderProxyBox {
       final shadowPaint = Paint()
         ..blendMode = BlendMode.srcATop
         ..colorFilter = ColorFilter.mode(shadow.color, BlendMode.srcOut)
-        ..imageFilter = ImageFilter.blur(sigmaX: shadow.blurSigma, sigmaY: shadow.blurSigma);
+        ..imageFilter = ImageFilter.blur(
+            sigmaX: shadow.blurSigma, sigmaY: shadow.blurSigma);
       canvas
         ..saveLayer(shadowRect, shadowPaint)
         ..translate(shadow.offset.dx, shadow.offset.dy);

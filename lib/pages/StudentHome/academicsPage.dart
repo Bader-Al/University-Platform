@@ -90,6 +90,8 @@ class DraggableSheetInTheForegroundState
       ),
     );
   }
+
+
 }
 
 class BodyInTheBackground extends StatelessWidget {
@@ -116,13 +118,12 @@ class AcademicPageState extends ChangeNotifier {
   var _selectedPage;
   bool showSheetPage = false;
 
-  static List _pages = [
-    page(pageIndex: 0, pageChildren: stuffs),
-    page(pageIndex: 1, pageChildren: stuffs),
-    page(pageIndex: 2, pageChildren: stuffs),
-    page(pageIndex: 3, pageChildren: stuffs),
-    page(pageIndex: 4, pageChildren: stuffs),
-    page(pageIndex: 5, pageChildren: stuffs),
+  static List _pages = [ // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
+    Container(key: ValueKey(0), child: 
+    DraggableBottomSheet(pageContent: stuffs, pageIndex: 0, ),),
+    Container(key: ValueKey(1), child: 
+    DraggableBottomSheet(pageContent: stuffs, pageIndex: 1, ),)
+    
   ];
 
   void setSelectedPageIndex(int index) {
@@ -158,52 +159,6 @@ class AcademicPageState extends ChangeNotifier {
     return _selectedPage;
   }
 }
-
-Widget page({@required pageIndex, @required pageChildren}) {
-  //ScrollController scrollController = new ScrollController();
-  return DraggableScrollableSheet(
-    key: ValueKey(pageIndex),
-      initialChildSize: 0.4,
-      minChildSize: 0.2,
-      maxChildSize: 1,
-      builder: (context, scrollController) {
-        return Transform.translate(
-          offset: Offset(0,-8),
-          
-                  child: ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-                    child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface , ),
-                child: CustomScrollView(
-                    controller: scrollController,
-                    slivers: <Widget>[
-                      SliverAppBar(
-                        pinned: true,
-                        floating: false,
-                        titleSpacing: 0,
-                        title: Container(
-                          decoration: BoxDecoration(color: Colors.yellow, ),
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                
-                child: Text(pageIndex.toString())) ,
-
-                      ),
-                      SliverFillRemaining(
-                        child: ListView.builder(
-                          itemBuilder: (context, index) => stuffs[index],
-                          itemCount: stuffs.length,
-                          controller: scrollController,
-                        ),
-                      )
-                    ],
-                  )),
-          ),
-        );
-      });
-}
-
 List stuffs = [
   Container(
     child: Text("data"),

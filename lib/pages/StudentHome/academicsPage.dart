@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
 
 class AcademicsPage extends StatelessWidget {
   @override
@@ -116,13 +117,14 @@ class BodyInTheBackground extends StatelessWidget {
 class AcademicPageState extends ChangeNotifier {
   static int _selectedPageIndex = 0;
   var _selectedPage;
+
   bool showSheetPage = false;
 
   static List _pages = [ // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
     Container(key: ValueKey(0), child: 
-    DraggableBottomSheet(pageContent: stuffs, pageIndex: 0, ),),
+    DraggableBottomSheet(pageContent: stuffs, pageIndex: 0, title: "Introduction To Artificial Intelligence",),),
     Container(key: ValueKey(1), child: 
-    DraggableBottomSheet(pageContent: stuffs, pageIndex: 1, ),)
+    DraggableBottomSheet(pageContent: stuffs, pageIndex: 1, title: "Human Computer Interaction"),)
     
   ];
 
@@ -155,129 +157,24 @@ class AcademicPageState extends ChangeNotifier {
     showSheetPage = value;
   }
 
+
   Widget returnSelectedPage() {
     return _selectedPage;
   }
+
 }
 List stuffs = [
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
-  Container(
-    child: Text("data"),
-    color: Colors.blue,
-  ),
-  SizedBox(height: 25),
+  SizedBox(height: 70,),
+  
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
+AcademicItem(),
 ];

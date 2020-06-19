@@ -10,7 +10,8 @@ class AcademicItem extends StatelessWidget {
   Padding(
     padding: const EdgeInsets.only(bottom: 30),
     child: Container(
-     // color: Colors.red,
+      //width: double.infinity,
+     //color: Colors.red,
      height: 75,
       padding: EdgeInsets.all(0),
       child: Row(
@@ -21,7 +22,8 @@ class AcademicItem extends StatelessWidget {
          // Icon(Icons.assignment, size: 75, color: Theme.of(context).colorScheme.primary, ), // the color thing is temporary.. 
           SizedBox(width: 15,),
           Container(
-            width: 225,
+           // color: Colors.red,
+            width: MediaQuery.of(context).size.width-170,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,14 +36,16 @@ class AcademicItem extends StatelessWidget {
               
               ],
             ),
-          ),
+          ), Spacer(),
+          
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
             Text("15.3 MB", style: TextStyle(fontWeight: FontWeight.w300, color: Color(0xff5E7CE2), fontSize: 12),)
             ,Image(image: AssetImage('lib/assets/icons/downloadCourseContent.png'), height: 24,),
-          ],)
+          ],), SizedBox(width: 15,),
+          
         ],
       ),
     ),

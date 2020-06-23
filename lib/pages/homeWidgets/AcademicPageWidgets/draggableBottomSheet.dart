@@ -57,7 +57,8 @@ class DraggableBottomSheet extends StatelessWidget {
                 ),
                 child: CustomScrollView(
                   controller:scrollController,
-
+                  
+                  physics: ScrollPhysics(parent: BouncingScrollPhysics()),
                    slivers: [
                      
                      SheetHeader(
@@ -67,6 +68,8 @@ class DraggableBottomSheet extends StatelessWidget {
                        
                        hasScrollBody: true,
                        child:  ListView(
+                         
+                  physics: ScrollPhysics(parent: BouncingScrollPhysics()),
                    controller: scrollController,
                    padding: EdgeInsets.only(left:15),
                   
@@ -81,29 +84,30 @@ class DraggableBottomSheet extends StatelessWidget {
                             scrollController: scrollController,
                             gradesList: [
                               Grade(
-                                examType: "quiz",
+                                examType: "QUIZ",
+                                earnedGrade: 4,
+                                gradePossible: 5,
+                                isSeen: false,
+                              ),
+                              Grade(
+                                examType: "QUIZ",
                                 earnedGrade: 4,
                                 gradePossible: 5,
                                 isSeen: false
                               ),
                               Grade(
-                                examType: "quiz",
+                                examType: "QUIZ",
                                 earnedGrade: 4,
                                 gradePossible: 5,
                               ),
                               Grade(
-                                examType: "quiz",
-                                earnedGrade: 4,
-                                gradePossible: 5,
-                              ),
-                              Grade(
-                                examType: "quiz",
+                                examType: "QUIZ",
                                 earnedGrade: 4,
                                 gradePossible: 5,
                               ),
                             ],
                           ),
-                          ...pageContent.map((e) => e)
+                          ...pageContent.map((e) => e) /// THIS IS WHERE THE CONTENT IT LOADED
                         ]
                         ,
                   

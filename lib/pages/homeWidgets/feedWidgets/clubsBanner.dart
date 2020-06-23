@@ -12,6 +12,7 @@ class ClubsBanner extends StatelessWidget {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     return SliverAppBar(
+      elevation: 0,
       floating: true,
       pinned: true,
       snap: false,

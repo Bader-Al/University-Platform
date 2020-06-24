@@ -56,6 +56,7 @@ class EventsListView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom:5.0),
       child: ListView.builder(
         itemCount: eventItems.length,
+        itemExtent: 150,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index){
           return eventItems[index];
@@ -69,10 +70,7 @@ List<EventCard> eventItems = [
 EventCard(title: "Robotics and IOT",),
 EventCard(title: "Robotics and IOT",),
 EventCard(title: "Robotics and IOT",),
-EventCard(title: "Robotics and IOT",),
-EventCard(title: "Robotics and IOT",),
-EventCard(title: "Robotics and IOT",),
-EventCard(title: "Robotics and IOT",),
+EventCard(title: "Only Load 4 at first... then load more when user scrolls",),
 
 ];
 
@@ -91,9 +89,9 @@ class EventCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: Stack(children: [
               Container(
-                color: Colors.yellow,
-                  width: 150,
-                  child: Image(
+                color: Theme.of(context).colorScheme.surface,
+                  child: 
+                  Image(
                     height: double.infinity,
                     image: CachedNetworkImageProvider(
                         "https://images.techhive.com/images/article/2016/09/data_science_classes-100682563-large.jpg"),

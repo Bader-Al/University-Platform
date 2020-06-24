@@ -22,9 +22,9 @@ class UniversityTab extends StatelessWidget {
           // color:Colors.red,
           child: Column(
             children: <Widget>[
-              BillBoardHeader(2),
+              BillBoardHeader(4),
               SizedBox(height:30),
-              UniversityEventsHighlightsBanner(5), // the Ints passed in are the FLEX FACTOR FOR EXPANDED!!!
+              UniversityEventsHighlightsBanner(9), // the Ints passed in are the FLEX FACTOR FOR EXPANDED!!!
             ],
           ),
         ), bottom: distanceFromBottom+75, top: 50,left: 0, right: 0,), // value added to the right is like padding between this and tabselector

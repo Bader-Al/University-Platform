@@ -84,6 +84,7 @@ class _SearchButtonState extends State<SearchButton> {
         PositionedDirectional(
           end: -17,
           child: FlatButton(
+            padding: EdgeInsets.only(top:3),
               onPressed: expandSearchBar,
               child: 
               Image(image:  AssetImage('lib/assets/icons/search.png', ), fit: BoxFit.contain, height: 16,)

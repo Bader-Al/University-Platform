@@ -21,6 +21,8 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double distanceFromBottom = MediaQuery.of(context).size.height*0.2+60; // TODO :: WARNING!! :: IF CHANGED THIS VALUE ALSO CHANGE IT IN OTHER AREAS {UNIVERSITY_TAB , }
     return SafeArea(
       child: DefaultTabController(
         
@@ -29,7 +31,7 @@ class FeedPage extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.primary,
           body: Stack(
             children: <Widget>[
-              centeredTabBar(tabTitles, context),
+              centeredTabBar(tabTitles, context, distanceFromBottom),
               TabBarView(children: tabs)
             ],
           )
@@ -42,8 +44,8 @@ class FeedPage extends StatelessWidget {
 }
 
 
-Widget centeredTabBar(tabTitles, context){
-  return Positioned( bottom: MediaQuery.of(context).size.height*0.2+100, width: MediaQuery.of(context).size.width,
+Widget centeredTabBar(tabTitles, context, distanceFromBottom){
+  return Positioned( bottom: distanceFromBottom, width: MediaQuery.of(context).size.width,
                 child: 
               Center(
                 child: Container(

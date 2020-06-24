@@ -31,9 +31,10 @@ Widget headerButton({context, bool hideShadow = false, Function onPressed}) {
 ///////////////////////////////////// above is not in a class because it's used by two classes that are not linked
 
 class DraggableBottomSheet extends StatelessWidget {
-  DraggableBottomSheet({this.pageContent, this.pageIndex,});
+  DraggableBottomSheet({this.pageContent, this.pageIndex, this.title});
   final List pageContent;
   final int pageIndex;
+  final String title;
   ScrollController insideContoller;
   @override
   //  List colors = [Colors.red, Colors.green, Colors.yellow, Colors.cyan, Colors.indigoAccent]; // JUST FOR DEBUGGING PURPOSES
@@ -56,56 +57,58 @@ class DraggableBottomSheet extends StatelessWidget {
                     color: Theme.of(context).colorScheme.surface,
                   ),
                   child: CustomScrollView(
-                    controller:scrollController,
-                    
-                    physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-                     slivers: [
-                       
-                       SheetHeader(
-                       ),
-                       
-                       SliverFillRemaining(
-                         
-                         hasScrollBody: true,
-                         child:  ListView(
-                           
-                    physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-                     controller: scrollController,
-                     padding: EdgeInsets.only(left:15),
-                    
-                    children: <Widget>[
-                           
-                            ...pageContent.map((e) => e) /// THIS IS WHERE THE CONTENT IT LOADED
-                          ]
-                          ,
-                    
-                    ),)
+                      controller: scrollController,
+                      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                      slivers: [
+                        SheetHeader(),
+                        SliverFillRemaining(
+                          hasScrollBody: true,
+                          child: ListView(
+                            physics:
+                                ScrollPhysics(parent: BouncingScrollPhysics()),
+                            controller: scrollController,
+                            padding: EdgeInsets.only(left: 15),
+                            children: <Widget>[
+                              if (title != null)
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25, vertical: 65),
+                                  child: Text(
+                                    title,
+                                    style: TextStyle(
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.w300,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ...pageContent.map((e) => e)
 
-
-
-
-                      ]
-                  )),
+                              /// THIS IS WHERE THE CONTENT IT LOADED
+                            ],
+                          ),
+                        )
+                      ])),
             );
           }),
     );
   }
 }
 
-
 // SliverFillRemaining(
-                        //   fillOverscroll: true,
+//   fillOverscroll: true,
 
-                        //   child: ListView.builder(
-                        //     itemBuilder: (context, index) {
-                        //       // if(index==1){pageContent[index](scrollController=scrollController);}
-                        //       return pageContent[index];},
-                        //     itemCount: pageContent.length,
-                        //     controller: scrollController,
-                        //   ),
-                        // ),
-
-
+//   child: ListView.builder(
+//     itemBuilder: (context, index) {
+//       // if(index==1){pageContent[index](scrollController=scrollController);}
+//       return pageContent[index];},
+//     itemCount: pageContent.length,
+//     controller: scrollController,
+//   ),
+// ),
 
 class SheetHeader extends StatelessWidget {
   @override

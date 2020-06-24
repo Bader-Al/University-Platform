@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/HorizontalExpandingGradeViewer.dart';
 // import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/academicDraggableBottomSheet.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
-import 'package:psu_platform/pages/homeWidgets/skeletonWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 
 class AcademicsPage extends StatelessWidget {
   @override
@@ -32,12 +32,7 @@ class AcademicPageBuilder extends StatelessWidget {
 class DraggableSheetInTheForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // if (!Provider.of<AcademicPageState>(context).showSheetPage) {
-    //   return Positioned(
-    //     child: handleFirstTime(context),
-    //     bottom: 0,
-    //   );
-    // }
+  
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 350),
       switchInCurve: Curves.elasticInOut,
@@ -50,40 +45,6 @@ class DraggableSheetInTheForeground extends StatelessWidget {
         );
       },
       child: Provider.of<AcademicPageState>(context)._selectedPage,
-    );
-  }
-
-  Widget handleFirstTime(context) {
-    print("showing firstTime");
-    return Container(
-      color: Colors.red,
-      alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height * 0.4,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          FlatButton(
-              onPressed: () {
-                Provider.of<AcademicPageState>(context).setSelectedPageIndex(1);
-
-                Provider.of<AcademicPageState>(context).setShowSheetPage(true);
-              },
-              child: Text("1")),
-          FlatButton(
-              onPressed: () {
-                Provider.of<AcademicPageState>(context).setSelectedPageIndex(2);
-                Provider.of<AcademicPageState>(context).setShowSheetPage(true);
-              },
-              child: Text("2")),
-          FlatButton(
-              onPressed: () {
-                Provider.of<AcademicPageState>(context).setSelectedPageIndex(3);
-                Provider.of<AcademicPageState>(context).setShowSheetPage(true);
-              },
-              child: Text("3")),
-        ],
-      ),
     );
   }
 

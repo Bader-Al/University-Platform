@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psu_platform/pages/homeWidgets/skeletonWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 import 'universityTabWidgets/eventsBanner.dart';
 import 'universityTabWidgets/billboardHeader.dart';
 
@@ -10,7 +10,7 @@ class UniversityTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    double distanceFromBottom = MediaQuery.of(context).size.height*0.2+50; 
+    double distanceFromBottom = MediaQuery.of(context).size.height*0.2+20; 
 
     return Stack(
       children: <Widget>[
@@ -20,6 +20,7 @@ class UniversityTab extends StatelessWidget {
         //  height: MediaQuery.of(context).size.height-distanceFromBottom,
           // color:Colors.red,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
              BillBoardHeader(5),
               SizedBox(height:20),
@@ -31,11 +32,14 @@ class UniversityTab extends StatelessWidget {
         Positioned(
           child: Container(
             width: MediaQuery.of(context).size.width, alignment: Alignment.center,
-            child: Text("University".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 + 10,),
+            child: Text("University".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 ,),
 
-        DraggableBottomSheet(
-          pageIndex: 0,
-          pageContent: [Text("data"), Text("data")],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: DraggableBottomSheet(
+            pageIndex: 0,
+            pageContent: [Text("data"), Text("data")],
+          ),
         ),
       ],
     );

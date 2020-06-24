@@ -28,7 +28,7 @@ class UniversityEventsHighlightsBanner extends StatelessWidget {
                     "Events",
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.background,
-                        fontSize: 24,
+                        fontSize: 21,
                         fontWeight: FontWeight.w300),
                   ), Padding(
                     padding: const EdgeInsets.only(right: 10),
@@ -36,7 +36,7 @@ class UniversityEventsHighlightsBanner extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 13),
               Expanded(
                   child: EventsListView()
               
@@ -53,14 +53,18 @@ class EventsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom:5.0),
-      child: ListView.builder(
-        itemCount: eventItems.length,
-        itemExtent: 150,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index){
-          return eventItems[index];
-        },
+      padding: const EdgeInsets.only(bottom:2.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(7)),
+              child: ListView.builder(
+                physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+          itemCount: eventItems.length,
+          itemExtent: 150,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index){
+            return eventItems[index];
+          },
+        ),
       ),
     );
   }
@@ -107,10 +111,12 @@ class EventCard extends StatelessWidget {
                       width: 150,
                       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       color: Theme.of(context).colorScheme.onSurface.withAlpha(135),
-                      child: Text(
-                        "$title",
-                        softWrap: true,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background),
+                      child: Center(
+                        child: Text(
+                          "$title",
+                          softWrap: true,
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background, ),overflow: TextOverflow.ellipsis, maxLines: 3,
+                        ),
                       ),
                     ),
                   ),

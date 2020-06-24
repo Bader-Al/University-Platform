@@ -41,7 +41,7 @@ class GradeViewer extends StatelessWidget {
                     bottomLeft: Radius.circular(25)),
               ),
               padding: EdgeInsets
-                  .zero, // there is a previous 10px idk where so this makes 15 PX
+                  .only(left:15), // there is a previous 10px idk where so this makes 15 PX
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[

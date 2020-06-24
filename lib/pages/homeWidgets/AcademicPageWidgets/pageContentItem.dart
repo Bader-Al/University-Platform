@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psu_platform/pages/homeWidgets/AbstractWidgets/sheetItem.dart';
 
-class AcademicItem extends StatelessWidget {
+class AcademicItem extends StatelessWidget implements SheetItem{
 
-  
+  double padding = 15;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class AcademicItem extends StatelessWidget {
       //width: double.infinity,
      //color: Colors.red,
      height: 75,
-      padding: EdgeInsets.all(0),
+      padding: EdgeInsets.only(left:padding, right: padding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start ,
         crossAxisAlignment: CrossAxisAlignment.stretch,

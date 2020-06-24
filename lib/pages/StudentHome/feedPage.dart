@@ -20,7 +20,7 @@ class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    double distanceFromBottom = MediaQuery.of(context).size.height*0.2+60; // TODO :: WARNING!! :: IF CHANGED THIS VALUE ALSO CHANGE IT IN OTHER AREAS {UNIVERSITY_TAB , }
+    double distanceFromBottom = MediaQuery.of(context).size.height*0.2+35; // TODO :: WARNING!! :: IF CHANGED THIS VALUE ALSO CHANGE IT IN OTHER AREAS {UNIVERSITY_TAB , }
     return SafeArea(
       child: DefaultTabController(
         
@@ -30,7 +30,7 @@ class FeedPage extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               centeredTabBar(tabTitles, context, distanceFromBottom),
-              TabBarView(children: tabs)
+              TabBarView(children: tabs, physics: ScrollPhysics(parent:BouncingScrollPhysics()),)
             ],
           )
           

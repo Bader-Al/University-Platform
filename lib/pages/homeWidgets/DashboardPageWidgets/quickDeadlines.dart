@@ -7,7 +7,8 @@ import 'package:psu_platform/constants.dart';
 // CALL sticky.remove();
 
 class QuickDeadlines extends StatelessWidget {
-  double _spaceBetweenTitleAndBody = 15.0;
+  const QuickDeadlines();
+  //double _spaceBetweenTitleAndBody = 15.0;
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -30,7 +31,7 @@ class QuickDeadlines extends StatelessWidget {
               style: kDashboardHeading.copyWith(
                   color: Theme.of(context).colorScheme.onSurface)),
           SizedBox(
-            height: _spaceBetweenTitleAndBody,
+            height: 15,
           ),
           Body()
         ],
@@ -40,6 +41,8 @@ class QuickDeadlines extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
+
+  
   ScrollController _scrollController = new ScrollController();
 
   GlobalKey _mainFrameKey = GlobalKey();
@@ -93,7 +96,7 @@ ScrollController mainFrameScrollController;
 class DateTab extends StatelessWidget {
   DateTab(this.index);
   bool isSelected;
-  int index;
+  final int index;
   @override
   Widget build(BuildContext context) {
     isSelected = index == Provider.of<DateSelectionData>(context).selectedIndex;

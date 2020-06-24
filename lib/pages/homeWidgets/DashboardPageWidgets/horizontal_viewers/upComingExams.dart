@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class UpComingExamsViewer extends StatelessWidget {
-  UpComingExamsViewer(
+  const UpComingExamsViewer(
       {@required this.children,
       this.title = "Upcoming Exams",
       this.marginTitleToChildren = 15});
@@ -63,7 +63,7 @@ class UpComingExamsViewer extends StatelessWidget {
 }
 
 class UpcomingExamCard extends StatelessWidget {
-  UpcomingExamCard(
+  const UpcomingExamCard(
       {this.courseFullTitle, this.daysLeft, this.examType, this.splashColor});
   final int daysLeft;
   final String courseFullTitle;

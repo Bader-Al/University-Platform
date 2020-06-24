@@ -36,6 +36,7 @@ class DashboardPage extends StatelessWidget {
 
 class DashboardPageSliver extends StatelessWidget {
   // template.. later these blocks should take data from actual
+  const DashboardPageSliver();
   
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,7 @@ class DashboardPageSliver extends StatelessWidget {
   }
 }
 
-List upcomingExams = [
+const List upcomingExams = [
   
   UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
   UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
@@ -80,7 +81,7 @@ List upcomingExams = [
   UpcomingExamCard(courseFullTitle: "CS 112", daysLeft: 7,),
 ];
 
-List postedGrades = [
+const List postedGrades = [
   PostedGradeCard(courseFullTitle: "ISC 101", gradeAttained: 5, gradePossible: 10, examType: "Quiz",),
   PostedGradeCard(courseFullTitle: "CS 101", gradeAttained: 7, gradePossible: 10, examType: "Quiz",),
   PostedGradeCard(courseFullTitle: "PSY 101", gradeAttained: 8, gradePossible: 10, examType: "Quiz",),

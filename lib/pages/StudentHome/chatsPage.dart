@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../homeWidgets/AcademicPageWidgets/draggableBottomSheet.dart';
 
 //TODO :: use key to preserve scroll when closing the draggable scrollable sheet!
 class ChatsPage extends StatefulWidget {

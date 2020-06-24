@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:psu_platform/constants.dart';
+import 'feedPageTabs/collabTab.dart';
 import 'feedPageTabs/clubsTab.dart';
 
 import 'feedPageTabs/universityTab.dart';
 
 class FeedPage extends StatelessWidget {
-  List<Widget> tabs = [
+  static const List<Widget> tabs = [
     UniversityTab(),
     ClubsTab(),
-    CoursesTab(),
-    CollabTab(),
+    ColabTab(),
   ];
-  List<Widget> tabTitles = [
+  static const List<Widget> tabTitles = [
     Icon(Icons.business),
     Icon(Icons.people),
-    Icon(Icons.book),
     Icon(Icons.forum)
     
   ];
@@ -178,26 +176,6 @@ class SoloTextBlock extends StatelessWidget {
 
 
 
-class CoursesTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[],
-      ),
-    );
-  }
-}
-
-class CollabTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text("Collab Page"),
-    );
-  }
-}
 
 ///////////////////////// Common ListView For All
 

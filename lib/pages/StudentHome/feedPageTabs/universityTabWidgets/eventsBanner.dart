@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class UniversityEventsHighlightsBanner extends StatelessWidget {
-  UniversityEventsHighlightsBanner(this.flexFactor);
+  const UniversityEventsHighlightsBanner(this.flexFactor) ;
   final int flexFactor;
 
   @override
@@ -91,12 +91,12 @@ class EventCard extends StatelessWidget {
               Container(
                 color: Theme.of(context).colorScheme.surface,
                   child: 
-                  Image(
-                    height: double.infinity,
-                    image: CachedNetworkImageProvider(
-                        "https://images.techhive.com/images/article/2016/09/data_science_classes-100682563-large.jpg"),
-                    fit: BoxFit.fitHeight,
-                  ),
+                    Image(
+                      height: double.infinity,
+                      image: CachedNetworkImageProvider(
+                          "https://images.techhive.com/images/article/2016/09/data_science_classes-100682563-large.jpg"),
+                      fit: BoxFit.fitHeight,
+                    ),
                 ),
               Positioned(
                 child: ClipRect(

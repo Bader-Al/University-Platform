@@ -56,19 +56,14 @@ class DraggableBottomSheet extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                   ),
-                  child: CustomScrollView(
-                      controller: scrollController,
-                      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-                      slivers: [
-                        SheetHeader(),
-                        SliverFillRemaining(
-                          hasScrollBody: true,
-                          child: ListView(
+                  child: ListView(
                             physics:
                                 ScrollPhysics(parent: BouncingScrollPhysics()),
                             controller: scrollController,
                             padding: EdgeInsets.only(left: 15),
                             children: <Widget>[
+                              SheetHeader(),
+
                               if (title != null)
                                 Container(
                                   alignment: Alignment.center,
@@ -90,8 +85,46 @@ class DraggableBottomSheet extends StatelessWidget {
                               /// THIS IS WHERE THE CONTENT IT LOADED
                             ],
                           ),
-                        )
-                      ])),
+                  // USED TO BE THE CODE FOR TO SUPPORT A SLIVER HEADER BUT CAUSED PERFORMANCE ISSUES. NOW NO MORE HEADER
+                  
+                  // CustomScrollView(
+                  //     controller: scrollController,
+                  //     physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                  //     slivers: [
+                  //       SheetHeader(),
+                  //       SliverFillRemaining(
+                  //         hasScrollBody: true,
+                  //         child: ListView(
+                  //           physics:
+                  //               ScrollPhysics(parent: BouncingScrollPhysics()),
+                  //           controller: scrollController,
+                  //           padding: EdgeInsets.only(left: 15),
+                  //           children: <Widget>[
+                  //             if (title != null)
+                  //               Container(
+                  //                 alignment: Alignment.center,
+                  //                 padding: const EdgeInsets.symmetric(
+                  //                     horizontal: 25, vertical: 65),
+                  //                 child: Text(
+                  //                   title,
+                  //                   style: TextStyle(
+                  //                       fontSize: 21,
+                  //                       fontWeight: FontWeight.w300,
+                  //                       color: Theme.of(context)
+                  //                           .colorScheme
+                  //                           .onSurface),
+                  //                   textAlign: TextAlign.center,
+                  //                 ),
+                  //               ),
+                  //             ...pageContent.map((e) => e)
+
+                  //             /// THIS IS WHERE THE CONTENT IT LOADED
+                  //           ],
+                  //         ),
+                  //       )
+                  //     ])
+                      
+                      ),
             );
           }),
     );
@@ -111,16 +144,20 @@ class DraggableBottomSheet extends StatelessWidget {
 // ),
 
 class SheetHeader extends StatelessWidget {
+  const SheetHeader();
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      backgroundColor: Colors.transparent,
-      forceElevated: false,
-      pinned: true,
-      floating: false,
-      elevation: 0,
-      titleSpacing: 0,
-      title: Container(
+    return 
+    // SliverAppBar(
+    //   backgroundColor: Colors.transparent,
+    //   forceElevated: false,
+    //   pinned: true,
+    //   floating: false,
+    //   elevation: 0,
+    //   titleSpacing: 0,
+    //   title: 
+      
+      Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
           ),
@@ -128,8 +165,8 @@ class SheetHeader extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-              child: Center(child: SearchButton()))),
-    );
+              child: Center(child: SearchButton())));
+    // );
   }
 }
 

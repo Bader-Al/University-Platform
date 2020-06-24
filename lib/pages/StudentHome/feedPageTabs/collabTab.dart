@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/pages/homeWidgets/skeletonWidgets/draggableBottomSheet.dart';
 
-class ClubsTab extends StatelessWidget {
-  const ClubsTab();
+class ColabTab extends StatelessWidget {
+  const ColabTab();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -10,7 +10,7 @@ class ClubsTab extends StatelessWidget {
         Positioned(
           child: Container(
             width: MediaQuery.of(context).size.width, alignment: Alignment.center,
-            child: Text("Clubs".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 + 10,),
+            child: Text("IDK".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 + 10,),
 
         DraggableBottomSheet(
           title: "Robotics and IOT",

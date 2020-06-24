@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/HorizontalExpandingGradeViewer.dart';
+// import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/academicDraggableBottomSheet.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
+import 'package:psu_platform/pages/homeWidgets/skeletonWidgets/draggableBottomSheet.dart';
 
 class AcademicsPage extends StatelessWidget {
   @override
@@ -27,19 +29,12 @@ class AcademicPageBuilder extends StatelessWidget {
   }
 }
 
-class DraggableSheetInTheForeground extends StatefulWidget {
-  @override
-  DraggableSheetInTheForegroundState createState() =>
-      DraggableSheetInTheForegroundState();
-}
-
-class DraggableSheetInTheForegroundState
-    extends State<DraggableSheetInTheForeground> {
+class DraggableSheetInTheForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // if (!Provider.of<AcademicPageState>(context).showSheetPage) {
     //   return Positioned(
-    //     child: handleFirstTime(),
+    //     child: handleFirstTime(context),
     //     bottom: 0,
     //   );
     // }
@@ -58,7 +53,7 @@ class DraggableSheetInTheForegroundState
     );
   }
 
-  Widget handleFirstTime() {
+  Widget handleFirstTime(context) {
     print("showing firstTime");
     return Container(
       color: Colors.red,
@@ -164,7 +159,10 @@ class AcademicPageState extends ChangeNotifier {
 
 }
 List stuffs = [
+   GradeViewer(gradesList: [Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),]),
+  
   SizedBox(height: 70,),
+                              
   
 AcademicItem(),
 AcademicItem(),

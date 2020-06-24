@@ -17,6 +17,7 @@ void main() => runApp(ChangeNotifierProvider<AppState>(
     ));
 
 //put back in homepage class
+// TODO:: USE DEFAULTTABCONTROLLER INSIDE HOME BOTTOM NAVIGATION
 
 class Platform extends StatefulWidget {
   @override

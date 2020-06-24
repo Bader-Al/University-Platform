@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/rendering.dart';
 
-
-
-// TODO: TRY USING THE HEADER AS A PART OF THE BODY RATHER THAN A SLIVERAPPBAR OR APPBAR... 
-// THERE'S NO NEED TO SEARCH ONCE SCROLLED DOWN AND THERE'S NO NEED TO SEE CALENDAR/ANNOUNCEMENTS
-
-
 class SearchButton extends StatefulWidget {
   @override
   _SearchButtonState createState() => _SearchButtonState();
@@ -82,14 +76,10 @@ class _SearchButtonState extends State<SearchButton> {
           ),
         ),
         PositionedDirectional(
-          end: -17,
+          end: -15,
           child: FlatButton(
               onPressed: expandSearchBar,
-              child: 
-              Image(image:  AssetImage('lib/assets/icons/search.png', ), fit: BoxFit.contain, height: 16,)
-              
-              
-              ),
+              child: Image(image:  AssetImage('lib/assets/icons/search.png', ), fit: BoxFit.contain, height: 16,)),
         )
       ];
 

@@ -98,29 +98,24 @@ class EventCard extends StatelessWidget {
                     Image(
                       height: double.infinity,
                       image: CachedNetworkImageProvider(
-                          "https://images.techhive.com/images/article/2016/09/data_science_classes-100682563-large.jpg"),
+                          "https://images.unsplash.com/1/type-away.jpg?q=80&fm=jpg&w=400&fit=max"),
                       fit: BoxFit.fitHeight,
                     ),
                 ),
               Positioned(
-                child: ClipRect(
-                              child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaY: 3, sigmaX: 3),
-                                child: Container(
-                      height: 65,
-                      width: 150,
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      color: Theme.of(context).colorScheme.onSurface.withAlpha(135),
-                      child: Center(
-                        child: Text(
-                          "$title",
-                          softWrap: true,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background, ),overflow: TextOverflow.ellipsis, maxLines: 3,
-                        ),
+                child: Container(
+                    height: 65,
+                    width: 150,
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    color: Theme.of(context).colorScheme.onSurface.withAlpha(155),
+                    child: Center(
+                      child: Text(
+                        "$title",
+                        softWrap: true,
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background, ),overflow: TextOverflow.ellipsis, maxLines: 3,
                       ),
                     ),
                   ),
-                ),
                 bottom: 0,
               )
             ]),

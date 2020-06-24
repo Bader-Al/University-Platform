@@ -28,22 +28,17 @@ class BillBoardHeader extends StatelessWidget {
               ),
             ),
             Positioned(
-              child: ClipRect(
-                            child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaY: 3, sigmaX: 3),
-                              child: Container(
-                    height: 65,
-                    width: boxWidth-30,
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    color: Theme.of(context).colorScheme.onSurface.withAlpha(135),
-                    child: Text(
-                      "Our Univerisity joins drone racing and cinematography..",
-                      softWrap: true,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background),
-                    ),
+              child: Container(
+                  height: 65,
+                  width: boxWidth-30,
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(155),
+                  child: Text(
+                    "Our Univerisity joins drone racing and cinematography..",
+                    softWrap: true,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background),
                   ),
                 ),
-              ),
               bottom: 0,
             )
           ]),

@@ -14,31 +14,36 @@ class BillBoardHeader extends StatelessWidget {
     return Expanded(
       flex: flexFactor,
       child: Padding(
-        padding: const EdgeInsets.only(right:15.0, left: 15),
+        padding: const EdgeInsets.only(right: 15.0, left: 15),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-                child: Stack(children: [
-            Container(
-              height: 150,
-              width: boxWidth - 30,
-              child: Image(
-                image: CachedNetworkImageProvider(
-                    "https://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/07/drone.jpg"),
-                fit: BoxFit.cover,
+          child: Stack(children: [
+            Positioned(
+              bottom: 0,top: 0,
+              child: Container(
+                width: boxWidth - 30,
+                child: Image(
+                  image: CachedNetworkImageProvider(
+                      "https://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/07/drone.jpg"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Positioned(
               child: Container(
-                  height: 65,
-                  width: boxWidth-30,
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  color: Theme.of(context).colorScheme.onSurface.withAlpha(155),
-                  child: Text(
-                    "Our Univerisity joins drone racing and cinematography..",
-                    softWrap: true,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background),
-                  ),
+                height: 65,
+                width: boxWidth - 30,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                color: Theme.of(context).colorScheme.onSurface.withAlpha(155),
+                child: Text(
+                  "Our Univerisity joins drone racing and cinematography..",
+                  softWrap: true,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                      color: Theme.of(context).colorScheme.background),
                 ),
+              ),
               bottom: 0,
             )
           ]),

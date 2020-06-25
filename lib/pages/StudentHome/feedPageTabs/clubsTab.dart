@@ -12,10 +12,13 @@ class ClubsTab extends StatelessWidget {
             width: MediaQuery.of(context).size.width, alignment: Alignment.center,
             child: Text("Clubs".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 ,),
 
-        DraggableBottomSheet(
-          title: "Robotics and IOT",
-          pageIndex: 0,
-          pageContent: [Text("data"), Text("data")],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: DraggableBottomSheet(
+            title: "Robotics and IOT",
+            pageIndex: 0,
+            pageContent: [Text("data"), Text("data")],
+          ),
         ),
       ],
     );

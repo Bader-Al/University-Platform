@@ -32,7 +32,6 @@ class AcademicPageBuilder extends StatelessWidget {
 class DraggableSheetInTheForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-  
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 350),
       switchInCurve: Curves.elasticInOut,
@@ -47,8 +46,6 @@ class DraggableSheetInTheForeground extends StatelessWidget {
       child: Provider.of<AcademicPageState>(context)._selectedPage,
     );
   }
-
-
 }
 
 class BodyInTheBackground extends StatelessWidget {
@@ -76,12 +73,23 @@ class AcademicPageState extends ChangeNotifier {
 
   bool showSheetPage = false;
 
-  static List _pages = [ // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
-    Container(key: ValueKey(0), child: 
-    DraggableBottomSheet(pageContent: stuffs, pageIndex: 0, title: "Introduction To Artificial Intelligence",),),
-    Container(key: ValueKey(1), child: 
-    DraggableBottomSheet(pageContent: stuffs, pageIndex: 1, title: "Human Computer Interaction"),)
-    
+  static List _pages = [
+    // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
+    Container(
+      key: ValueKey(0),
+      child: DraggableBottomSheet(
+        pageContent: stuffs,
+        pageIndex: 0,
+        title: "Introduction To Artificial Intelligence",
+      ),
+    ),
+    Container(
+      key: ValueKey(1),
+      child: DraggableBottomSheet(
+          pageContent: stuffs,
+          pageIndex: 1,
+          title: "Human Computer Interaction"),
+    )
   ];
 
   void setSelectedPageIndex(int index) {
@@ -113,27 +121,30 @@ class AcademicPageState extends ChangeNotifier {
     showSheetPage = value;
   }
 
-
   Widget returnSelectedPage() {
     return _selectedPage;
   }
-
 }
+
 List stuffs = [
-   GradeViewer(gradesList: [Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),]),
-  
-  SizedBox(height: 70,),
-                              
-  
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
-AcademicItem(),
+  GradeViewer(gradesList: [
+    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10, isSeen: false),
+    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10, isSeen: false),
+    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10, isSeen: false),
+    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),
+  ]),
+  SizedBox(
+    height: 70,
+  ),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
 ];

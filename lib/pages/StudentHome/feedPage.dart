@@ -66,7 +66,8 @@ Widget centeredTabBar(tabTitles, context, distanceFromBottom){
 Widget tabBar(tabTitles, selectedColor, unselectedColor){
   return TabBar(
 
-                          isScrollable: false,
+                          isScrollable: true,
+                          
                           indicatorSize: TabBarIndicatorSize.label ,
                           indicatorWeight: 1,
                           tabs: tabTitles,

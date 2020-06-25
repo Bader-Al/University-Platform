@@ -33,108 +33,111 @@ class GradeViewer extends StatelessWidget {
         create: (context) => GradeSelectionData(),
         child: Consumer<GradeSelectionData>(
           builder: (context, gradeSelectionData, child) {
-            return Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.background,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    bottomLeft: Radius.circular(25)),
-              ),
-              padding: EdgeInsets
-                  .only(left:15), // there is a previous 10px idk where so this makes 15 PX
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      GradeExpansionTile(
-                        title: Container(
-                          // Contains the background
-                          height: 155,
-                        ),
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            color: Theme.of(context).colorScheme.background,
-                            child: Text("DASHEBERH"),
-                          )
-                        ],
-                      ),
-                      Container(
-                        // Contains the listView
-                        height: 155,
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            start: 10,
-                            top: 10,
-                            bottom: 10,
+            return Padding(
+              padding: const EdgeInsets.only(left:15.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      bottomLeft: Radius.circular(25)),
+                ),
+                padding: EdgeInsets
+                    .only(left:0), // there is a previous 10px idk where so this makes 15 PX
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        GradeExpansionTile(
+                          title: Container(
+                            // Contains the background
+                            height: 155,
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                bottomLeft: Radius.circular(15)),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              physics: ScrollPhysics(parent: BouncingScrollPhysics() ),
-                              itemCount: gradesList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return FlatButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    Provider.of<GradeSelectionData>(context)
-                                        .setSelectedIndex(index, gradesList[index]);
-                                  },
-                                  child: GradeCard(
-                                    gradeAttained:
-                                        gradesList[index].earnedGrade,
-                                    gradePossible:
-                                        gradesList[index].gradePossible,
-                                    examType: gradesList[index].examType,
-                                    isWeaklyHighlighted: !gradesList[index].isSeen,
-                                    isHighlighted:
-                                        Provider.of<GradeSelectionData>(context)
-                                                .selectedIndex ==
-                                            index,
-                                  ),
-                                );
-                              },
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.6,
+                              color: Theme.of(context).colorScheme.background,
+                              child: Text("DASHEBERH"),
+                            )
+                          ],
+                        ),
+                        Container(
+                          // Contains the listView
+                          height: 155,
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.only(
+                              start: 10,
+                              top: 10,
+                              bottom: 10,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15)),
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                physics: ScrollPhysics(parent: BouncingScrollPhysics() ),
+                                itemCount: gradesList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return FlatButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      Provider.of<GradeSelectionData>(context)
+                                          .setSelectedIndex(index, gradesList[index]);
+                                    },
+                                    child: GradeCard(
+                                      gradeAttained:
+                                          gradesList[index].earnedGrade,
+                                      gradePossible:
+                                          gradesList[index].gradePossible,
+                                      examType: gradesList[index].examType,
+                                      isWeaklyHighlighted: !gradesList[index].isSeen,
+                                      isHighlighted:
+                                          Provider.of<GradeSelectionData>(context)
+                                                  .selectedIndex ==
+                                              index,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    // padding: EdgeInsets.zero,
-                    onTap: () {
-                      gradeSelectionData.switchExpansion();
-                      scrollController.jumpTo(100.0);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(bottom: 5),
-                      color: Colors.transparent,
-                      child: Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text("Grade Overview",
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.primary)),
-                        ],
-                      ),
+                      ],
                     ),
-                  )
-                ],
+                    GestureDetector(
+                      // padding: EdgeInsets.zero,
+                      onTap: () {
+                        gradeSelectionData.switchExpansion();
+                        scrollController.jumpTo(100.0);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(bottom: 5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.keyboard_arrow_down,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("Grade Overview",
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary)),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           },

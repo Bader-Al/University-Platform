@@ -18,20 +18,40 @@ class StudentHome extends StatefulWidget {
 class StudentHomeState extends State<StudentHome> {
   List<Widget> navBarRoutes = [
     DashboardPage(),
-    FeedPage(),
+    AcademicsPage(),
     ChatsPage(),
-    AcademicsPage()
+    FeedPage(),
   ];
   int _pageIndex = 0;
   bool fabEnabled = true;
+  PageController _pageController ;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _pageController = new PageController();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _pageController.dispose();
+    super.dispose();
+  }
 
   
   @override
   Widget build(BuildContext context) {
    // FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).colorScheme.primary) ;
-    
+    //navBarRoutes[_pageIndex]
     return Scaffold(
-        body: navBarRoutes[_pageIndex],
+        body: PageView(
+          controller: _pageController, 
+          children: <Widget>[...navBarRoutes],
+          onPageChanged: (index){setState(() {
+            _pageIndex=index;
+          });},
+        ),
         floatingActionButton: FloatingActionButton(
           // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
           onPressed: !fabEnabled
@@ -55,6 +75,7 @@ class StudentHomeState extends State<StudentHome> {
   Widget homeBottomNavigationBar() {
     return BubbleBottomBar(
       onTap: (index) {
+        _pageController.jumpToPage(index);
         setState(() {
           _pageIndex = index;
           if (_pageIndex == 1) {
@@ -75,43 +96,49 @@ class StudentHomeState extends State<StudentHome> {
           .colorScheme.primary, //optional, uses theme color if not specified
       items: <BubbleBottomBarItem>[
         BubbleBottomBarItem(
+          
             backgroundColor: Theme.of(context).colorScheme.primary,
             icon: Icon(
-              Icons.dashboard,
+              Icons.home,
               color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
+              size: 24,
             ),
             activeIcon: Icon(
-              Icons.dashboard,
+              Icons.home,
               color: Theme.of(context).colorScheme.onPrimary,
+              size: 30,
             ),
             title: Text(
-              "Dashboard",
+              "Home",
               style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)
+            )),
+        BubbleBottomBarItem(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            icon: Icon(
+              Icons.book,
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
+              size: 24,
+            ),
+            activeIcon: Icon(
+              Icons.library_books,
+              color: Theme.of(context).colorScheme.onPrimary,
+              size: 30,
+            ),
+            title: Text(
+              "Courses",
+             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)
             )),
         BubbleBottomBarItem(
           backgroundColor: Theme.of(context).colorScheme.primary,
           icon: Icon(
-            Icons.rss_feed,
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
-          ),
-          activeIcon: Icon(
-            Icons.rss_feed,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-          title: Text(
-            "Posts",
-            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-          ),
-        ),
-        BubbleBottomBarItem(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          icon: Icon(
             Icons.chat_bubble,
             color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
+              size: 24,
           ),
           activeIcon: Icon(
             Icons.chat_bubble,
             color: Theme.of(context).colorScheme.onPrimary,
+              size: 30,
           ),
           title: Text(
             "Chats",
@@ -119,19 +146,22 @@ class StudentHomeState extends State<StudentHome> {
           ),
         ),
         BubbleBottomBarItem(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            icon: Icon(
-              Icons.dashboard,
-              color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
-            ),
-            activeIcon: Icon(
-              Icons.library_books,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-            title: Text(
-              "Academic",
-             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)
-            )),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          icon: Icon(
+            Icons.web,
+            color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
+              size: 24,
+          ),
+          activeIcon: Icon(
+            Icons.web,
+            color: Theme.of(context).colorScheme.onPrimary,
+              size: 30,
+          ),
+          title: Text(
+            "Social",
+            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          ),
+        ),
       ],
     );
   }

@@ -10,7 +10,7 @@ class UniversityTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    double distanceFromBottom = MediaQuery.of(context).size.height*0.2+20; 
+    double distanceFromBottom = MediaQuery.of(context).size.height*0.2+40; 
 
     return Stack(
       children: <Widget>[
@@ -23,16 +23,16 @@ class UniversityTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
              BillBoardHeader(5),
-              SizedBox(height:20),
+              SizedBox(height:13),
              UniversityEventsHighlightsBanner(8), // the Ints passed in are the FLEX FACTOR FOR EXPANDED!!!
             ],
           ),
-        ), bottom: distanceFromBottom+75, top: 50,left: 0, right: 0,), // value added to the right is like padding between this and tabselector
+        ), bottom: distanceFromBottom+70, top: 15,left: 0, right: 0,), // value added to the right is like padding between this and tabselector
 
         Positioned(
           child: Container(
             width: MediaQuery.of(context).size.width, alignment: Alignment.center,
-            child: Text("University".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 ,),
+            child: Text("University".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2+5 ,),
 
         DraggableBottomSheet(
           pageIndex: 0,

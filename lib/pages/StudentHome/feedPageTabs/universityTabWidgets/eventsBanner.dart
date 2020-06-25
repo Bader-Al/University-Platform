@@ -24,17 +24,20 @@ class UniversityEventsHighlightsBanner extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("Events", style: TextStyle(color: Theme.of(context).colorScheme.onPrimary , fontSize: 24, fontWeight: FontWeight.w300 , letterSpacing: 1) ,  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left:15.0),
+                    child: Text("Events", style: TextStyle(color: Theme.of(context).colorScheme.onPrimary , fontSize: 24, fontWeight: FontWeight.w300 , letterSpacing: 1) ,  ),
+                  ),
                   
                   
                   
                   Padding(
-                    padding: const EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(right: 10, bottom: 5),
                     child: Icon(Icons.add_alert , color: Theme.of(context).colorScheme.background.withAlpha(150),),
                   )
                 ],
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               Expanded(
                   child: EventsListView()
               
@@ -105,12 +108,15 @@ class EventCard extends StatelessWidget {
         height: 65,
         width: 175,
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        color: Theme.of(context).colorScheme.onSurface.withAlpha(155),
-        child: Center(
+        color: Theme.of(context).colorScheme.surface.withAlpha(200),
+        child: Container(
+          alignment: Alignment.centerLeft,
+          height: 65,
           child: Text(
             "$title",
+            textAlign: TextAlign.left,
             softWrap: true,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.background, ),overflow: TextOverflow.ellipsis, maxLines: 3,
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: Theme.of(context).colorScheme.onSurface, ),overflow: TextOverflow.ellipsis, maxLines: 3,
           ),
         ),
       ),

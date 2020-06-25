@@ -34,14 +34,14 @@ class BillBoardHeader extends StatelessWidget {
                 height: 65,
                 width: boxWidth - 30,
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                color: Theme.of(context).colorScheme.onSurface.withAlpha(155),
+                color: Theme.of(context).colorScheme.surface.withAlpha(200),
                 child: Text(
                   "Our Univerisity joins drone racing and cinematography..",
                   softWrap: true,
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
-                      color: Theme.of(context).colorScheme.background),
+                      color: Theme.of(context).colorScheme.onSurface),
                 ),
               ),
               bottom: 0,

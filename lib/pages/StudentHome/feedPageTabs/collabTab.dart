@@ -10,7 +10,7 @@ class ColabTab extends StatelessWidget {
         Positioned(
           child: Container(
             width: MediaQuery.of(context).size.width, alignment: Alignment.center,
-            child: Text("IDK".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 ,),
+            child: Text("IDK".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 +5,),
 
         DraggableBottomSheet(
           title: "Robotics and IOT",

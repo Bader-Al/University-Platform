@@ -86,6 +86,7 @@ class AcademicPageState extends ChangeNotifier {
     Container(
       key: ValueKey(1),
       child: DraggableBottomSheet(
+        horizontalPadding: 0,
           pageContent: stuffs,
           pageIndex: 1,
           title: "Human Computer Interaction"),
@@ -133,9 +134,7 @@ List stuffs = [
     Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10, isSeen: false),
     Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),
   ]),
-  SizedBox(
-    height: 70,
-  ),
+
   AcademicItem(),
   AcademicItem(),
   AcademicItem(),

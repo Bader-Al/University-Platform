@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:psu_platform/pages/homeWidgets/AbstractWidgets/sheetItem.dart';
 
 class Grade {
   Grade(
@@ -17,24 +18,27 @@ class Grade {
   bool isSeen;
 }
 
-class GradeViewer extends StatelessWidget {
+class GradeViewer extends StatelessWidget implements SheetItem {
   GradeViewer({@required this.gradesList, this.scrollController,});
 
   final List<Grade> gradesList;
   final scrollController;
+
+  double padding = 15;
+  Color backGroundColor;
+
   /// TODO:::: NEEDS CONSUMER?
   @override
   Widget build(BuildContext context) {
-
-
-    
+    backGroundColor = Theme.of(context).colorScheme.surface;
 
     return ChangeNotifierProvider<GradeSelectionData>(
         create: (context) => GradeSelectionData(),
         child: Consumer<GradeSelectionData>(
           builder: (context, gradeSelectionData, child) {
-            return Padding(
-              padding: const EdgeInsets.only(left:15.0),
+            return Container(
+              color: backGroundColor,
+              padding:  EdgeInsets.only(left:padding, bottom: padding*7),
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,

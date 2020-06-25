@@ -4,11 +4,14 @@ import 'package:psu_platform/pages/homeWidgets/AbstractWidgets/sheetItem.dart';
 class AcademicItem extends StatelessWidget implements SheetItem{
 
   double padding = 15;
+  Color backGroundColor;
 
   @override
   Widget build(BuildContext context) {
+    backGroundColor = Theme.of(context).colorScheme.surface;
     return 
-  Padding(
+  Container(
+    color: backGroundColor,
     padding: const EdgeInsets.only(bottom: 30),
     child: Container(
       //width: double.infinity,

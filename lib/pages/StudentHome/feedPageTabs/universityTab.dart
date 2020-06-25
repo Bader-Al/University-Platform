@@ -34,12 +34,10 @@ class UniversityTab extends StatelessWidget {
             width: MediaQuery.of(context).size.width, alignment: Alignment.center,
             child: Text("University".toUpperCase(), style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary),), ), bottom: MediaQuery.of(context).size.height*0.2 ,),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: DraggableBottomSheet(
-            pageIndex: 0,
-            pageContent: [Text("data"), Text("data")],
-          ),
+        DraggableBottomSheet(
+          pageIndex: 0,
+          pageContent: [Text("data"), Text("data")],
+          horizontalPadding: 2,
         ),
       ],
     );

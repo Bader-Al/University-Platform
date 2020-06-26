@@ -23,6 +23,7 @@ class QuickDeadlines extends StatelessWidget {
       height = 0.66 * phoneHeight;
       //mainFrameHeight=height;
     }
+    mainFrameHeight = height;
     return Container(
       height: height,
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -47,18 +48,18 @@ class Body extends StatelessWidget {
 
   List deadLines;
 
-  GlobalKey _mainFrameKey = GlobalKey();
+  // GlobalKey _mainFrameKey = GlobalKey();
 
-  Size boxSize;
-  getSize() {
-    RenderBox _frameBox = _mainFrameKey.currentContext.findRenderObject();
-    boxSize = _frameBox.size;
-    mainFrameHeight = boxSize.height;
-  }
+  // Size boxSize;
+  // getSize() {
+  //   RenderBox _frameBox = _mainFrameKey.currentContext.findRenderObject();
+  //   boxSize = _frameBox.size;
+  //   mainFrameHeight = boxSize.height;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
+   // WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
     // getSize();
 
     return Expanded(
@@ -74,7 +75,6 @@ class Body extends StatelessWidget {
           // padding: EdgeInsets.all(2),
 
           child: Stack(
-            key: _mainFrameKey,
             fit: StackFit.passthrough,
             children: <Widget>[
               DateSelector(),
@@ -410,6 +410,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                   : selectedIndex = null;
               //print("Selected is $selectedIndex"); //
               print(mainFrameHeight);
+            
               double jumptoValue = (index.toDouble() * 100) + 17 * index;
               print("jumptoValue: $jumptoValue");
             });
@@ -440,7 +441,7 @@ class DeadLineBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: mainFrameHeight == null ? 150 : mainFrameHeight - 100,
+      height:mainFrameHeight - 140,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -448,7 +449,7 @@ class DeadLineBody extends StatelessWidget {
             height: 5,
           ), // you could completely replace spacer with Expanded... same exact thing but with a child
           Container(
-            height: mainFrameHeight == null ? 150: mainFrameHeight - 170,
+            height: mainFrameHeight - 210,
             padding: const EdgeInsets.only(left: 15),
             child: ClipRRect(
                 borderRadius:

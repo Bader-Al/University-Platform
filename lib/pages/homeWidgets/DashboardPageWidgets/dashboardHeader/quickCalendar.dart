@@ -30,7 +30,7 @@ class QuickCalendarSlider extends StatelessWidget {
       width: double.infinity,
       child: PageView.builder(itemBuilder: (context, index){
         return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: _quickCalendarItems[index],
               );
       } ,

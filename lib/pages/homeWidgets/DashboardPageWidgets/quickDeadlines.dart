@@ -47,7 +47,6 @@ class Body extends StatelessWidget {
 
   List deadLines;
 
-
   GlobalKey _mainFrameKey = GlobalKey();
 
   Size boxSize;
@@ -61,7 +60,6 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
     // getSize();
-
 
     return Expanded(
         child: Container(
@@ -79,11 +77,8 @@ class Body extends StatelessWidget {
             key: _mainFrameKey,
             fit: StackFit.passthrough,
             children: <Widget>[
-              DateSelector(
-              ),
-              DeadLinesContentViewer(
-                this.deadLines
-              ),
+              DateSelector(),
+              DeadLinesContentViewer(this.deadLines),
             ],
           ),
         ),
@@ -129,7 +124,10 @@ class DateTab extends StatelessWidget {
                     fontSize: 15,
                     color: isSelected
                         ? Colors.white
-                        :Theme.of(context).colorScheme.background.withAlpha(150),
+                        : Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withAlpha(150),
                     fontWeight: FontWeight.w400),
               ),
               Text(
@@ -138,7 +136,10 @@ class DateTab extends StatelessWidget {
                     fontSize: 12,
                     color: isSelected
                         ? Colors.white
-                        : Theme.of(context).colorScheme.background.withAlpha(150),
+                        : Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withAlpha(150),
                     fontWeight: FontWeight.w300),
               ),
             ],
@@ -214,10 +215,11 @@ class DeadLinesContentViewer extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    bottomRight: Radius.circular(15)),
-                child:
-                ExpandingDeadlineListView(deadLines: this.deadLines,),
+                    topRight: Radius.circular(5),
+                    bottomRight: Radius.circular(5)),
+                child: ExpandingDeadlineListView(
+                  deadLines: this.deadLines,
+                ),
               )),
         )
       ],
@@ -269,58 +271,92 @@ class CompactFileItem extends StatelessWidget {
   }
 }
 
+class CompactFileViewer extends StatelessWidget {
+  // major performance issues NOMORE
+  // ISSUES WHERE TRACED DOWN TO COMPACT FILE ITEM
 
-
-class CompactFileViewer extends StatelessWidget { // major performance issues NOMORE
-                                                  // ISSUES WHERE TRACED DOWN TO COMPACT FILE ITEM
- 
   @override
   Widget build(BuildContext context) {
-
-
-return GridView.count(
-  physics: ScrollPhysics(parent:BouncingScrollPhysics()),
-  crossAxisCount: MediaQuery.of(context).size.height<500? 1:MediaQuery.of(context).size.height<1300?2 :MediaQuery.of(context).size.height<1500? 3 : 4 , scrollDirection: Axis.horizontal,
-children: <Widget>[
-  Container(color: Colors.red, width: 10, height: 10,),
-  Container(color: Colors.blue, width: 10, height: 10,),
-  Container(color: Colors.yellow, width: 10, height: 10,),
-  Container(color: Colors.green, width: 10, height: 10,),
-  Container(color: Colors.brown, width: 10, height: 10,),
-  Container(color: Colors.orange, width: 10, height: 10,),
-  Container(color: Colors.green, width: 10, height: 10,),
-  Container(color: Colors.brown, width: 10, height: 10,),
-  Container(color: Colors.orange, width: 10, height: 10,),
-  Container(color: Colors.blue, width: 10, height: 10,),
-  Container(color: Colors.yellow, width: 10, height: 10,),
-  Container(color: Colors.green, width: 10, height: 10,),
-  Container(color: Colors.brown, width: 10, height: 10,),
-  Container(color: Colors.orange, width: 10, height: 10,),
-  Container(color: Colors.green, width: 10, height: 10,),
-  Container(color: Colors.brown, width: 10, height: 10,),
-  Container(color: Colors.orange, width: 10, height: 10,),
-
-],
-
-);
-
-
-
+    return GridView.count(
+      childAspectRatio: 5 / 9,
+      // padding: EdgeInsets.zero,
+      mainAxisSpacing: 5,
+      crossAxisSpacing: 5,
+      cacheExtent: 0,
+      
+      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+      crossAxisCount: MediaQuery.of(context).size.height < 500
+          ? 1
+          : MediaQuery.of(context).size.height < 1300
+              ? 2
+              : MediaQuery.of(context).size.height < 1500 ? 3 : 4,
+      scrollDirection: Axis.horizontal,
+      children: <Widget>[
+     buildFileItem(context, false),
+     buildFileItem(context, true),
+     buildFileItem(context, true),
+     buildFileItem(context, false),
+     buildFileItem(context, true),
+     buildFileItem(context, false), 
+      ],
+    );
   }
 
+  Widget buildFileItem(context, bool isDownloaded){
+    return    Container( 
+      padding: EdgeInsets.symmetric( horizontal: 10 ) ,
+      // color: Colors.red, 
+      decoration: BoxDecoration(
+        color: isDownloaded? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(5)
+      ),
+      child: Row(
+          // crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+               
+               Expanded(
+                 child: Text(
+                   "Assignment1_dueeeeTomro.pdf",
+                   style: TextStyle(
+         fontWeight: FontWeight.w400,
+         color: isDownloaded? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
+         fontSize: 12),
+                   maxLines: 4,
+                   softWrap: true,
+                   overflow: TextOverflow.ellipsis ,
+                 ),
+               ),
+               Padding(
+                 padding: const EdgeInsets.only(left:5.0),
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                   children: <Widget>[
+                     Visibility(visible: !isDownloaded,child: Icon(Icons.remove_red_eye, color:isDownloaded? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary, size: 21,)),
+                     Icon( isDownloaded? Icons.delete:Icons.cloud_download, color:isDownloaded? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary, size: 21,),
+                   ],
+                 ),
+               )
+              ],
+            ),
+    );
+  }
 }
 
 ////////////////////////////////// ExpandingDeadlines[ Right Side
 
 class Deadline {
   Deadline(
-      {this.isExpanded = false,this.deadlineType, this.deadlineCourseName, this.deadlineTitle, this.deadlineDueDate });
+      {this.isExpanded = false,
+      this.deadlineType,
+      this.deadlineCourseName,
+      this.deadlineTitle,
+      this.deadlineDueDate});
 
   bool isExpanded;
-    final String deadlineType;
+  final String deadlineType;
   final String deadlineTitle;
   final String deadlineCourseName;
-  final String deadlineDueDate; 
+  final String deadlineDueDate;
 }
 
 List<Deadline> _items = <Deadline>[
@@ -328,7 +364,7 @@ List<Deadline> _items = <Deadline>[
 ];
 
 class ExpandingDeadlineListView extends StatefulWidget {
-  const ExpandingDeadlineListView({Key key, this.deadLines }) : super(key: key);
+  const ExpandingDeadlineListView({Key key, this.deadLines}) : super(key: key);
   final List deadLines;
   @override
   _ExpandingDeadlineListViewState createState() =>
@@ -338,7 +374,6 @@ class ExpandingDeadlineListView extends StatefulWidget {
 class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
   int selectedIndex;
   ScrollController scrollController;
-
 
   @override
   void initState() {
@@ -355,125 +390,118 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-   
-
     return SingleChildScrollView(
-      controller: scrollController,
-      physics: ScrollPhysics(parent:BouncingScrollPhysics()),
-      child: 
-        ExpansionPanelList(
+        controller: scrollController,
+        physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+        child: ExpansionPanelList(
           expandedHeaderPadding: EdgeInsets.all(0),
-
-          expansionCallback: (int index, bool isExpanded, ) {
+          expansionCallback: (
+            int index,
+            bool isExpanded,
+          ) {
             setState(() {
-              widget.deadLines[index].isExpanded = !widget.deadLines[index].isExpanded;
+              widget.deadLines[index].isExpanded =
+                  !widget.deadLines[index].isExpanded;
               widget.deadLines[index].isExpanded
                   ? selectedIndex = index
                   : selectedIndex = null;
               //print("Selected is $selectedIndex"); //
               print(mainFrameHeight);
-              double jumptoValue = (index.toDouble()*100) + 17*index;
+              double jumptoValue = (index.toDouble() * 100) + 17 * index;
               print("jumptoValue: $jumptoValue");
             });
           },
-          children: 
-          widget.deadLines.map(( deadline) {
+          children: widget.deadLines.map((deadline) {
             var expansionPanel = // did this split up so that i can deal with expansionPanel later in hopes to use something like a key to find its scroll poisition
-            ExpansionPanel(
-              
-
-                canTapOnHeader: true,
-                headerBuilder: (BuildContext ctx, bool isExpanded) {
-                  return DeadLineHeader(
-                    deadlineTitle: deadline.deadlineTitle,
-                  deadlineCourseName: deadline.deadlineCourseName,
-                  deadlineDueDate: deadline.deadlineDueDate,
-                  deadlineType: deadline.deadlineType,
-                  
-                  );
-                },
-                isExpanded: deadline.isExpanded,
-                body: DeadLineBody()
-
-
-            );
-            
-
+                ExpansionPanel(
+                    canTapOnHeader: true,
+                    headerBuilder: (BuildContext ctx, bool isExpanded) {
+                      return DeadLineHeader(
+                        deadlineTitle: deadline.deadlineTitle,
+                        deadlineCourseName: deadline.deadlineCourseName,
+                        deadlineDueDate: deadline.deadlineDueDate,
+                        deadlineType: deadline.deadlineType,
+                      );
+                    },
+                    isExpanded: deadline.isExpanded,
+                    body: DeadLineBody());
 
             return expansionPanel;
           }).toList(),
-        )
-      
-    );
+        ));
   }
-
 }
 
 class DeadLineBody extends StatelessWidget {
-   const DeadLineBody();
+  const DeadLineBody();
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      height: mainFrameHeight==null?150: mainFrameHeight - 100,
+    return Container(
+      height: mainFrameHeight == null ? 150 : mainFrameHeight - 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[SizedBox(height: 5,), // you could completely replace spacer with Expanded... same exact thing but with a child
-          Container( height: mainFrameHeight - 170,
-         
+        children: <Widget>[
+          SizedBox(
+            height: 5,
+          ), // you could completely replace spacer with Expanded... same exact thing but with a child
+          Container(
+            height: mainFrameHeight - 170,
             padding: const EdgeInsets.only(left: 15),
-            child:  ClipRRect(borderRadius: BorderRadius.horizontal(left:Radius.circular(25)),child: CompactFileViewer()),
-          ), Spacer(),
+            child: ClipRRect(
+                borderRadius:
+                    BorderRadius.horizontal(left: Radius.circular(5)),
+                child: CompactFileViewer()),
+          ),
+          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
                   child: Container(
-                    height:
+                height:
                     45, // The expanded only expands horizontally.. leave this here
-                    child: FlatButton(
-                      color: Theme.of(context).colorScheme.surface,
-                      onPressed: () {},
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
+                child: FlatButton(
+                  color: Theme.of(context).colorScheme.surface,
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
                         BorderRadius.only(topRight: Radius.circular(10)),
-                      ),
-                      child: Text(
-                        "Description",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.onSurface),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  )),
+                  ),
+                  child: Text(
+                    "Description",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.onSurface),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+              )),
               SizedBox(
                 width: 15,
               ),
               Expanded(
                   child: Container(
-                    height: 45,
-                    child: FlatButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () {},
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
+                height: 45,
+                child: FlatButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(10)),
-                      ),
-                      child: Text(
-                        "Attempt",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.background),
-                      ),
-                    ),
-                  ))
+                  ),
+                  child: Text(
+                    "Attempt",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.background),
+                  ),
+                ),
+              ))
             ],
           )
         ],
@@ -482,20 +510,22 @@ class DeadLineBody extends StatelessWidget {
   }
 }
 
-
 class DeadLineHeader extends StatelessWidget {
-  const DeadLineHeader({this.deadlineType, this.deadlineTitle, this.deadlineCourseName, this.deadlineDueDate});
+  const DeadLineHeader(
+      {this.deadlineType,
+      this.deadlineTitle,
+      this.deadlineCourseName,
+      this.deadlineDueDate});
   final String deadlineType;
   final String deadlineTitle;
   final String deadlineCourseName;
-  final String deadlineDueDate; 
+  final String deadlineDueDate;
 
   @override
   // RenderBox box;
   Widget build(BuildContext context) {
-
-  //  box = context.findRenderObject();
-  //  print(box.size);
+    //  box = context.findRenderObject();
+    //  print(box.size);
     return Container(
       height: 100,
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -509,14 +539,16 @@ class DeadLineHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                 Text(deadlineTitle??
-                  "Assignment DEBUG",
+                Text(
+                  deadlineTitle ?? "Assignment DEBUG",
                   style: TextStyle(
                       fontWeight: FontWeight.w300,
                       color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 16),
                 ),
-                 Text(deadlineCourseName??"Introduction To Software Engineering",
+                Text(
+                    deadlineCourseName ??
+                        "Introduction To Software Engineering",
                     maxLines: 1,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
@@ -532,8 +564,8 @@ class DeadLineHeader extends StatelessWidget {
               decoration: BoxDecoration(
                   color: kYellowIndication.withAlpha(100),
                   borderRadius: BorderRadius.circular(25)),
-              child: Text(deadlineDueDate??
-                "Due 21 DEBUGGER",
+              child: Text(
+                deadlineDueDate ?? "Due 21 DEBUGGER",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
                     color: Theme.of(context).colorScheme.onSurface,

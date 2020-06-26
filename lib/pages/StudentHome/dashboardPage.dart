@@ -68,12 +68,10 @@ class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin<Das
 
 class DashboardPageSliver extends StatelessWidget {
   // template.. later these blocks should take data from actual
-  const DashboardPageSliver();
-  
-  @override
-  Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildListDelegate([
+  // const DashboardPageSliver();
+
+  List pageContent = 
+        [
         SizedBox(
           height: 100,
         ),
@@ -95,12 +93,16 @@ class DashboardPageSliver extends StatelessWidget {
        SizedBox(
          height: 75,
        ),
-//        Billboard(),
-//        SizedBox(
-//          height: 50,
-//        ),
-      ]),
-    );
+
+      ];
+  
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(delegate: SliverChildBuilderDelegate((context,index)=>pageContent[index] , childCount: pageContent.length, ), );
+
+    // return SliverList(delegate: SliverChildListDelegate(pageContent) );
+    
+    
   }
 }
 

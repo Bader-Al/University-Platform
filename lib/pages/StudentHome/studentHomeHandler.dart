@@ -47,6 +47,7 @@ class StudentHomeState extends State<StudentHome> {
     return Scaffold(
         body: PageView(
           controller: _pageController, 
+          physics: ScrollPhysics(parent: BouncingScrollPhysics()),
           children: <Widget>[...navBarRoutes],
           onPageChanged: (index){setState(() {
             _pageIndex=index;

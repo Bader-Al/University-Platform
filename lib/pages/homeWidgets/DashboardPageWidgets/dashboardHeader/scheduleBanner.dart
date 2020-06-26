@@ -3,7 +3,7 @@ import 'quickCalendar.dart';
 import '../../../../constants.dart';
 
 class ScheduleBanner extends StatelessWidget {
-  ScheduleBanner(this.boxIsScrolled);
+  const ScheduleBanner(this.boxIsScrolled);
   final bool boxIsScrolled;
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class ScheduleBanner extends StatelessWidget {
 }
 
 class PrimaryAppBarRow extends StatelessWidget {
-  PrimaryAppBarRow({this.justThePlacerHolders = false, this.color, this.noPlaceHolders = false, this.showNextClass=false, this.isFlipped=false});
+  const PrimaryAppBarRow({this.justThePlacerHolders = false, this.color, this.noPlaceHolders = false, this.showNextClass=false, this.isFlipped=false});
   final bool justThePlacerHolders, noPlaceHolders, showNextClass, isFlipped;
   final Color color;
   @override
@@ -114,7 +114,7 @@ class PrimaryAppBarRow extends StatelessWidget {
 
 class SecondaryAppBarRow extends StatelessWidget {
   final Color color;
-  SecondaryAppBarRow({this.color});
+  const SecondaryAppBarRow({this.color});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -156,7 +156,7 @@ class BannerColumn extends StatelessWidget {
   final bool noPlaceHolders;
   final bool isFlipped;
 
-  BannerColumn(
+  const BannerColumn(
       { this.value,
       @required this.placeHolder,
       this.color,

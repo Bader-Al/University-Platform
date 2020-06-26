@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/constants.dart';
+import 'package:psu_platform/pages/StudentHome/dashboardPage.dart';
 
 //IMPORTANT~!!!!!
 // sticky.remove(); WHEN NAVIGATING AWAY FROM HOME SCREEN
 // CALL sticky.remove();
 
 class QuickDeadlines extends StatelessWidget {
-  const QuickDeadlines();
+  const QuickDeadlines({this.deadLines});
+  final List deadLines;
   //double _spaceBetweenTitleAndBody = 15.0;
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class QuickDeadlines extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Body()
+          Body(this.deadLines)
         ],
       ),
     );
@@ -41,9 +43,10 @@ class QuickDeadlines extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
+  Body(this.deadLines);
 
-  
-  ScrollController _scrollController = new ScrollController();
+  List deadLines;
+
 
   GlobalKey _mainFrameKey = GlobalKey();
 
@@ -58,7 +61,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
     // getSize();
-    mainFrameScrollController = _scrollController;
+
 
     return Expanded(
         child: Container(
@@ -77,10 +80,9 @@ class Body extends StatelessWidget {
             fit: StackFit.passthrough,
             children: <Widget>[
               DateSelector(
-                scrollController: this._scrollController,
               ),
               DeadLinesContentViewer(
-                scrollController: this._scrollController,
+                this.deadLines
               ),
             ],
           ),
@@ -91,7 +93,6 @@ class Body extends StatelessWidget {
 }
 
 var mainFrameHeight;
-ScrollController mainFrameScrollController;
 
 class DateTab extends StatelessWidget {
   DateTab(this.index);
@@ -101,13 +102,13 @@ class DateTab extends StatelessWidget {
   Widget build(BuildContext context) {
     isSelected = index == Provider.of<DateSelectionData>(context).selectedIndex;
     return Container(
-      height: isSelected ? 150 : 80,
-      //color: Theme.of(context).colorScheme.background.withAlpha(0),
+      height: isSelected ? 100 : 80,
+      color: Theme.of(context).colorScheme.background,
       child: Container(
         decoration: BoxDecoration(
           color: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.surface,
+              ? Theme.of(context).colorScheme.primary.withAlpha(180)
+              : Theme.of(context).colorScheme.primary,
         ),
         child: FlatButton(
           padding:
@@ -127,8 +128,8 @@ class DateTab extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 15,
                     color: isSelected
-                        ? Theme.of(context).colorScheme.background
-                        : Theme.of(context).colorScheme.primary,
+                        ? Colors.white
+                        :Theme.of(context).colorScheme.background.withAlpha(150),
                     fontWeight: FontWeight.w400),
               ),
               Text(
@@ -136,8 +137,8 @@ class DateTab extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 12,
                     color: isSelected
-                        ? Theme.of(context).colorScheme.background
-                        : Theme.of(context).colorScheme.primary.withAlpha(150),
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.background.withAlpha(150),
                     fontWeight: FontWeight.w300),
               ),
             ],
@@ -174,7 +175,7 @@ class _DateSelectorState extends State<DateSelector> {
     return ChangeNotifierProvider<DateSelectionData>(
       create: (context) => DateSelectionData(),
       child: Container(
-        width: 117,
+        width: 115,
         // color: Theme.of(context).colorScheme.background,
         child: ListView.builder(
           itemCount: 7,
@@ -198,15 +199,15 @@ class DateSelectionData extends ChangeNotifier {
 }
 
 class DeadLinesContentViewer extends StatelessWidget {
+  DeadLinesContentViewer(this.deadLines);
+  final List deadLines;
   // TODO :: NEEDS TO BE STAEFUL FOR CHANGES IN LIST TO HAPPEN
-  DeadLinesContentViewer({this.scrollController});
-  final scrollController;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         SizedBox(
-          width: 105,
+          width: 115,
         ), // DEADSPACE IN BG
         Expanded(
           child: Container(
@@ -215,7 +216,8 @@ class DeadLinesContentViewer extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(15),
                     bottomRight: Radius.circular(15)),
-                child: ExpandingDeadlineListView(),
+                child:
+                ExpandingDeadlineListView(deadLines: this.deadLines,),
               )),
         )
       ],
@@ -267,53 +269,91 @@ class CompactFileItem extends StatelessWidget {
   }
 }
 
-class CompactFileViewer extends StatelessWidget {
+class CompactFileViewer extends StatelessWidget { // major performance issues NOMORE
+                                                  // ISSUES WHERE TRACED DOWN TO COMPACT FILE ITEM
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.builder(
       scrollDirection: Axis.horizontal,
-      children: <Widget>[
-        SizedBox(width: 15),
-        CompactFileItem(
-          isDownloaded: true,
-        ),
-        SizedBox(width: 15),
-        CompactFileItem(),
-        SizedBox(width: 15),
-        CompactFileItem(),
-        SizedBox(width: 15),
-        CompactFileItem(),
-        SizedBox(width: 15),
-        CompactFileItem(),
-        SizedBox(width: 25),
-      ],
-    );
+      itemCount: _items.length, itemBuilder: (BuildContext context, int index) {
+      return _deadlineContent[index];
+    },);
+
+//      ListView(
+//      scrollDirection: Axis.horizontal,
+//      children: <Widget>[
+//        SizedBox(width: 15),
+//        CompactFileItem(
+//          isDownloaded: true,
+//        ),
+//        SizedBox(width: 15),
+//        CompactFileItem(),
+//        SizedBox(width: 15),
+//        CompactFileItem(),
+//        SizedBox(width: 15),
+//        CompactFileItem(),
+//        SizedBox(width: 15),
+//        CompactFileItem(),
+//        SizedBox(width: 25),
+//      ],
+//    );
+
+
   }
+
+  List _deadlineContent = [
+
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+//    SizedBox(width: 15),
+//    CompactFileItem(
+//      isDownloaded: true,
+//    ),
+//    SizedBox(width: 15),
+//    CompactFileItem(),
+//    SizedBox(width: 15),
+//    CompactFileItem(),
+//    SizedBox(width: 15),
+//    CompactFileItem(),
+//    SizedBox(width: 15),
+//    CompactFileItem(),
+//    SizedBox(width: 25),
+
+  ];
 }
 
 ////////////////////////////////// ExpandingDeadlines[ Right Side
 
-class ExpandingDeadline {
-  ExpandingDeadline(
-      {this.isExpanded = false, this.header = "HEADER", this.body = "BOODY"});
+class Deadline {
+  Deadline(
+      {this.isExpanded = false,this.deadlineType, this.deadlineCourseName, this.deadlineTitle, this.deadlineDueDate });
 
   bool isExpanded;
-  final String header;
-  final String body;
+    final String deadlineType;
+  final String deadlineTitle;
+  final String deadlineCourseName;
+  final String deadlineDueDate; 
 }
 
-List<ExpandingDeadline> _items = <ExpandingDeadline>[
-  ExpandingDeadline(),
-  ExpandingDeadline(),
-  ExpandingDeadline(),
-  ExpandingDeadline(),
-  ExpandingDeadline(),
-  ExpandingDeadline(),
+List<Deadline> _items = <Deadline>[
+  Deadline(),
 ];
 
 class ExpandingDeadlineListView extends StatefulWidget {
-  ExpandingDeadlineListView({Key key}) : super(key: key);
-
+  const ExpandingDeadlineListView({Key key, this.deadLines }) : super(key: key);
+  final List deadLines;
   @override
   _ExpandingDeadlineListViewState createState() =>
       _ExpandingDeadlineListViewState();
@@ -321,60 +361,94 @@ class ExpandingDeadlineListView extends StatefulWidget {
 
 class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
   int selectedIndex;
-  ScrollController scrollController = new ScrollController();
+  ScrollController scrollController;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController = new ScrollController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    scrollController.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
+
+   
+
+    return SingleChildScrollView(
       controller: scrollController,
-      children: <Widget>[
+      physics: ScrollPhysics(parent:BouncingScrollPhysics()),
+      child: 
         ExpansionPanelList(
           expandedHeaderPadding: EdgeInsets.all(0),
-          expansionCallback: (int index, bool isExpanded) {
+
+          expansionCallback: (int index, bool isExpanded, ) {
             setState(() {
-              _items[index].isExpanded = !_items[index].isExpanded;
-              _items[index].isExpanded
+              widget.deadLines[index].isExpanded = !widget.deadLines[index].isExpanded;
+              widget.deadLines[index].isExpanded
                   ? selectedIndex = index
                   : selectedIndex = null;
               //print("Selected is $selectedIndex"); //
               print(mainFrameHeight);
-              double jumptoValue = (index.toDouble() * 100);
+              double jumptoValue = (index.toDouble()*100) + 17*index;
               print("jumptoValue: $jumptoValue");
-              scrollController.jumpTo(
-                jumptoValue,
-              );
-              // , duration: Duration(seconds: 2), curve: Curves.ease);
-              // _items[index].isExpanded?scrollController.jumpTo(index.toDouble()*(mainFrameHeight-(180+index+20))):null; //180 = header 85 + body 95 +++ padding 20
-              // scrollController.attach(ScrollPosition(physics: ScrollPhysics(parent: ()), context: null));
             });
           },
-          children: _items.map((ExpandingDeadline item) {
-            return ExpansionPanel(
+          children: 
+          widget.deadLines.map(( deadline) {
+            var expansionPanel = // did this split up so that i can deal with expansionPanel later in hopes to use something like a key to find its scroll poisition
+            ExpansionPanel(
+              
+
                 canTapOnHeader: true,
                 headerBuilder: (BuildContext ctx, bool isExpanded) {
-                  return deadlineCardHeader();
+                  return DeadLineHeader(
+                    deadlineTitle: deadline.deadlineTitle,
+                  deadlineCourseName: deadline.deadlineCourseName,
+                  deadlineDueDate: deadline.deadlineDueDate,
+                  deadlineType: deadline.deadlineType,
+                  
+                  );
                 },
-                isExpanded: item.isExpanded,
-                body: deadlineCardBody(context));
+                isExpanded: deadline.isExpanded,
+                body: DeadLineBody()
+
+
+            );
+            
+
+
+            return expansionPanel;
           }).toList(),
         )
-      ],
+      
     );
   }
 
-  Widget deadlineCardBody(context) {
-    // RenderBox _fullViewBox = _expansionListKey.currentContext.findRenderObject();
-    // Size _fullViewBoxSize = _fullViewBox.size;
-    // RenderBox _expansionHeaderBox = _expansionHeaderKey.currentContext.findRenderObject();
-    // Size _expansionHeaderSize = _expansionHeaderBox.size;
+}
 
-    return Container(
-      height: mainFrameHeight != null ? mainFrameHeight - 100 : 200,
+class DeadLineBody extends StatelessWidget {
+   const DeadLineBody();
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+      height: mainFrameHeight==null?150: mainFrameHeight - 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[Spacer(flex: 2, ), // you could completely replace spacer with Expanded... same exact thing but with a child
           Container( height: 200,
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: CompactFileViewer(),
+            child:  CompactFileViewer(),
           ), Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -382,55 +456,69 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
             children: <Widget>[
               Expanded(
                   child: Container(
-                height:
+                    height:
                     45, // The expanded only expands horizontally.. leave this here
-                child: FlatButton(
-                  color: Theme.of(context).colorScheme.surface,
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
+                    child: FlatButton(
+                      color: Theme.of(context).colorScheme.surface,
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
                         BorderRadius.only(topRight: Radius.circular(10)),
-                  ),
-                  child: Text(
-                    "Description",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.onSurface),
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-              )),
+                      ),
+                      child: Text(
+                        "Description",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12,
+                            color: Theme.of(context).colorScheme.onSurface),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  )),
               SizedBox(
                 width: 15,
               ),
               Expanded(
                   child: Container(
-                height: 45,
-                child: FlatButton(
-                  color: Theme.of(context).colorScheme.primary,
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
+                    height: 45,
+                    child: FlatButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(10)),
-                  ),
-                  child: Text(
-                    "Attempt",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.background),
-                  ),
-                ),
-              ))
+                      ),
+                      child: Text(
+                        "Attempt",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12,
+                            color: Theme.of(context).colorScheme.background),
+                      ),
+                    ),
+                  ))
             ],
           )
         ],
       ),
     );
   }
+}
 
-  Widget deadlineCardHeader() {
+
+class DeadLineHeader extends StatelessWidget {
+  const DeadLineHeader({this.deadlineType, this.deadlineTitle, this.deadlineCourseName, this.deadlineDueDate});
+  final String deadlineType;
+  final String deadlineTitle;
+  final String deadlineCourseName;
+  final String deadlineDueDate; 
+
+  @override
+  // RenderBox box;
+  Widget build(BuildContext context) {
+
+  //  box = context.findRenderObject();
+  //  print(box.size);
     return Container(
       height: 100,
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -444,14 +532,14 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                 Text(deadlineTitle??
                   "Assignment Submission",
                   style: TextStyle(
                       fontWeight: FontWeight.w300,
                       color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 16),
                 ),
-                Text("Introduction To Software Engineering",
+                 Text(deadlineCourseName??"Introduction To Software Engineering",
                     maxLines: 1,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
@@ -467,7 +555,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
               decoration: BoxDecoration(
                   color: kYellowIndication.withAlpha(100),
                   borderRadius: BorderRadius.circular(25)),
-              child: Text(
+              child: Text(deadlineDueDate??
                 "Due 21 September",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
@@ -479,4 +567,3 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
     );
   }
 }
-//////////////////////////////////////////////

@@ -17,16 +17,17 @@ environment:
   sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
-  provider: ^3.1.0+1
-  flutter_swiper: ^1.1.6
-  carousel_slider: ^1.3.1
-  bubble_bottom_bar: ^1.2.0
-  cached_network_image: ^2.0.0-rc
-  percent_indicator: ^2.1.4
+  provider: ^3.1.0+1 #using.. don't remove
+  flutter_swiper: ^1.1.6 #idk yet
+  carousel_slider: ^1.3.1 #might remove it.. but currently using
+  bubble_bottom_bar: ^1.2.0 #using.. don't remove
+  cached_network_image: ^2.0.0-rc #using... don't remove
+  percent_indicator: ^2.1.4 #using... don't remove
   flutter:
     sdk: flutter
-  shared_preferences: ^0.5.7+3
-  flutter_statusbarcolor: ^0.2.3
+  shared_preferences: ^0.5.7+3 #not used yet
+  flutter_statusbarcolor: ^0.2.3 #not used yet
+  after_layout: ^1.0.7+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

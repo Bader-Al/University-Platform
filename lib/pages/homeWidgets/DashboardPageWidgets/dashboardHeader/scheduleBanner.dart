@@ -3,8 +3,7 @@ import 'quickCalendar.dart';
 import '../../../../constants.dart';
 
 class ScheduleBanner extends StatelessWidget {
-  const ScheduleBanner(this.boxIsScrolled);
-  final bool boxIsScrolled;
+  const ScheduleBanner();
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;

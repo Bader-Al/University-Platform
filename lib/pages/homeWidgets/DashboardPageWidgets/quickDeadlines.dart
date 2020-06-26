@@ -284,6 +284,7 @@ class CompactFileViewer extends StatelessWidget {
       crossAxisSpacing: 5,
       cacheExtent: 0,
       
+      
       physics: ScrollPhysics(parent: BouncingScrollPhysics()),
       crossAxisCount: MediaQuery.of(context).size.height < 500
           ? 1
@@ -447,7 +448,7 @@ class DeadLineBody extends StatelessWidget {
             height: 5,
           ), // you could completely replace spacer with Expanded... same exact thing but with a child
           Container(
-            height: mainFrameHeight - 170,
+            height: mainFrameHeight == null ? 150: mainFrameHeight - 170,
             padding: const EdgeInsets.only(left: 15),
             child: ClipRRect(
                 borderRadius:

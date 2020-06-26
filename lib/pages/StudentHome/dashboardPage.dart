@@ -37,23 +37,15 @@ class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin<Das
   Widget build(BuildContext context) {
     
     return Scaffold(
-      body: NestedScrollView(
+      body: CustomScrollView(
+          physics: ScrollPhysics(parent:BouncingScrollPhysics()),
+          cacheExtent: MediaQuery.of(context).size.height,
         controller: scrollController,
-        headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
-          return <Widget>[
-            ScheduleBanner(boxIsScrolled),
-          ];
-          
-        },
-        body: CustomScrollView(
-          
-        //controller: scrollController,
-          slivers: <Widget>[
+          slivers: <Widget>[ ScheduleBanner(),
             DashboardPageSliver(),// TODO: maybe change to sliverlist fill remaining and us listview builder... test for performance diff
           ],
         ),
-      ),
-    );
+      );
     
     
    

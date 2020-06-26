@@ -43,10 +43,12 @@ class PostedGradesViewer extends StatelessWidget {
                   bottomLeft: Radius.circular(25)),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 8.0, top: 10, bottom: 10),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),topLeft: Radius.circular(15)),
                 child: ListView.builder(
+                  physics: ScrollPhysics(parent:BouncingScrollPhysics()),
+                  cacheExtent: 0,
                   scrollDirection: Axis.horizontal,
                   itemCount: children.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -72,7 +74,7 @@ class PostedGradeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+      margin: EdgeInsets.symmetric(vertical: 0, horizontal: 3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       color: Theme.of(context).colorScheme.background,
       clipBehavior: Clip.hardEdge,

@@ -226,7 +226,7 @@ class DeadLinesContentViewer extends StatelessWidget {
 }
 
 class CompactFileItem extends StatelessWidget {
-  CompactFileItem({this.isDownloaded = false});
+  const CompactFileItem({this.isDownloaded = false});
   final bool isDownloaded;
   @override
   Widget build(BuildContext context) {
@@ -269,69 +269,45 @@ class CompactFileItem extends StatelessWidget {
   }
 }
 
+
+
 class CompactFileViewer extends StatelessWidget { // major performance issues NOMORE
                                                   // ISSUES WHERE TRACED DOWN TO COMPACT FILE ITEM
+ 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: _items.length, itemBuilder: (BuildContext context, int index) {
-      return _deadlineContent[index];
-    },);
 
-//      ListView(
-//      scrollDirection: Axis.horizontal,
-//      children: <Widget>[
-//        SizedBox(width: 15),
-//        CompactFileItem(
-//          isDownloaded: true,
-//        ),
-//        SizedBox(width: 15),
-//        CompactFileItem(),
-//        SizedBox(width: 15),
-//        CompactFileItem(),
-//        SizedBox(width: 15),
-//        CompactFileItem(),
-//        SizedBox(width: 15),
-//        CompactFileItem(),
-//        SizedBox(width: 25),
-//      ],
-//    );
+
+return GridView.count(
+  physics: ScrollPhysics(parent:BouncingScrollPhysics()),
+  crossAxisCount: MediaQuery.of(context).size.height<500? 1:MediaQuery.of(context).size.height<1300?2 :MediaQuery.of(context).size.height<1500? 3 : 4 , scrollDirection: Axis.horizontal,
+children: <Widget>[
+  Container(color: Colors.red, width: 10, height: 10,),
+  Container(color: Colors.blue, width: 10, height: 10,),
+  Container(color: Colors.yellow, width: 10, height: 10,),
+  Container(color: Colors.green, width: 10, height: 10,),
+  Container(color: Colors.brown, width: 10, height: 10,),
+  Container(color: Colors.orange, width: 10, height: 10,),
+  Container(color: Colors.green, width: 10, height: 10,),
+  Container(color: Colors.brown, width: 10, height: 10,),
+  Container(color: Colors.orange, width: 10, height: 10,),
+  Container(color: Colors.blue, width: 10, height: 10,),
+  Container(color: Colors.yellow, width: 10, height: 10,),
+  Container(color: Colors.green, width: 10, height: 10,),
+  Container(color: Colors.brown, width: 10, height: 10,),
+  Container(color: Colors.orange, width: 10, height: 10,),
+  Container(color: Colors.green, width: 10, height: 10,),
+  Container(color: Colors.brown, width: 10, height: 10,),
+  Container(color: Colors.orange, width: 10, height: 10,),
+
+],
+
+);
+
 
 
   }
 
-  List _deadlineContent = [
-
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-//    SizedBox(width: 15),
-//    CompactFileItem(
-//      isDownloaded: true,
-//    ),
-//    SizedBox(width: 15),
-//    CompactFileItem(),
-//    SizedBox(width: 15),
-//    CompactFileItem(),
-//    SizedBox(width: 15),
-//    CompactFileItem(),
-//    SizedBox(width: 15),
-//    CompactFileItem(),
-//    SizedBox(width: 25),
-
-  ];
 }
 
 ////////////////////////////////// ExpandingDeadlines[ Right Side
@@ -445,10 +421,11 @@ class DeadLineBody extends StatelessWidget {
       height: mainFrameHeight==null?150: mainFrameHeight - 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[Spacer(flex: 2, ), // you could completely replace spacer with Expanded... same exact thing but with a child
-          Container( height: 200,
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child:  CompactFileViewer(),
+        children: <Widget>[SizedBox(height: 5,), // you could completely replace spacer with Expanded... same exact thing but with a child
+          Container( height: mainFrameHeight - 170,
+         
+            padding: const EdgeInsets.only(left: 15),
+            child:  ClipRRect(borderRadius: BorderRadius.horizontal(left:Radius.circular(25)),child: CompactFileViewer()),
           ), Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -533,7 +510,7 @@ class DeadLineHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                  Text(deadlineTitle??
-                  "Assignment Submission",
+                  "Assignment DEBUG",
                   style: TextStyle(
                       fontWeight: FontWeight.w300,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -556,7 +533,7 @@ class DeadLineHeader extends StatelessWidget {
                   color: kYellowIndication.withAlpha(100),
                   borderRadius: BorderRadius.circular(25)),
               child: Text(deadlineDueDate??
-                "Due 21 September",
+                "Due 21 DEBUGGER",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
                     color: Theme.of(context).colorScheme.onSurface,

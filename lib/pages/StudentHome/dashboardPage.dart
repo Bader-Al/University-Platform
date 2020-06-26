@@ -90,11 +90,11 @@ class DashboardPageSliver extends StatelessWidget {
           height: 75,
         ),
          QuickDeadlines(deadLines: deadLinesItems,),
-//
-//
-//        SizedBox(
-//          height: 75,
-//        ),
+
+
+       SizedBox(
+         height: 75,
+       ),
 //        Billboard(),
 //        SizedBox(
 //          height: 50,
@@ -122,7 +122,7 @@ const List postedGrades = [
 ];
 
  List deadLinesItems = [
-  Deadline(deadlineCourseName: "PSY 420", deadlineType: "Project Phase 3", deadlineDueDate: "19 November", deadlineTitle: "Project Due",),
+  Deadline(deadlineCourseName: "PSY 420 : Ape Psychology", deadlineType: "Project Phase 3", deadlineDueDate: "19 November", deadlineTitle: "Project Due",),
   Deadline(),
   Deadline(),
   Deadline(),

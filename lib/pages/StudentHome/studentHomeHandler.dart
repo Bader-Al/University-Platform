@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
@@ -52,10 +53,7 @@ class StudentHomeState extends State<StudentHome> {
               onNotification(notification, context),
           child: PageView(
             controller: _pageController,
-            physics: ScrollPhysics(
-                parent: Provider.of<AppState>(context).sideBarIsCollapsed
-                    ? AlwaysScrollableScrollPhysics()
-                    : NeverScrollableScrollPhysics()),
+            //physics: ScrollPhysics(parent: BouncingScrollPhysics()),
             children: <Widget>[...navBarRoutes],
             onPageChanged: (index) {
               setState(() {
@@ -92,14 +90,16 @@ class StudentHomeState extends State<StudentHome> {
     // Provider.of<AppState>(context).toggleSideBarCollapseMode();
     //if(notification is ){}
     // print(notification);
-    if (notification is OverscrollNotification &&
-        notification.overscroll < 0 &&
-        notification.dragDetails.delta.dx > 10 &&
-        _pageIndex == 0) {
-      //print("open");
-      widget.toggleSideBar();
-      // Provider.of<AppState>(context).toggleSideBarCollapseMode();
+
+    if (notification is UserScrollNotification) {
+      if (_pageIndex == 0 &&
+          notification != null &&
+          notification.direction == ScrollDirection.forward) {
+        widget.toggleSideBar();
+        return true;
+      }
     }
+    return false;
   }
 
   Widget homeBottomNavigationBar() {

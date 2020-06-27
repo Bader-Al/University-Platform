@@ -116,6 +116,16 @@ class StudentScreenState extends State<StudentScreen>
                           ? BorderRadius.circular(0)
                           : BorderRadius.circular(25),
                 ),
+                Visibility(
+                  visible: !Provider.of<AppState>(context).sideBarIsCollapsed,
+                  child: SizedBox(
+                    width: screenWidth,
+                    height: screenHeight,
+                    child: Container(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                )
                 // Positioned(
                 //   child: GestureDetector(
                 //     onTap: _toggleSideBar,

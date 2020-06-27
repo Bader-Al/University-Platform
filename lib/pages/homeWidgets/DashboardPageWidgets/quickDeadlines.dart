@@ -59,7 +59,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
+    // WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
     // getSize();
 
     return Expanded(
@@ -283,62 +283,77 @@ class CompactFileViewer extends StatelessWidget {
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
       cacheExtent: 0,
-      
-      
+
       physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-      crossAxisCount: MediaQuery.of(context).size.height < 500
+      crossAxisCount: MediaQuery.of(context).size.height < 700
           ? 1
           : MediaQuery.of(context).size.height < 1300
               ? 2
               : MediaQuery.of(context).size.height < 1500 ? 3 : 4,
       scrollDirection: Axis.horizontal,
       children: <Widget>[
-     buildFileItem(context, false),
-     buildFileItem(context, true),
-     buildFileItem(context, true),
-     buildFileItem(context, false),
-     buildFileItem(context, true),
-     buildFileItem(context, false), 
+        buildFileItem(context, false),
+        buildFileItem(context, true),
+        buildFileItem(context, true),
+        buildFileItem(context, false),
+        buildFileItem(context, true),
+        buildFileItem(context, false),
       ],
     );
   }
 
-  Widget buildFileItem(context, bool isDownloaded){
-    return    Container( 
-      padding: EdgeInsets.symmetric( horizontal: 10 ) ,
-      // color: Colors.red, 
+  Widget buildFileItem(context, bool isDownloaded) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      // color: Colors.red,
       decoration: BoxDecoration(
-        color: isDownloaded? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(5)
-      ),
+          color: isDownloaded
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(5)),
       child: Row(
-          // crossAxisAlignment: CrossAxisAlignment.end,
+        // crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              "Assignment1_dueeeeTomro.pdf",
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: isDownloaded
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : Theme.of(context).colorScheme.onSurface,
+                  fontSize: 12),
+              maxLines: 4,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-               
-               Expanded(
-                 child: Text(
-                   "Assignment1_dueeeeTomro.pdf",
-                   style: TextStyle(
-         fontWeight: FontWeight.w400,
-         color: isDownloaded? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
-         fontSize: 12),
-                   maxLines: 4,
-                   softWrap: true,
-                   overflow: TextOverflow.ellipsis ,
-                 ),
-               ),
-               Padding(
-                 padding: const EdgeInsets.only(left:5.0),
-                 child: Column(
-                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                   children: <Widget>[
-                     Visibility(visible: !isDownloaded,child: Icon(Icons.remove_red_eye, color:isDownloaded? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary, size: 21,)),
-                     Icon( isDownloaded? Icons.delete:Icons.cloud_download, color:isDownloaded? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary, size: 21,),
-                   ],
-                 ),
-               )
+                Visibility(
+                    visible: !isDownloaded,
+                    child: Icon(
+                      Icons.remove_red_eye,
+                      color: isDownloaded
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.primary,
+                      size: 21,
+                    )),
+                Icon(
+                  isDownloaded ? Icons.delete : Icons.cloud_download,
+                  color: isDownloaded
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : Theme.of(context).colorScheme.primary,
+                  size: 21,
+                ),
               ],
             ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -410,7 +425,7 @@ class _ExpandingDeadlineListViewState extends State<ExpandingDeadlineListView> {
                   : selectedIndex = null;
               //print("Selected is $selectedIndex"); //
               print(mainFrameHeight);
-            
+
               double jumptoValue = (index.toDouble() * 100) + 17 * index;
               print("jumptoValue: $jumptoValue");
             });
@@ -441,7 +456,7 @@ class DeadLineBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:mainFrameHeight - 140,
+      height: mainFrameHeight - 140,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -452,8 +467,7 @@ class DeadLineBody extends StatelessWidget {
             height: mainFrameHeight - 210,
             padding: const EdgeInsets.only(left: 15),
             child: ClipRRect(
-                borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(5)),
+                borderRadius: BorderRadius.horizontal(left: Radius.circular(5)),
                 child: CompactFileViewer()),
           ),
           Spacer(),

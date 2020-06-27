@@ -18,6 +18,10 @@ class ScheduleBanner extends StatelessWidget {
       snap: false,
       centerTitle: true,
       titleSpacing: 0,
+      primary: true,
+      stretch: true,
+      stretchTriggerOffset: 100,
+
       title: SecondaryAppBarRow(),
 
       // Column(
@@ -33,7 +37,7 @@ class ScheduleBanner extends StatelessWidget {
       // ),
       bottom: AppBar(
           titleSpacing: 0,
-          elevation: 1,
+          elevation: 0,
           title: PrimaryAppBarRow(
             isFlipped: true,
           ),
@@ -146,8 +150,7 @@ class SecondaryAppBarRow extends StatelessWidget {
           //   style: TextStyle(fontSize: 14 , color: Theme.of(context).colorScheme.background, fontWeight: FontWeight.w300),
           // ),
           // ),
-          Container(
-            //decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: Theme.of(context).colorScheme.primary),
+          Center(
             child: Text(
               "Next Class : CS285",
               style: TextStyle(
@@ -252,50 +255,5 @@ class BannerColumn extends StatelessWidget {
   }
 }
 
-/////////////////////////////////////////////////////
+///////////////////////////////////////////////
 ///
-///
-///
-/// stashed
-
-// SliverAppBar(
-//       backgroundColor: Theme.of(context).colorScheme.primary,
-//       expandedHeight: queryData.size.height * 0.80,
-//       floating: false,
-//       pinned: true,
-//       snap: false,
-//       centerTitle: true,
-//       titleSpacing: 0,
-//       title: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: <Widget>[
-//           //SecondaryAppBarRow(),
-//           SizedBox(height:10),
-//           PrimaryAppBarRow(
-//             color: Theme.of(context).colorScheme.background,
-//             noPlaceHolders: true,
-//           )
-//         ],
-//       ),
-//       bottom: AppBar(
-//           titleSpacing: 0,
-//           elevation: 1,
-//           title: Container(
-//             child: Column(
-//               children: <Widget>[
-//                 PrimaryAppBarRow(justThePlacerHolders: true,color: Theme.of(context).colorScheme.primary,),
-//                 SecondaryAppBarRow(color: Theme.of(context).colorScheme.primary,)
-//               ],
-//             ),
-//           ),
-//           shape: kAppBarShape,
-//           backgroundColor: Theme.of(context).colorScheme.background),
-//       flexibleSpace: FlexibleSpaceBar(
-//         // title: Container(height: 100, width: 100, color: Colors.red,child: Text("data")),
-//         collapseMode: CollapseMode.parallax,
-
-//         background: QuickCalendar(),
-//       ),
-//       shape: kAppBarShape,
-//       elevation: 1,
-//     );

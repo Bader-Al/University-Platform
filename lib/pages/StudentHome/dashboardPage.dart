@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/constants.dart';
 import 'package:psu_platform/pages/homeWidgets/DashboardPageWidgets/horizontal_viewers/postedGrades.dart';
 import '../homeWidgets/DashboardPageWidgets/dashboardHeader/scheduleBanner.dart';
@@ -6,8 +7,10 @@ import '../homeWidgets/DashboardPageWidgets/billboard.dart';
 import '../homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
 import '../homeWidgets/DashboardPageWidgets/horizontal_viewers/upComingExams.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class DashboardPage extends StatefulWidget {
+  const DashboardPage();
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
@@ -40,7 +43,10 @@ class _DashboardPageState extends State<DashboardPage>
         cacheExtent: MediaQuery.of(context).size.height,
         controller: scrollController,
         slivers: <Widget>[
-          ScheduleBanner(),
+          Consumer<AppState>(
+            builder: (context, appState, child) => child,
+            child: ScheduleBanner(),
+          ),
           DashboardPageSliver(), // TODO: maybe change to sliverlist fill remaining and us listview builder... test for performance diff
         ],
       ),

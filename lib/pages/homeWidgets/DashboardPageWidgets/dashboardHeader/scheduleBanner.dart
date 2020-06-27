@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:psu_platform/appState.dart';
 import 'quickCalendar.dart';
 import '../../../../constants.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleBanner extends StatelessWidget {
   const ScheduleBanner();
@@ -17,7 +19,7 @@ class ScheduleBanner extends StatelessWidget {
       centerTitle: true,
       titleSpacing: 0,
       title: SecondaryAppBarRow(),
-      
+
       // Column(
       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
       //   children: <Widget>[
@@ -29,10 +31,12 @@ class ScheduleBanner extends StatelessWidget {
       //     )
       //   ],
       // ),
-      bottom: AppBar( 
+      bottom: AppBar(
           titleSpacing: 0,
           elevation: 1,
-          title: PrimaryAppBarRow(isFlipped: true,),
+          title: PrimaryAppBarRow(
+            isFlipped: true,
+          ),
           shape: kAppBarShape,
           backgroundColor: Theme.of(context).colorScheme.background),
       flexibleSpace: FlexibleSpaceBar(
@@ -48,13 +52,18 @@ class ScheduleBanner extends StatelessWidget {
 }
 
 class PrimaryAppBarRow extends StatelessWidget {
-  const PrimaryAppBarRow({this.justThePlacerHolders = false, this.color, this.noPlaceHolders = false, this.showNextClass=false, this.isFlipped=false});
+  const PrimaryAppBarRow(
+      {this.justThePlacerHolders = false,
+      this.color,
+      this.noPlaceHolders = false,
+      this.showNextClass = false,
+      this.isFlipped = false});
   final bool justThePlacerHolders, noPlaceHolders, showNextClass, isFlipped;
   final Color color;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 15.0, left: 30),
+      padding: const EdgeInsets.only(right: 15.0, left: 15),
       child: Column(
         children: <Widget>[
           Row(
@@ -68,7 +77,7 @@ class PrimaryAppBarRow extends StatelessWidget {
               // ),),
               BannerColumn(
                 placeHolder: "ABSENCES",
-                value:  "2/16",
+                value: "2/16",
                 color: this.color,
                 justPlaceHolders: this.justThePlacerHolders,
                 noPlaceHolders: this.noPlaceHolders,
@@ -87,7 +96,7 @@ class PrimaryAppBarRow extends StatelessWidget {
 
               BannerColumn(
                 placeHolder: "ROOM",
-                value:  "A-12",
+                value: "A-12",
                 color: this.color,
                 justPlaceHolders: this.justThePlacerHolders,
                 noPlaceHolders: this.noPlaceHolders,
@@ -102,7 +111,6 @@ class PrimaryAppBarRow extends StatelessWidget {
                 noPlaceHolders: this.noPlaceHolders,
                 isFlipped: this.isFlipped,
               ), //TODO
-              
             ],
           ),
         ],
@@ -116,13 +124,20 @@ class SecondaryAppBarRow extends StatelessWidget {
   const SecondaryAppBarRow({this.color});
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      width: double.infinity,
+      height: 55,
+      // color: Colors.red,
       padding: const EdgeInsets.only(right: 15.0, left: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 20),
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => Provider.of<AppState>(context).toggleSidebar(),
+            padding: EdgeInsets.zero,
+          ),
           // Container(
           //   padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
           //   //decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: Theme.of(context).colorScheme.primary),
@@ -137,7 +152,8 @@ class SecondaryAppBarRow extends StatelessWidget {
               "Next Class : CS285",
               style: TextStyle(
                   fontSize: 14,
-                  color: color??Theme.of(context).colorScheme.background,
+                  letterSpacing: 1.35,
+                  color: color ?? Theme.of(context).colorScheme.background,
                   fontWeight: FontWeight.w300),
             ),
           ),
@@ -156,13 +172,12 @@ class BannerColumn extends StatelessWidget {
   final bool isFlipped;
 
   const BannerColumn(
-      { this.value,
+      {this.value,
       @required this.placeHolder,
       this.color,
       this.justPlaceHolders = false,
       this.noPlaceHolders = false,
-      this.isFlipped = false
-      });
+      this.isFlipped = false});
 
   @override
   Widget build(BuildContext context) {
@@ -174,71 +189,68 @@ class BannerColumn extends StatelessWidget {
     final TextStyle bigText = TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w400,
-        color: this.color?? Theme.of(context).colorScheme.primary);
+        color: this.color ?? Theme.of(context).colorScheme.primary);
 
     return Padding(
-      padding: const EdgeInsets.only(
-          left: 5.0), // there is a previous 10px idk where so this makes 15 PX
-      child: 
-      justPlaceHolders? Text(
-            "$placeHolder",
-            style: smallText,
-          ) :
-      
-       noPlaceHolders? Column(
-         children: <Widget>[
-           SizedBox(height: 25,),
-           Text(
-                "$value",
-                style: color !=null? bigText.copyWith(color: color) : bigText,
-              ),
-         ],
-       ):
-      !isFlipped?
-      
-      Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "$placeHolder",
-            style: smallText,
-          ) ,
-          SizedBox(
-            height: 2,
-          ),
-          Text(
-            "$value",
-            style: bigText,
-          )  
-        ],
-      ):
-      Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "$value",
-            style: bigText,
-          ) ,
-          SizedBox(
-            height: 2,
-          ),
-          Text(
-            "$placeHolder",
-            style: smallText,
-          )  
-        ],
-      )
-
-    );
-    
+        padding: const EdgeInsets.only(
+            left:
+                5.0), // there is a previous 10px idk where so this makes 15 PX
+        child: justPlaceHolders
+            ? Text(
+                "$placeHolder",
+                style: smallText,
+              )
+            : noPlaceHolders
+                ? Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        "$value",
+                        style: color != null
+                            ? bigText.copyWith(color: color)
+                            : bigText,
+                      ),
+                    ],
+                  )
+                : !isFlipped
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "$placeHolder",
+                            style: smallText,
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "$value",
+                            style: bigText,
+                          )
+                        ],
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "$value",
+                            style: bigText,
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "$placeHolder",
+                            style: smallText,
+                          )
+                        ],
+                      ));
   }
 }
-
-
-
-
 
 /////////////////////////////////////////////////////
 ///

@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
-import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 import 'dashboardPage.dart';
 import 'feedPage.dart';
 import 'chatsPage.dart';
 
 class StudentHome extends StatefulWidget {
-  StudentHome({this.toggleSideBar});
-  final Function toggleSideBar;
+  StudentHome();
   @override
   StudentHomeState createState() => StudentHomeState();
 }
@@ -48,19 +45,16 @@ class StudentHomeState extends State<StudentHome> {
     //navBarRoutes[_pageIndex]
 
     return Scaffold(
-        body: NotificationListener(
-          onNotification: (notification) =>
-              onNotification(notification, context),
-          child: PageView(
-            controller: _pageController,
-            //physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-            children: <Widget>[...navBarRoutes],
-            onPageChanged: (index) {
-              setState(() {
-                _pageIndex = index;
-              });
-            },
-          ),
+        body: PageView(
+          controller: _pageController,
+          physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+          // physics:  ScrollPhysics(parent:Provider.of<AppState>(context).sideBarIsCollapsed? NeverScrollableScrollPhysics(): AlwaysScrollableScrollPhysics),
+          children: <Widget>[...navBarRoutes],
+          onPageChanged: (index) {
+            setState(() {
+              _pageIndex = index;
+            });
+          },
         ),
         floatingActionButton: FloatingActionButton(
           // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
@@ -83,23 +77,6 @@ class StudentHomeState extends State<StudentHome> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: homeBottomNavigationBar());
-  }
-
-  bool onNotification(notification, context) {
-    // print(notification);
-    // Provider.of<AppState>(context).toggleSideBarCollapseMode();
-    //if(notification is ){}
-    // print(notification);
-
-    if (notification is UserScrollNotification) {
-      if (_pageIndex == 0 &&
-          notification != null &&
-          notification.direction == ScrollDirection.forward) {
-        widget.toggleSideBar();
-        return true;
-      }
-    }
-    return false;
   }
 
   Widget homeBottomNavigationBar() {

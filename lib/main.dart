@@ -83,6 +83,8 @@ class StudentScreenState extends State<StudentScreen>
     screenHeight = size.height;
     screenWidth = size.width;
 
+    Provider.of<AppState>(context).toggleSidebar = _toggleSideBar;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -107,9 +109,7 @@ class StudentScreenState extends State<StudentScreen>
                     builder: (context, appState, child) {
                       return child;
                     },
-                    child: StudentHome(
-                      toggleSideBar: _toggleSideBar,
-                    ),
+                    child: StudentHome(),
                   ),
                   borderRadius:
                       Provider.of<AppState>(context).sideBarIsCollapsed
@@ -126,20 +126,6 @@ class StudentScreenState extends State<StudentScreen>
                     ),
                   ),
                 )
-                // Positioned(
-                //   child: GestureDetector(
-                //     onTap: _toggleSideBar,
-                //     child: Container(
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.only(
-                //               bottomRight: Radius.circular(15)),
-                //         ),
-                //         padding: EdgeInsets.symmetric(horizontal: 15),
-                //         height: 50,
-                //         child: Icon(Icons.menu, color: Colors.white)),
-                //   ),
-                //   top: 0,
-                // ),
               ]))),
       top: 0,
       bottom: 0,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppState extends ChangeNotifier {
   bool isDarkMode = false;
   bool isAutoModeForBrightness = true;
+  Function toggleSidebar;
 
   bool sideBarIsCollapsed = true;
 

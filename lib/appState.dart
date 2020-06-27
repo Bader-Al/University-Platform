@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 
-class AppState extends ChangeNotifier{
-
+class AppState extends ChangeNotifier {
   bool isDarkMode = false;
   bool isAutoModeForBrightness = true;
 
   bool sideBarIsCollapsed = true;
 
-
-  void setDarkMode(bool isDarkModeOn){
+  void setDarkMode(bool isDarkModeOn) {
     this.isDarkMode = isDarkModeOn;
-    notifyListeners(); 
-
+    notifyListeners();
   }
-   void setBrightnessAutoMode(bool isAutoMode){
+
+  void setBrightnessAutoMode(bool isAutoMode) {
     this.isAutoModeForBrightness = isAutoMode;
-    notifyListeners(); 
-
+    notifyListeners();
   }
 
-  void toggleDarkMode(){
+  void toggleDarkMode() {
     this.isDarkMode = !isDarkMode;
     notifyListeners();
   }
 
-  void toggleSideBar(){
-
+  void setSideBarCollapseMode(bool value) {
+    sideBarIsCollapsed = value;
+    notifyListeners();
   }
 
+  void toggleSideBarCollapseMode() {
+    sideBarIsCollapsed = !sideBarIsCollapsed;
+    notifyListeners();
+  }
 }

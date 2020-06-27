@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
 
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 import 'dashboardPage.dart';
 import 'feedPage.dart';
 import 'chatsPage.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-
-import '../../constants.dart';
 
 class StudentHome extends StatefulWidget {
+  StudentHome({this.toggleSideBar});
+  final Function toggleSideBar;
   @override
   StudentHomeState createState() => StudentHomeState();
 }
 
 class StudentHomeState extends State<StudentHome> {
-  List<Widget> navBarRoutes = [
-    DashboardPage(),
-    AcademicsPage(),
-    ChatsPage(),
-    FeedPage(),
-  ];
+  List<Widget> navBarRoutes;
   int _pageIndex = 0;
   bool fabEnabled = true;
-  PageController _pageController ;
+  PageController _pageController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _pageController = new PageController();
+    navBarRoutes = [
+      DashboardPage(),
+      AcademicsPage(),
+      ChatsPage(),
+      FeedPage(), //feedpage is social page
+    ];
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -39,38 +41,65 @@ class StudentHomeState extends State<StudentHome> {
     super.dispose();
   }
 
-  
   @override
   Widget build(BuildContext context) {
-   // FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).colorScheme.primary) ;
+    // FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).colorScheme.primary) ;
     //navBarRoutes[_pageIndex]
+
     return Scaffold(
-        body: PageView(
-          controller: _pageController, 
-          physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-          children: <Widget>[...navBarRoutes],
-          onPageChanged: (index){setState(() {
-            _pageIndex=index;
-          });},
+        body: NotificationListener(
+          onNotification: (notification) =>
+              onNotification(notification, context),
+          child: PageView(
+            controller: _pageController,
+            physics: ScrollPhysics(
+                parent: Provider.of<AppState>(context).sideBarIsCollapsed
+                    ? AlwaysScrollableScrollPhysics()
+                    : NeverScrollableScrollPhysics()),
+            children: <Widget>[...navBarRoutes],
+            onPageChanged: (index) {
+              setState(() {
+                _pageIndex = index;
+              });
+            },
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
           onPressed: !fabEnabled
               ? null
               : () {/* Should depend on navBarRoute[index] */},
-          child: Icon(Icons.arrow_drop_up, color: Theme.of(context).colorScheme.onPrimary,),
-            // _pageIndex == 0
-            //   ? Icons.navigation
-            //   : _pageIndex == 1
-            //       ? Icons.add
-            //       : Icons
-            //           .help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
+          child: Icon(
+            Icons.arrow_drop_up,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+          // _pageIndex == 0
+          //   ? Icons.navigation
+          //   : _pageIndex == 1
+          //       ? Icons.add
+          //       : Icons
+          //           .help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
           backgroundColor:
               fabEnabled ? Theme.of(context).colorScheme.primary : Colors.grey,
           elevation: fabEnabled ? 6 : 0,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: homeBottomNavigationBar());
+  }
+
+  bool onNotification(notification, context) {
+    // print(notification);
+    // Provider.of<AppState>(context).toggleSideBarCollapseMode();
+    //if(notification is ){}
+    // print(notification);
+    if (notification is OverscrollNotification &&
+        notification.overscroll < 0 &&
+        notification.dragDetails.delta.dx > 10 &&
+        _pageIndex == 0) {
+      //print("open");
+      widget.toggleSideBar();
+      // Provider.of<AppState>(context).toggleSideBarCollapseMode();
+    }
   }
 
   Widget homeBottomNavigationBar() {
@@ -94,25 +123,25 @@ class StudentHomeState extends State<StudentHome> {
       hasNotch: true, //new
       hasInk: true, //new, gives a cute ink effect
       inkColor: Theme.of(context)
-          .colorScheme.primary, //optional, uses theme color if not specified
+          .colorScheme
+          .primary, //optional, uses theme color if not specified
       items: <BubbleBottomBarItem>[
         BubbleBottomBarItem(
-          
             backgroundColor: Theme.of(context).colorScheme.primary,
             icon: Icon(
-              Icons.home,
+              Icons.dashboard,
               color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
               size: 24,
             ),
             activeIcon: Icon(
-              Icons.home,
+              Icons.dashboard,
               color: Theme.of(context).colorScheme.onPrimary,
               size: 30,
             ),
-            title: Text(
-              "Home",
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)
-            )),
+            title: Text("Dashboard",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ))),
         BubbleBottomBarItem(
             backgroundColor: Theme.of(context).colorScheme.primary,
             icon: Icon(
@@ -125,25 +154,27 @@ class StudentHomeState extends State<StudentHome> {
               color: Theme.of(context).colorScheme.onPrimary,
               size: 30,
             ),
-            title: Text(
-              "Courses",
-             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)
-            )),
+            title: Text("Academic",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ))),
         BubbleBottomBarItem(
           backgroundColor: Theme.of(context).colorScheme.primary,
           icon: Icon(
             Icons.chat_bubble,
             color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
-              size: 24,
+            size: 24,
           ),
           activeIcon: Icon(
             Icons.chat_bubble,
             color: Theme.of(context).colorScheme.onPrimary,
-              size: 30,
+            size: 30,
           ),
           title: Text(
             "Chats",
-            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
           ),
         ),
         BubbleBottomBarItem(
@@ -151,15 +182,15 @@ class StudentHomeState extends State<StudentHome> {
           icon: Icon(
             Icons.web,
             color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
-              size: 24,
+            size: 24,
           ),
           activeIcon: Icon(
             Icons.web,
             color: Theme.of(context).colorScheme.onPrimary,
-              size: 30,
+            size: 30,
           ),
           title: Text(
-            "Social",
+            "Social", // feedpage
             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
           ),
         ),

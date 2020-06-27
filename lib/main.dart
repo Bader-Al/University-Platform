@@ -26,8 +26,6 @@ class Platform extends StatefulWidget {
 
 class _PlatformState extends State<Platform> {
   Widget build(BuildContext context) {
-    
-    
     return Consumer<AppState>(
       builder: (context, appState, child) {
         return MaterialApp(
@@ -52,7 +50,7 @@ class StudentScreen extends StatefulWidget {
 
 class StudentScreenState extends State<StudentScreen>
     with SingleTickerProviderStateMixin {
-  bool isCollapsed = true;
+  // bool isCollapsed;
   double screenWidth, screenHeight;
   final Duration duration = const Duration(milliseconds: 350);
   AnimationController _controller;
@@ -105,41 +103,57 @@ class StudentScreenState extends State<StudentScreen>
               scale: _scaleAnimation,
               child: Stack(children: [
                 ClipRRect(
-                  child: StudentHome(),
-                  borderRadius: isCollapsed
-                      ? BorderRadius.circular(0)
-                      : BorderRadius.circular(25),
+                  child: Consumer<AppState>(
+                    builder: (context, appState, child) {
+                      return child;
+                    },
+                    child: StudentHome(
+                      toggleSideBar: _toggleSideBar,
+                    ),
+                  ),
+                  borderRadius:
+                      Provider.of<AppState>(context).sideBarIsCollapsed
+                          ? BorderRadius.circular(0)
+                          : BorderRadius.circular(25),
                 ),
                 // Positioned(
                 //   child: GestureDetector(
-                //       onTap: _toggleSideBar,
-                //       child: Container(
+                //     onTap: _toggleSideBar,
+                //     child: Container(
                 //         decoration: BoxDecoration(
-                          
-                //           borderRadius: BorderRadius.only(bottomRight: Radius.circular(15)) , ),
+                //           borderRadius: BorderRadius.only(
+                //               bottomRight: Radius.circular(15)),
+                //         ),
                 //         padding: EdgeInsets.symmetric(horizontal: 15),
                 //         height: 50,
-                //         child:Icon(Icons.menu, color: Colors.white)),),
+                //         child: Icon(Icons.menu, color: Colors.white)),
+                //   ),
                 //   top: 0,
                 // ),
               ]))),
       top: 0,
       bottom: 0,
-      left: isCollapsed ? 0 : 0.5 * screenWidth,
-      right: isCollapsed ? 0 : -0.5 * screenWidth,
+      left: Provider.of<AppState>(context).sideBarIsCollapsed
+          ? 0
+          : 0.5 * screenWidth,
+      right: Provider.of<AppState>(context).sideBarIsCollapsed
+          ? 0
+          : -0.5 * screenWidth,
       duration: duration,
     );
   }
 
   void _toggleSideBar() {
     setState(() {
-      if (isCollapsed) {
+      if (Provider.of<AppState>(context).sideBarIsCollapsed) {
+        Provider.of<AppState>(context).setSideBarCollapseMode(true);
         _controller.forward();
       } else {
+        Provider.of<AppState>(context).setSideBarCollapseMode(false);
         _controller.reverse();
       }
 
-      isCollapsed = !isCollapsed;
+      Provider.of<AppState>(context).toggleSideBarCollapseMode();
     });
   }
 
@@ -148,9 +162,11 @@ class StudentScreenState extends State<StudentScreen>
     setState(() {
       if (dx == 0) {
         _controller.forward();
-        isCollapsed = false;
+        // isCollapsed = false;
+        Provider.of<AppState>(context).setSideBarCollapseMode(false);
       } else {
-        isCollapsed = true;
+        // isCollapsed = true;
+        Provider.of<AppState>(context).setSideBarCollapseMode(true);
         _controller.reverse();
       }
     });
@@ -164,9 +180,8 @@ class StudentScreenState extends State<StudentScreen>
 
     return Stack(
       children: <Widget>[
-        
-       sideBarBackgroundScenary(),
-        
+        sideBarBackgroundScenary(),
+
         AnimatedBuilder(
           animation: _slideAnimation,
           builder: (context, child) {
@@ -182,7 +197,9 @@ class StudentScreenState extends State<StudentScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height:((0.2 * screenHeight) / 2) ,),
+                  SizedBox(
+                    height: ((0.2 * screenHeight) / 2),
+                  ),
                   sideBarItems(),
                   Container(
                     height: (((0.2 * screenHeight) / 2)),
@@ -190,7 +207,7 @@ class StudentScreenState extends State<StudentScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                      //  DarkModeSwitch(),
+                        //  DarkModeSwitch(),
                         darkModeWidget(phonesCurrentBrightnessMode),
                       ],
                     ),
@@ -198,117 +215,131 @@ class StudentScreenState extends State<StudentScreen>
                 ],
               )),
         ),
-         sideBarHeader(),
+        sideBarHeader(),
 
-       Positioned(child:Container(height:(screenHeight*0.2)/2 , child: Icon(Icons.exit_to_app, color: Theme.of(context).colorScheme.onSurface, size: 26,), ) ,  right: 30, ) // TODO :: change icon
+        Positioned(
+          child: Container(
+            height: (screenHeight * 0.2) / 2,
+            child: Icon(
+              Icons.exit_to_app,
+              color: Theme.of(context).colorScheme.onSurface,
+              size: 26,
+            ),
+          ),
+          right: 30,
+        ) // TODO :: change icon
       ],
     );
   }
 
-  Widget sideBarBackgroundScenary(){
+  Widget sideBarBackgroundScenary() {
     return Container(
-                    height: (((0.7* screenHeight) / 2) ),
-                    width: screenWidth,
-                    decoration: BoxDecoration( color: Theme.of(context).colorScheme.primary ,image: DecorationImage( image: CachedNetworkImageProvider(
-                            "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg"), fit: BoxFit.cover)),
-                  );
+      height: (((0.7 * screenHeight) / 2)),
+      width: screenWidth,
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          image: DecorationImage(
+              image: CachedNetworkImageProvider(
+                  "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg"),
+              fit: BoxFit.cover)),
+    );
   }
 
-  Widget sideBarHeader(){
+  Widget sideBarHeader() {
     return ClipRect(
-          child: BackdropFilter(
+      child: BackdropFilter(
         filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
-            child: Container(
-              padding: EdgeInsets.only(left: 15, bottom: 15),
-              height: (((0.2 * screenHeight) / 2) + 42),
-              // screen is reduced to 0.8 from animation.. leaving with 0.2... divide by 2 cz theres upper and lower sides
-              // then add 35 which seems to be the upper app-bar's height
+        child: Container(
+          padding: EdgeInsets.only(left: 15, bottom: 15),
+          height: (((0.2 * screenHeight) / 2) + 42),
+          // screen is reduced to 0.8 from animation.. leaving with 0.2... divide by 2 cz theres upper and lower sides
+          // then add 35 which seems to be the upper app-bar's height
 
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface.withAlpha(50)),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface.withAlpha(50)),
 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.fitHeight,
-                            image: CachedNetworkImageProvider(
-                                "http://southparkstudios.mtvnimages.com/shared/characters/kids/eric-cartman.png"))),
-                  ), SizedBox(width: 5,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Bader Al Alami",
-                        style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w300,
-                            color: Theme.of(context).colorScheme.onSurface),
-                      ),
-                      Text("217210641",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300,
-                              color: Theme.of(context).colorScheme.onSurface))
-                    ],
-                  )
-                ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        fit: BoxFit.fitHeight,
+                        image: CachedNetworkImageProvider(
+                            "http://southparkstudios.mtvnimages.com/shared/characters/kids/eric-cartman.png"))),
               ),
-            ),
+              SizedBox(
+                width: 5,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Bader Al Alami",
+                    style: TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w300,
+                        color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  Text("217210641",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                          color: Theme.of(context).colorScheme.onSurface))
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget sideBarItems(){
+  Widget sideBarItems() {
     return Container(
-                    height: 350,
-                    width: 0.45 * screenWidth,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Spacer(flex: 1),
-                        Text(
-                          "Home",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        SizedBox(height:50),
-                        Text(
-                          "Calendar",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        SizedBox(height:50),
-                        Text(
-                          "People",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
+      height: 350,
+      width: 0.45 * screenWidth,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Spacer(flex: 1),
+          Text(
+            "Home",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          SizedBox(height: 50),
+          Text(
+            "Calendar",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          SizedBox(height: 50),
+          Text(
+            "People",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
 
-                        SizedBox(height:50),
-                        Text(
-                          "Tools",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
+          SizedBox(height: 50),
+          Text(
+            "Tools",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
 
-                        //Spacer(flex:2)
-                      ],
-                    ),
-                  );
+          //Spacer(flex:2)
+        ],
+      ),
+    );
   }
 
   Widget darkModeWidget(phonesCurrentBrightnessMode) {
-    return 
-    Container(
-      
-      width: 0.45*screenWidth,
+    return Container(
+      width: 0.45 * screenWidth,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(25)),
@@ -390,15 +421,15 @@ class StudentScreenState extends State<StudentScreen>
     Provider.of<AppState>(context).setBrightnessAutoMode(false);
   }
 }
- 
+
 // class DarkModeSwitch extends StatefulWidget {
 //   @override
 //   _State createState() => _State();
 // }
- 
+
 // class _State extends State<DarkModeSwitch> {
 //   bool isSwitched = false;
- 
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Row(
@@ -417,6 +448,6 @@ class StudentScreenState extends State<StudentScreen>
 //             ),
 //       ],
 //     );
-    
+
 //   }
 // }

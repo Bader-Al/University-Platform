@@ -366,6 +366,10 @@ class StudentScreenState extends State<StudentScreen>
           // iconOff: Icons.power_settings_new,                        THE ICONS ARE DEALT WITH MANUALLY IN THE CLASS
           textSize: 17,
           onChanged: (value) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              setLightModeManually(value);
+              // Add Your Code here.
+            });
             // SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
             //   setLightModeManually(value);
             // }

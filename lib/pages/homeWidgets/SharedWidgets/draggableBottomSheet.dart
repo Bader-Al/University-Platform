@@ -32,18 +32,15 @@ import 'package:provider/provider.dart';
 ///////////////////////////////////// above is not in a class because it's used by two classes that are not linked
 
 class DraggableBottomSheet extends StatelessWidget {
-  const DraggableBottomSheet({
-    this.headerWidget,
-    this.pageContent,
-    this.pageIndex,
-    this.title,
-    this.horizontalPadding = 0,
-  });
+  const DraggableBottomSheet(
+      {this.pageContent,
+      this.pageIndex,
+      this.title,
+      this.horizontalPadding = 0});
   final List pageContent;
   final int pageIndex;
   final String title;
   final double horizontalPadding;
-  final Widget headerWidget;
   @override
   //  List colors = [Colors.red, Colors.green, Colors.yellow, Colors.cyan, Colors.indigoAccent]; // JUST FOR DEBUGGING PURPOSES
   Widget build(BuildContext context) {
@@ -95,7 +92,7 @@ class DraggableBottomSheet extends StatelessWidget {
                               controller: scrollController,
                               padding: EdgeInsets.only(left: 0),
                               children: <Widget>[
-                                Center(child: SheetHeader(this.headerWidget)),
+                                Center(child: SheetHeader()),
 
                                 title != null
                                     ? Container(
@@ -173,8 +170,7 @@ class DraggableBottomSheet extends StatelessWidget {
 }
 
 class SheetHeader extends StatelessWidget {
-  const SheetHeader(this.headerWidget);
-  final headerWidget;
+  const SheetHeader();
   @override
   Widget build(BuildContext context) {
     return
@@ -194,10 +190,7 @@ class SheetHeader extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-              child: Center(
-                  child: this.headerWidget != null
-                      ? this.headerWidget
-                      : SearchButton()))),
+              child: Center(child: SearchButton()))),
     );
     // );
   }

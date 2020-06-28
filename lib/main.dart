@@ -356,7 +356,7 @@ class StudentScreenState extends State<StudentScreen>
       child: Padding(
         padding: EdgeInsets.only(),
         child: LiteRollingSwitch(
-          // value: true,
+          // value: true,  TODO use this when implementing AUTO
 
           textOn: 'Night',
           textOff: 'Day',
@@ -366,9 +366,11 @@ class StudentScreenState extends State<StudentScreen>
           // iconOff: Icons.power_settings_new,                        THE ICONS ARE DEALT WITH MANUALLY IN THE CLASS
           textSize: 17,
           onChanged: (value) {
-            SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
-              setLightModeManually(value);
-            });
+            // SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
+            //   setLightModeManually(value);
+            // }
+
+            // );
           },
         ),
       ),

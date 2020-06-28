@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
@@ -355,7 +356,8 @@ class StudentScreenState extends State<StudentScreen>
       child: Padding(
         padding: EdgeInsets.only(),
         child: LiteRollingSwitch(
-          value: true,
+          // value: true,
+
           textOn: 'Night',
           textOff: 'Day',
           colorOn: Color(0xff333333),
@@ -363,7 +365,11 @@ class StudentScreenState extends State<StudentScreen>
           // iconOn: ImageIcon(AssetImage('icons/moon.png')),
           // iconOff: Icons.power_settings_new,                        THE ICONS ARE DEALT WITH MANUALLY IN THE CLASS
           textSize: 17,
-          onChanged: (value) => setLightModeManually(value),
+          onChanged: (value) {
+            SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
+              setLightModeManually(value);
+            });
+          },
         ),
       ),
 

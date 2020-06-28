@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/HorizontalExpandingGradeViewer.dart';
-// import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/academicDraggableBottomSheet.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
 import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 
 class AcademicsPage extends StatelessWidget {
@@ -78,6 +78,7 @@ class AcademicPageState extends ChangeNotifier {
     Container(
       key: ValueKey(0),
       child: DraggableBottomSheet(
+        // headerWidget: ColorBasedTabs(),
         pageContent: stuffs,
         pageIndex: 0,
         title: "Introduction To Artificial Intelligence",
@@ -86,7 +87,7 @@ class AcademicPageState extends ChangeNotifier {
     Container(
       key: ValueKey(1),
       child: DraggableBottomSheet(
-        horizontalPadding: 0,
+          horizontalPadding: 0,
           pageContent: stuffs,
           pageIndex: 1,
           title: "Human Computer Interaction"),
@@ -129,12 +130,23 @@ class AcademicPageState extends ChangeNotifier {
 
 List stuffs = [
   GradeViewer(gradesList: [
-    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10, isSeen: false),
-    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10, isSeen: false),
-    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10, isSeen: false),
+    Grade(
+        examType: "Quiz".toUpperCase(),
+        earnedGrade: 7,
+        gradePossible: 10,
+        isSeen: false),
+    Grade(
+        examType: "Quiz".toUpperCase(),
+        earnedGrade: 7,
+        gradePossible: 10,
+        isSeen: false),
+    Grade(
+        examType: "Quiz".toUpperCase(),
+        earnedGrade: 7,
+        gradePossible: 10,
+        isSeen: false),
     Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),
   ]),
-
   AcademicItem(),
   AcademicItem(),
   AcademicItem(),

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
-import 'package:psu_platform/pages/homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:day_night_switch/day_night_switch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import './pages/StudentHome/studentHomeHandler.dart';
@@ -177,7 +178,6 @@ class StudentScreenState extends State<StudentScreen>
     return Stack(
       children: <Widget>[
         sideBarBackgroundScenary(),
-
         AnimatedBuilder(
           animation: _slideAnimation,
           builder: (context, child) {
@@ -187,43 +187,54 @@ class StudentScreenState extends State<StudentScreen>
               child: child,
             );
           },
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: ((0.2 * screenHeight) / 2),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Spacer(
+                flex: 6,
+              ),
+              SizedBox(
+                  // height: ((0.2 * screenHeight) / 2),
                   ),
-                  sideBarItems(),
-                  Container(
-                    height: (((0.2 * screenHeight) / 2)),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        //  DarkModeSwitch(),
-                        darkModeWidget(phonesCurrentBrightnessMode),
-                      ],
-                    ),
-                  ),
-                ],
-              )),
+              sideBarItems(),
+              Spacer(
+                flex: 2,
+              ),
+              darkModeWidget(phonesCurrentBrightnessMode),
+              SizedBox(
+                height: (screenHeight * 0.2) / 2,
+              )
+            ],
+          ),
         ),
         sideBarHeader(),
-
         Positioned(
           child: Container(
-            height: (screenHeight * 0.2) / 2,
-            child: Icon(
-              Icons.exit_to_app,
-              color: Theme.of(context).colorScheme.onSurface,
-              size: 26,
+            // height: (((0.2 * screenHeight) / 2)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  "Sign Out",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontSize: 11),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.exit_to_app,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  size: 21,
+                ),
+              ],
             ),
           ),
-          right: 30,
-        ) // TODO :: change icon
+          right: 15,
+          top: 15,
+        ),
       ],
     );
   }
@@ -251,13 +262,13 @@ class StudentScreenState extends State<StudentScreen>
           // screen is reduced to 0.8 from animation.. leaving with 0.2... divide by 2 cz theres upper and lower sides
           // then add 35 which seems to be the upper app-bar's height
 
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface.withAlpha(50)),
 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
                 width: 80,
@@ -273,21 +284,21 @@ class StudentScreenState extends State<StudentScreen>
                 width: 5,
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     "Bader Al Alami",
                     style: TextStyle(
-                        fontSize: 21,
+                        fontSize: 18,
                         fontWeight: FontWeight.w300,
                         color: Theme.of(context).colorScheme.onSurface),
                   ),
                   Text("217210641",
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.w300,
-                          color: Theme.of(context).colorScheme.onSurface))
+                          color: Theme.of(context).colorScheme.onSurface)),
                 ],
               )
             ],
@@ -335,19 +346,38 @@ class StudentScreenState extends State<StudentScreen>
 
   Widget darkModeWidget(phonesCurrentBrightnessMode) {
     return Container(
-      width: 0.45 * screenWidth,
+      // width: 0.45 * screenWidth,
+      // width: screenWidth * 0.5 - 100,
+      height: 35,
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          //color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(25)),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          darkButton(),
-          autoButton(phonesCurrentBrightnessMode),
-          lightButton(),
-        ],
+      child: Padding(
+        padding: EdgeInsets.only(),
+        child: LiteRollingSwitch(
+          value: true,
+          textOn: 'Night',
+          textOff: 'Day',
+          colorOn: Color(0xff333333),
+          colorOff: Colors.white,
+          // iconOn: ImageIcon(AssetImage('icons/moon.png')),
+          // iconOff: Icons.power_settings_new,                        THE ICONS ARE DEALT WITH MANUALLY IN THE CLASS
+          textSize: 17,
+          onChanged: (value) => setLightModeManually(value),
+        ),
       ),
+
+      // Row(
+      //   mainAxisSize: MainAxisSize.max,
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+      //   children: <Widget>[
+
+      //     darkButton(),
+      //     autoButton(phonesCurrentBrightnessMode),
+      //     lightButton(),
+      //   ],
+      // ),
     );
   }
 
@@ -414,6 +444,11 @@ class StudentScreenState extends State<StudentScreen>
 
   void setLightModeToLight() {
     Provider.of<AppState>(context).setDarkMode(false);
+    Provider.of<AppState>(context).setBrightnessAutoMode(false);
+  }
+
+  void setLightModeManually(bool value) {
+    Provider.of<AppState>(context).setDarkMode(value);
     Provider.of<AppState>(context).setBrightnessAutoMode(false);
   }
 }

@@ -28,6 +28,8 @@ dependencies:
   shared_preferences: ^0.5.7+3 #not used yet
   flutter_statusbarcolor: ^0.2.3 #not used yet
   after_layout: ^1.0.7+2
+  lite_rolling_switch: ^0.1.1 # for dark mode/ lightmode switch
+  day_night_switch: ^0.0.2+1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

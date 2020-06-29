@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:psu_platform/pages/homeWidgets/AbstractWidgets/sheetItem.dart';
+import 'charts.dart';
 
 class Grade {
-  Grade(
-      {@required this.examType,
-      @required this.earnedGrade,
-      @required this.gradePossible,
-      this.date,
-      this.isSeen = true,
-      
-      });
+  Grade({
+    @required this.examType,
+    @required this.earnedGrade,
+    @required this.gradePossible,
+    this.date,
+    this.isSeen = true,
+  });
   String examType;
   int earnedGrade, gradePossible;
   String date = "19 Jan 2021"; // TODO ":" change this later to be functional
@@ -19,7 +19,10 @@ class Grade {
 }
 
 class GradeViewer extends StatelessWidget implements SheetItem {
-  GradeViewer({@required this.gradesList, this.scrollController,});
+  GradeViewer({
+    @required this.gradesList,
+    this.scrollController,
+  });
 
   final List<Grade> gradesList;
   final scrollController;
@@ -38,7 +41,7 @@ class GradeViewer extends StatelessWidget implements SheetItem {
           builder: (context, gradeSelectionData, child) {
             return Container(
               color: backGroundColor,
-              padding:  EdgeInsets.only(left:padding, bottom: padding*7),
+              padding: EdgeInsets.only(left: padding, bottom: padding * 7),
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
@@ -46,8 +49,9 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                       topLeft: Radius.circular(25),
                       bottomLeft: Radius.circular(25)),
                 ),
-                padding: EdgeInsets
-                    .only(left:0), // there is a previous 10px idk where so this makes 15 PX
+                padding: EdgeInsets.only(
+                    left:
+                        0), // there is a previous 10px idk where so this makes 15 PX
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -63,7 +67,7 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                               width: double.infinity,
                               height: MediaQuery.of(context).size.height * 0.6,
                               color: Theme.of(context).colorScheme.background,
-                              child: Text("DASHEBERH"),
+                              child: GradeChart(),
                             )
                           ],
                         ),
@@ -82,14 +86,16 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                                   bottomLeft: Radius.circular(15)),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                physics: ScrollPhysics(parent: BouncingScrollPhysics() ),
+                                physics: ScrollPhysics(
+                                    parent: BouncingScrollPhysics()),
                                 itemCount: gradesList.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return FlatButton(
                                     padding: EdgeInsets.zero,
                                     onPressed: () {
                                       Provider.of<GradeSelectionData>(context)
-                                          .setSelectedIndex(index, gradesList[index]);
+                                          .setSelectedIndex(
+                                              index, gradesList[index]);
                                     },
                                     child: GradeCard(
                                       gradeAttained:
@@ -97,9 +103,11 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                                       gradePossible:
                                           gradesList[index].gradePossible,
                                       examType: gradesList[index].examType,
-                                      isWeaklyHighlighted: !gradesList[index].isSeen,
+                                      isWeaklyHighlighted:
+                                          !gradesList[index].isSeen,
                                       isHighlighted:
-                                          Provider.of<GradeSelectionData>(context)
+                                          Provider.of<GradeSelectionData>(
+                                                      context)
                                                   .selectedIndex ==
                                               index,
                                     ),
@@ -115,7 +123,7 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                       // padding: EdgeInsets.zero,
                       onTap: () {
                         gradeSelectionData.switchExpansion();
-                        scrollController.jumpTo(100.0);
+                        // scrollController.jumpTo(100.0);
                       },
                       child: Container(
                         padding: EdgeInsets.only(bottom: 5),
@@ -166,7 +174,7 @@ class GradeSelectionData extends ChangeNotifier {
     selectedIndex = index;
     if (index == selectedIndex) {
       //switchExpansion();
-      gradeItem.isSeen=true;
+      gradeItem.isSeen = true;
     } else
       selectedIndex = index;
 
@@ -178,14 +186,13 @@ class GradeSelectionData extends ChangeNotifier {
 }
 
 class GradeCard extends StatelessWidget {
-  GradeCard(
-      {@required this.gradeAttained,
-      @required this.gradePossible,
-      @required this.examType,
-      this.isHighlighted = false,
-      this.isWeaklyHighlighted = false,
-      });
-      
+  GradeCard({
+    @required this.gradeAttained,
+    @required this.gradePossible,
+    @required this.examType,
+    this.isHighlighted = false,
+    this.isWeaklyHighlighted = false,
+  });
 
   final int gradeAttained, gradePossible;
   final examType;

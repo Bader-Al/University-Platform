@@ -178,6 +178,7 @@ class PageContentBuilder extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
       //will be switched from StreamBuilder
       child: ListView.builder(
+        cacheExtent: MediaQuery.of(context).size.width * 3,
         reverse: this.reverse,
         itemCount: items.length,
         itemBuilder: (context, index) {

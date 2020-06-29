@@ -16,7 +16,8 @@ class UpComingExamsViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          left: 15,),
+        left: 15,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -44,10 +45,12 @@ class UpComingExamsViewer extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, top: 10, bottom: 10),
               child: ClipRRect(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), topLeft: Radius.circular(15)),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    topLeft: Radius.circular(15)),
                 child: ListView.builder(
-                  physics: ScrollPhysics(parent:BouncingScrollPhysics()),
-                  cacheExtent: 0,
+                  physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                  cacheExtent: MediaQuery.of(context).size.width,
                   scrollDirection: Axis.horizontal,
                   itemCount: children.length,
                   itemBuilder: (BuildContext context, int index) {

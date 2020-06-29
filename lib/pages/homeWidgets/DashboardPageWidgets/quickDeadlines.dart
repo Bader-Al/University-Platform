@@ -278,18 +278,19 @@ class CompactFileViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      childAspectRatio: 5 / 9,
+      childAspectRatio: 7 / 9,
+
       // padding: EdgeInsets.zero,
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
       cacheExtent: 0,
 
       physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-      crossAxisCount: MediaQuery.of(context).size.height < 700
+      crossAxisCount: MediaQuery.of(context).size.longestSide < 1200
           ? 1
-          : MediaQuery.of(context).size.height < 1300
+          : MediaQuery.of(context).size.longestSide < 1700
               ? 2
-              : MediaQuery.of(context).size.height < 1500 ? 3 : 4,
+              : MediaQuery.of(context).size.longestSide < 1900 ? 3 : 4,
       scrollDirection: Axis.horizontal,
       children: <Widget>[
         buildFileItem(context, false),
@@ -315,18 +316,21 @@ class CompactFileViewer extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Expanded(
-            child: Text(
-              "Assignment1_dueeeeTomro.pdf",
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  color: isDownloaded
-                      ? Theme.of(context).colorScheme.onPrimary
-                      : Theme.of(context).colorScheme.onSurface,
-                  fontSize: 12),
-              maxLines: 4,
-              softWrap: true,
-              overflow: TextOverflow.ellipsis,
-            ),
+            child: Container(
+              padding: EdgeInsets.only(right: 15),
+              child:Text(
+                "Assignment1_dueeeeTomro.pdf",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: isDownloaded
+                        ? Theme.of(context).colorScheme.onPrimary
+                        : Theme.of(context).colorScheme.onSurface,
+                    fontSize: 12),
+                maxLines: 4,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),

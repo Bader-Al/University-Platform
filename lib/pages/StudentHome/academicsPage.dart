@@ -78,7 +78,7 @@ class AcademicPageState extends ChangeNotifier {
     Container(
       key: ValueKey(0),
       child: DraggableBottomSheet(
-        // headerWidget: ColorBasedTabs(),
+        headerWidget: ColorBasedTabs(),
         pageContent: stuffs,
         pageIndex: 0,
         title: "Introduction To Artificial Intelligence",

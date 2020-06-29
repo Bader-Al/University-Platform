@@ -17,7 +17,8 @@ class PostedGradesViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          left: 15,),
+        left: 15,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -45,10 +46,12 @@ class PostedGradesViewer extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, top: 10, bottom: 10),
               child: ClipRRect(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),topLeft: Radius.circular(15)),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    topLeft: Radius.circular(15)),
                 child: ListView.builder(
-                  physics: ScrollPhysics(parent:BouncingScrollPhysics()),
-                  cacheExtent: 0,
+                  physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                  cacheExtent: MediaQuery.of(context).size.width,
                   scrollDirection: Axis.horizontal,
                   itemCount: children.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -66,8 +69,12 @@ class PostedGradesViewer extends StatelessWidget {
 
 class PostedGradeCard extends StatelessWidget {
   const PostedGradeCard(
-      {@required this.courseFullTitle, @required this.gradeAttained, @required this.gradePossible, @required this.examType, this.splashColor});
-  final int gradeAttained , gradePossible;
+      {@required this.courseFullTitle,
+      @required this.gradeAttained,
+      @required this.gradePossible,
+      @required this.examType,
+      this.splashColor});
+  final int gradeAttained, gradePossible;
   final String courseFullTitle;
   final examType;
   final splashColor;
@@ -106,7 +113,7 @@ class PostedGradeCard extends StatelessWidget {
       radius: 75,
       lineWidth: 4,
       backgroundColor: Theme.of(context).colorScheme.background,
-      percent: gradeAttained/gradePossible,
+      percent: gradeAttained / gradePossible,
       circularStrokeCap: CircularStrokeCap.round,
       progressColor: Theme.of(context).colorScheme.primary,
       center: Column(
@@ -119,7 +126,15 @@ class PostedGradeCard extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onBackground,
                 fontWeight: FontWeight.w300,
                 fontSize: 18),
-          ), SizedBox(height:4),Container(height:1, width: 25, color: Theme.of(context).colorScheme.primary.withAlpha(50)),SizedBox(height: 4,),
+          ),
+          SizedBox(height: 4),
+          Container(
+              height: 1,
+              width: 25,
+              color: Theme.of(context).colorScheme.primary.withAlpha(50)),
+          SizedBox(
+            height: 4,
+          ),
           Text(
             "$gradePossible",
             textAlign: TextAlign.center,

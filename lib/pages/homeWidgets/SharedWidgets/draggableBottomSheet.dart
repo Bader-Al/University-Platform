@@ -33,7 +33,8 @@ import 'package:provider/provider.dart';
 
 class DraggableBottomSheet extends StatelessWidget {
   const DraggableBottomSheet(
-      {this.pageContent,
+      {this.headerWidget,
+      this.pageContent,
       this.pageIndex,
       this.title,
       this.horizontalPadding = 0});
@@ -41,6 +42,7 @@ class DraggableBottomSheet extends StatelessWidget {
   final int pageIndex;
   final String title;
   final double horizontalPadding;
+  final Widget headerWidget;
   @override
   //  List colors = [Colors.red, Colors.green, Colors.yellow, Colors.cyan, Colors.indigoAccent]; // JUST FOR DEBUGGING PURPOSES
   Widget build(BuildContext context) {
@@ -52,9 +54,12 @@ class DraggableBottomSheet extends StatelessWidget {
           builder: (context, bgState, child) {
             return NotificationListener(
               onNotification: (notification) {
+                // print(notification);
                 if (notification is ScrollUpdateNotification) {
-                  notification.metrics.atEdge &&
-                          notification.metrics.extentBefore == 1
+                  // print(notification.metrics.extentBefore);
+                  // bgState.showBG();
+                  // notification.metrics.atEdge &&
+                  notification.metrics.extentBefore > 0
                       ? bgState.showBG()
                       : bgState.hideBG();
                 } else if (notification is DraggableScrollableNotification) {
@@ -78,7 +83,8 @@ class DraggableBottomSheet extends StatelessWidget {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: horizontalPadding),
+                            horizontal: horizontalPadding,
+                          ),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
@@ -87,12 +93,13 @@ class DraggableBottomSheet extends StatelessWidget {
                                   top: Radius.circular(15)),
                             ),
                             child: ListView(
+                              cacheExtent: 900,
                               physics: ScrollPhysics(
                                   parent: BouncingScrollPhysics()),
                               controller: scrollController,
-                              padding: EdgeInsets.only(left: 0),
+                              padding: EdgeInsets.only(left: 0, top: 10),
                               children: <Widget>[
-                                Center(child: SheetHeader()),
+                                Center(child: headerWidget ?? SheetHeader()),
 
                                 title != null
                                     ? Container(
@@ -170,7 +177,8 @@ class DraggableBottomSheet extends StatelessWidget {
 }
 
 class SheetHeader extends StatelessWidget {
-  const SheetHeader();
+  const SheetHeader({this.headerWidget});
+  final Widget headerWidget;
   @override
   Widget build(BuildContext context) {
     return

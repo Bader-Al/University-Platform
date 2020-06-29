@@ -107,7 +107,7 @@ class DateTab extends StatelessWidget {
         ),
         child: FlatButton(
           padding:
-              const EdgeInsets.only(top: 14, bottom: 10, left: 5, right: 30),
+              const EdgeInsets.only(top: 14, bottom: 10, left: 5, right: 0),
           highlightColor: Theme.of(context).colorScheme.secondary,
           splashColor: Theme.of(context).colorScheme.secondary,
           onPressed: () {
@@ -176,7 +176,7 @@ class _DateSelectorState extends State<DateSelector> {
     return ChangeNotifierProvider<DateSelectionData>(
       create: (context) => DateSelectionData(),
       child: Container(
-        width: 115,
+        width: 105,
         // color: Theme.of(context).colorScheme.background,
         child: ListView.builder(
           itemCount: 7,
@@ -208,7 +208,7 @@ class DeadLinesContentViewer extends StatelessWidget {
     return Row(
       children: <Widget>[
         SizedBox(
-          width: 115,
+          width: 105,
         ), // DEADSPACE IN BG
         Expanded(
           child: Container(
@@ -316,22 +316,21 @@ class CompactFileViewer extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Expanded(
-            child: Container(
-              padding: EdgeInsets.only(right: 15),
-              child:Text(
-                "Assignment1_dueeeeTomro.pdf",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: isDownloaded
-                        ? Theme.of(context).colorScheme.onPrimary
-                        : Theme.of(context).colorScheme.onSurface,
-                    fontSize: 12),
-                maxLines: 4,
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
-              ),
-            )
-          ),
+              child: Container(
+            padding: EdgeInsets.only(right: 15),
+            child: Text(
+              "Assignment1_dueeeeTomro.pdf",
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: isDownloaded
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : Theme.of(context).colorScheme.onSurface,
+                  fontSize: 12),
+              maxLines: 4,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
             child: Column(

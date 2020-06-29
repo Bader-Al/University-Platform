@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 import 'universityTabWidgets/eventsBanner.dart';
 import 'universityTabWidgets/billboardHeader.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:psu_platform/pages/homeWidgets/feedWidgets/feedPageContentItems.dart';
 
@@ -53,13 +54,29 @@ class UniversityTab extends StatelessWidget {
         DraggableBottomSheet(
           pageIndex: 0,
           pageContent: [
-            TextOnlyPost(),
-            TextOnlyPost(),
-            TextOnlyPost(),
-            TextOnlyPost(),
-            TextOnlyPost(),
-            TextOnlyPost(),
-            TextOnlyPost(),
+            GenericPost(
+                postImage: PostImage(
+              imageUrl:
+                  "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg",
+              imageDescription: "HELLOOOOOOOOOOOOOOOOOOO",
+            )),
+            GenericPost(
+              postText: "THIS IS GENEERRIIIICCCC YYYAYYY",
+            ),
+            GenericPost(),
+            GenericPost(
+              postImage: PostImage(
+                imageUrl: "https://source.unsplash.com/random",
+                imageDescription: "HELLOOOOOOOOOOOOOOOOOOO",
+              ),
+            ),
+            GenericPost(),
+            GenericPost(),
+            GenericPost(),
+            GenericPost(),
+            GenericPost(),
+            GenericPost(),
+            GenericPost(),
           ],
           horizontalPadding: 2,
         ),

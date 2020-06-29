@@ -98,7 +98,10 @@ class PostTimeStamp extends StatelessWidget {
   }
 }
 
-class TextOnlyPost extends StatelessWidget {
+class GenericPost extends StatelessWidget {
+  GenericPost({this.postImage, this.postText});
+  final postImage, postText;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -137,15 +140,84 @@ class TextOnlyPost extends StatelessWidget {
               ),
               Container(
                 width: MediaQuery.of(context).size.width - 115,
-                child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis nunc morbi gravida et ante ornare scelerisque. Enim turpis duis integer iaculis quis sit volutpat. Urna suscipit nunc, quisque adipiscing amet interdum egestas arcu vel. Sit justo orci metus molestie.",
-                  softWrap: true,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    PostText(
+                      postText: this.postText,
+                    ),
+                    this.postImage ??
+                        Container(
+                          child: this.postImage,
+                        )
+                  ],
                 ),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class PostImage extends StatelessWidget {
+  const PostImage({this.imageUrl, this.imageDescription});
+  final String imageUrl, imageDescription;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Stack(
+          children: <Widget>[
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height / 2),
+              child: Container(
+                // width: double.infinity,
+                child: Image(
+                    fit: BoxFit.fitWidth,
+                    image: CachedNetworkImageProvider(imageUrl)),
+              ),
+            ),
+            Positioned(
+              child: Container(
+                padding: EdgeInsets.all(11),
+                height: 75,
+                child: Text(
+                  imageDescription,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground),
+                ),
+                decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .background
+                        .withAlpha(225)),
+              ),
+              bottom: 0,
+              right: 0,
+              left: 0,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PostText extends StatelessWidget {
+  const PostText({this.postText});
+  final String postText;
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      postText ??
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis nunc morbi gravida et ante ornare scelerisque. Enim turpis duis integer iaculis quis sit volutpat. Urna suscipit nunc, quisque adipiscing amet interdum egestas arcu vel. Sit justo orci metus molestie.",
+      softWrap: true,
+      style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
     );
   }
 }

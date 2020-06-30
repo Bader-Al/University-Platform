@@ -6,10 +6,11 @@ class GradeChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: BezierChart(
         bezierChartScale: BezierChartScale.CUSTOM,
         selectedValue: 70,
+
         onValueSelected: (value) => print(value),
 
         xAxisCustomValues: const [
@@ -101,7 +102,7 @@ class GradeChart extends StatelessWidget {
             bubbleIndicatorValueStyle:
                 TextStyle(color: Theme.of(context).colorScheme.onBackground),
             xAxisTextStyle:
-                TextStyle(color: Theme.of(context).colorScheme.onBackground),
+                TextStyle(color: Theme.of(context).colorScheme.primary),
 
             // backgroundColor: Theme.of(context).colorScheme.primary,
             snap: false,

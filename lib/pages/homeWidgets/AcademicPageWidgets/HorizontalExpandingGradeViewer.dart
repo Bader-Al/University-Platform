@@ -105,31 +105,20 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                                 itemCount:
                                     gradeSelectionData.selectedGradeList.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return FlatButton(
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      Provider.of<GradeSelectionData>(context)
-                                          .setSelectedIndex(
-                                              index,
-                                              gradeSelectionData
-                                                  .selectedGradeList[index]);
-                                    },
-                                    child: GradeCard(
-                                      gradeAttained: gradeSelectionData
-                                          .selectedGradeList[index].earnedGrade,
-                                      gradePossible: gradeSelectionData
-                                          .selectedGradeList[index]
-                                          .gradePossible,
-                                      examType: gradeSelectionData
-                                          .selectedGradeList[index].examType,
-                                      isWeaklyHighlighted: !gradeSelectionData
-                                          .selectedGradeList[index].isSeen,
-                                      isHighlighted:
-                                          Provider.of<GradeSelectionData>(
-                                                      context)
-                                                  .selectedIndex ==
-                                              index,
-                                    ),
+                                  return Stack(
+                                    children: <Widget>[
+                                      returnGradeCard(
+                                          gradeSelectionData, index),
+                                      AnimatedOpacity(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease,
+                                        opacity: gradeSelectionData.isExpanded
+                                            ? 1
+                                            : 0,
+                                        child: returnCardIndexIndicator(
+                                            context, gradeSelectionData, index),
+                                      )
+                                    ],
                                   );
                                 },
                               ),
@@ -153,7 +142,7 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                               width: 10,
                             ),
                             AnimatedSwitcher(
-                              duration: Duration(seconds: 3),
+                              duration: Duration(seconds: 1),
                               child: Icon(Icons.keyboard_arrow_down,
                                   color: Theme.of(context).colorScheme.primary),
                               transitionBuilder: (child, animation) {
@@ -195,6 +184,43 @@ class GradeViewer extends StatelessWidget implements SheetItem {
             );
           },
         ));
+  }
+
+  Widget returnCardIndexIndicator(context, gradeSelectionData, index) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, top: 10),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Theme.of(context).colorScheme.surface,
+            border: Border.all(
+                width: 1, color: Theme.of(context).colorScheme.primary)),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+        child: Text(
+          (gradeSelectionData.selectedGradeList.length - index).toString(),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget returnGradeCard(gradeSelectionData, index) {
+    return GradeCard(
+      onPressed: () {
+        // TODO::: HANDLE WHEN ITEMS FALL DOWN TO ZERO::
+        gradeSelectionData
+            .popLastItem(); // TODO ::  JUST FOR TESTING AND DEBUGGING. GET RID OF
+        gradeSelectionData.setSelectedIndex(
+            index, gradeSelectionData.selectedGradeList[index]);
+      },
+      gradeAttained: gradeSelectionData.selectedGradeList[index].earnedGrade,
+      gradePossible: gradeSelectionData.selectedGradeList[index].gradePossible,
+      examType: gradeSelectionData.selectedGradeList[index].examType,
+      isWeaklyHighlighted: !gradeSelectionData.selectedGradeList[index].isSeen,
+      isHighlighted: gradeSelectionData.selectedIndex == index,
+    );
   }
 }
 
@@ -271,6 +297,11 @@ class GradeSelectionData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void popLastItem() {
+    selectedGradeList.removeLast();
+    notifyListeners();
+  }
+
   void setSelectedIndex(int index, Grade gradeItem) {
     selectedIndex = index;
     if (index == selectedIndex) {
@@ -287,44 +318,49 @@ class GradeSelectionData extends ChangeNotifier {
 }
 
 class GradeCard extends StatelessWidget {
-  GradeCard({
-    @required this.gradeAttained,
-    @required this.gradePossible,
-    @required this.examType,
-    this.isHighlighted = false,
-    this.isWeaklyHighlighted = false,
-  });
+  GradeCard(
+      {@required this.gradeAttained,
+      @required this.gradePossible,
+      @required this.examType,
+      this.isHighlighted = false,
+      this.isWeaklyHighlighted = false,
+      this.onPressed});
 
   final int gradeAttained, gradePossible;
   final examType;
   final bool isHighlighted;
   final bool isWeaklyHighlighted;
+  final onPressed;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      margin: EdgeInsets.only(right: 5),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      color: isHighlighted
-          ? Theme.of(context).colorScheme.primary
-          : isWeaklyHighlighted
-              ? Theme.of(context).colorScheme.primaryVariant
-              : Theme.of(context).colorScheme.surface,
-      clipBehavior: Clip.hardEdge,
-      child: Container(
-          width: 151,
-          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              circleIndicator(context, gradeAttained, gradePossible,
-                  isHighlighted, isWeaklyHighlighted),
-              SizedBox(height: 5),
-              bottomDetails(
-                  context, examType, isHighlighted || isWeaklyHighlighted)
-            ],
-          )),
+    return FlatButton(
+      padding: EdgeInsets.zero,
+      onPressed: onPressed ?? () {},
+      child: Card(
+        elevation: 0,
+        margin: EdgeInsets.only(right: 5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        color: isHighlighted
+            ? Theme.of(context).colorScheme.primary
+            : isWeaklyHighlighted
+                ? Theme.of(context).colorScheme.primaryVariant
+                : Theme.of(context).colorScheme.surface,
+        clipBehavior: Clip.hardEdge,
+        child: Container(
+            width: 151,
+            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                circleIndicator(context, gradeAttained, gradePossible,
+                    isHighlighted, isWeaklyHighlighted),
+                SizedBox(height: 5),
+                bottomDetails(
+                    context, examType, isHighlighted || isWeaklyHighlighted)
+              ],
+            )),
+      ),
     );
   }
 

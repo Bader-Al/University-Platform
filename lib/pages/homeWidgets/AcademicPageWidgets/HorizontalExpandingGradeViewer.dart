@@ -39,6 +39,7 @@ class GradeViewer extends StatelessWidget implements SheetItem {
         create: (context) => GradeSelectionData(),
         child: Consumer<GradeSelectionData>(
           builder: (context, gradeSelectionData, child) {
+            gradeSelectionData.selectedGradeList = gradesList;
             return Container(
               color: backGroundColor,
               padding: EdgeInsets.only(left: padding, bottom: padding * 7),
@@ -67,7 +68,20 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                               width: double.infinity,
                               height: MediaQuery.of(context).size.height * 0.6,
                               color: Theme.of(context).colorScheme.background,
-                              child: GradeChart(),
+                              child: Stack(
+                                children: <Widget>[
+                                  GradeChart(),
+                                  Positioned(
+                                      top: 25,
+                                      left: 15,
+                                      right: 0,
+                                      child: Container(
+                                          width: double.infinity,
+                                          height: 21,
+                                          // color: Colors.red,
+                                          child: GradeTypeTabs()))
+                                ],
+                              ),
                             )
                           ],
                         ),
@@ -88,23 +102,28 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                                 scrollDirection: Axis.horizontal,
                                 physics: ScrollPhysics(
                                     parent: BouncingScrollPhysics()),
-                                itemCount: gradesList.length,
+                                itemCount:
+                                    gradeSelectionData.selectedGradeList.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return FlatButton(
                                     padding: EdgeInsets.zero,
                                     onPressed: () {
                                       Provider.of<GradeSelectionData>(context)
                                           .setSelectedIndex(
-                                              index, gradesList[index]);
+                                              index,
+                                              gradeSelectionData
+                                                  .selectedGradeList[index]);
                                     },
                                     child: GradeCard(
-                                      gradeAttained:
-                                          gradesList[index].earnedGrade,
-                                      gradePossible:
-                                          gradesList[index].gradePossible,
-                                      examType: gradesList[index].examType,
-                                      isWeaklyHighlighted:
-                                          !gradesList[index].isSeen,
+                                      gradeAttained: gradeSelectionData
+                                          .selectedGradeList[index].earnedGrade,
+                                      gradePossible: gradeSelectionData
+                                          .selectedGradeList[index]
+                                          .gradePossible,
+                                      examType: gradeSelectionData
+                                          .selectedGradeList[index].examType,
+                                      isWeaklyHighlighted: !gradeSelectionData
+                                          .selectedGradeList[index].isSeen,
                                       isHighlighted:
                                           Provider.of<GradeSelectionData>(
                                                       context)
@@ -133,17 +152,39 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                             SizedBox(
                               width: 10,
                             ),
-                            Icon(
-                              Icons.keyboard_arrow_down,
-                              color: Theme.of(context).colorScheme.primary,
+                            AnimatedSwitcher(
+                              duration: Duration(seconds: 3),
+                              child: Icon(Icons.keyboard_arrow_down,
+                                  color: Theme.of(context).colorScheme.primary),
+                              transitionBuilder: (child, animation) {
+                                gradeSelectionData.isExpanded
+                                    ? child = Icon(Icons.keyboard_arrow_up,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary)
+                                    : Icon(Icons.keyboard_arrow_down);
+                                return RotationTransition(
+                                  turns: animation,
+                                  child: child,
+                                );
+                              },
                             ),
+                            // Icon(
+                            //   Icons.keyboard_arrow_down,
+                            //   color: Theme.of(context).colorScheme.primary,
+                            // ),
                             SizedBox(
                               width: 5,
                             ),
-                            Text("Grade Overview",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.primary)),
+                            AnimatedOpacity(
+                              duration: Duration(milliseconds: 200),
+                              opacity: gradeSelectionData.isExpanded ? 0 : 1,
+                              child: Text("Grade Overview",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary)),
+                            ),
                           ],
                         ),
                       ),
@@ -157,11 +198,71 @@ class GradeViewer extends StatelessWidget implements SheetItem {
   }
 }
 
+class GradeTypeTabs extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      // controller: controller,
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Text(
+            "Total (100%)",
+            style: TextStyle(
+                fontSize: 16, color: Theme.of(context).colorScheme.primary),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            "Quizzes (5%)",
+            style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.primary.withAlpha(150)),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            "Majors (40%)",
+            style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.primary.withAlpha(150)),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            "Projects (20%)",
+            style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.primary.withAlpha(150)),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            "Projects (20%)",
+            style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.primary.withAlpha(150)),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 ///gradesList[index]
 
 ///
 class GradeSelectionData extends ChangeNotifier {
   bool isExpanded = false;
+  List selectedGradeList;
 
   int selectedIndex = 0;
 

@@ -5,6 +5,8 @@ import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentIt
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
 import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 
+import 'package:concentric_transition/concentric_transition.dart';
+
 class AcademicsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -91,7 +93,7 @@ class AcademicPageState extends ChangeNotifier {
           pageContent: stuffs,
           pageIndex: 1,
           title: "Human Computer Interaction"),
-    )
+    ),
   ];
 
   void setSelectedPageIndex(int index) {
@@ -129,24 +131,7 @@ class AcademicPageState extends ChangeNotifier {
 }
 
 List stuffs = [
-  GradeViewer(gradesList: [
-    Grade(
-        examType: "Quiz".toUpperCase(),
-        earnedGrade: 7,
-        gradePossible: 10,
-        isSeen: false),
-    Grade(
-        examType: "Quiz".toUpperCase(),
-        earnedGrade: 7,
-        gradePossible: 10,
-        isSeen: false),
-    Grade(
-        examType: "Quiz".toUpperCase(),
-        earnedGrade: 7,
-        gradePossible: 10,
-        isSeen: false),
-    Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),
-  ]),
+  GradeViewer(gradesList: _grades),
   AcademicItem(),
   AcademicItem(),
   AcademicItem(),
@@ -158,4 +143,35 @@ List stuffs = [
   AcademicItem(),
   AcademicItem(),
   AcademicItem(),
+];
+
+List<Grade> _grades = [
+  Grade(
+      examType: "Quiz".toUpperCase(),
+      earnedGrade: 7,
+      gradePossible: 10,
+      isSeen: false),
+  Grade(
+      examType: "Quiz".toUpperCase(),
+      earnedGrade: 7,
+      gradePossible: 10,
+      isSeen: false),
+  Grade(
+      examType: "Major".toUpperCase(),
+      earnedGrade: 16,
+      gradePossible: 20,
+      isSeen: false),
+  Grade(examType: "Project".toUpperCase(), earnedGrade: 7, gradePossible: 15),
+  Grade(
+      examType: "Quiz".toUpperCase(),
+      earnedGrade: 7,
+      gradePossible: 10,
+      isSeen: true),
+  Grade(examType: "Major".toUpperCase(), earnedGrade: 9, gradePossible: 20),
+  Grade(
+      examType: "Quiz".toUpperCase(),
+      earnedGrade: 7,
+      gradePossible: 10,
+      isSeen: true),
+  Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),
 ];

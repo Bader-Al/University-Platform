@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
-import 'package:day_night_switch/day_night_switch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import './pages/StudentHome/studentHomeHandler.dart';

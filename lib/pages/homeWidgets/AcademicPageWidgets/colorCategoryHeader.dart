@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/rendering.dart';
 import 'package:psu_platform/constants.dart';
+import 'package:concentric_transition/concentric_transition.dart';
 
 class ColorBasedTabs extends StatefulWidget {
   @override
@@ -38,7 +39,33 @@ class _ColorBasedTabsState extends State<ColorBasedTabs>
     return Container(
       height: 60,
       color: Colors.transparent,
-      child: Row(
+      child:
+          //  ClipPath(
+          //   clipper: ConcentricClipper(
+          //     progress: 0.1, // from 0.0 to 1.0
+          //     reverse: false,
+          //     radius: 30.0,
+          //     verticalPosition: 0.82,
+          //   ),
+          //   child: Container(
+          //     color: Colors.green,
+          //   ),
+          // )
+
+          // ConcentricPageView(
+          //   colors: <Color>[Colors.white, Colors.blue, Colors.red],
+          //   itemCount: 1, // null = infinity
+          //   physics: NeverScrollableScrollPhysics(),
+          //   itemBuilder: (int index, double value) {
+          //     return Center(
+          //       child: Container(
+          //         child: Text('Page $index'),
+          //       ),
+          //     );
+          //   },
+          // )
+
+          Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CircleAvatar(

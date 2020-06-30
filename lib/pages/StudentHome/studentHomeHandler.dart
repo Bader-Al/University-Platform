@@ -47,7 +47,7 @@ class StudentHomeState extends State<StudentHome> {
     return Scaffold(
         body: PageView(
           controller: _pageController,
-          physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+          physics: ScrollPhysics(parent: NeverScrollableScrollPhysics()),
           // physics:  ScrollPhysics(parent:Provider.of<AppState>(context).sideBarIsCollapsed? NeverScrollableScrollPhysics(): AlwaysScrollableScrollPhysics),
           children: <Widget>[...navBarRoutes],
           onPageChanged: (index) {

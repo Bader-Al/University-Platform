@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/HorizontalExpandingGradeViewer.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
-
+// import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
+// import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/bodyInBackground.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/academicDraggableBottomSheet.dart';
 import 'package:concentric_transition/concentric_transition.dart';
+
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/HorizontalExpandingGradeViewer.dart';
 
 class AcademicsPage extends StatelessWidget {
   @override
@@ -17,23 +19,51 @@ class AcademicsPage extends StatelessWidget {
   }
 }
 
+List _pages;
+
 class AcademicPageBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AcademicPageState>(builder: (context, appState, child) {
+    return Consumer<AcademicPageState>(
+        builder: (context, academicPageState, child) {
+      buildCoursePagesList(context);
       return Stack(
         children: <Widget>[
+          Positioned(
+            bottom: 0,
+            top: 0,
+            right: 0,
+            left: 0,
+            child: Container(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ), // BG COLOR
           BodyInTheBackground(),
-          DraggableSheetInTheForeground()
+          DraggableSheetInTheForeground(),
         ],
       );
     });
+  }
+
+  void buildCoursePagesList(context) {
+    final _academicPageState = Provider.of<AcademicPageState>(context);
+    _pages = [
+      // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
+      AcademicDraggableSheet(
+        children: stuffs,
+        pageIndex: 0,
+        title: "Introduction To Artificial Intelligence",
+      ),
+      AcademicDraggableSheet(
+          children: stuffs, pageIndex: 1, title: "Human Computer Interaction"),
+    ];
   }
 }
 
 class DraggableSheetInTheForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _academicPageState = Provider.of<AcademicPageState>(context);
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 350),
       switchInCurve: Curves.elasticInOut,
@@ -45,56 +75,22 @@ class DraggableSheetInTheForeground extends StatelessWidget {
               .animate(animation),
         );
       },
-      child: Provider.of<AcademicPageState>(context)._selectedPage,
-    );
-  }
-}
-
-class BodyInTheBackground extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).colorScheme.primary,
-        child: FlatButton(
-            onPressed: () {
-              Provider.of<AcademicPageState>(context).incrementPageIndex();
-            },
-            child: Text("Change page yay")),
-      ),
-      top: 0,
+      child: _academicPageState._selectedPage,
     );
   }
 }
 
 class AcademicPageState extends ChangeNotifier {
   static int _selectedPageIndex = 0;
-  var _selectedPage;
+  Widget _selectedPage;
+  double backgroundWidth;
+  double backgroundHeight = 100;
+  double initialExtent;
+  double currentExtent = 0;
 
   bool showSheetPage = false;
 
-  static List _pages = [
-    // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
-    Container(
-      key: ValueKey(0),
-      child: DraggableBottomSheet(
-        headerWidget: ColorBasedTabs(),
-        pageContent: stuffs,
-        pageIndex: 0,
-        title: "Introduction To Artificial Intelligence",
-      ),
-    ),
-    Container(
-      key: ValueKey(1),
-      child: DraggableBottomSheet(
-          horizontalPadding: 0,
-          pageContent: stuffs,
-          pageIndex: 1,
-          title: "Human Computer Interaction"),
-    ),
-  ];
+  // static List _pages =
 
   void setSelectedPageIndex(int index) {
     _selectedPageIndex = index;
@@ -123,10 +119,20 @@ class AcademicPageState extends ChangeNotifier {
 
   void setShowSheetPage(bool value) {
     showSheetPage = value;
+    notifyListeners();
+  }
+
+  void updateExtent(draggableSheetExtent) {
+    currentExtent = draggableSheetExtent;
+    notifyListeners();
   }
 
   Widget returnSelectedPage() {
     return _selectedPage;
+  }
+
+  int getSelectedPageIndex() {
+    return _selectedPageIndex;
   }
 }
 

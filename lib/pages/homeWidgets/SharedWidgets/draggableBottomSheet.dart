@@ -95,41 +95,44 @@ class DraggableBottomSheet extends StatelessWidget {
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(15)),
                             ),
-                            child: ListView(
+                            child: ListView.builder(
                               cacheExtent:
                                   MediaQuery.of(context).size.height * 3,
                               physics: ScrollPhysics(
                                   parent: BouncingScrollPhysics()),
                               controller: scrollController,
                               padding: EdgeInsets.only(left: 0, top: 10),
-                              children: <Widget>[
-                                Center(child: headerWidget ?? SheetHeader()),
+                              itemBuilder: (context, index) {
+                                return pageContent[index];
+                              },
+                              // children: <Widget>[
+                              //   Center(child: headerWidget ?? SheetHeader()),
 
-                                title != null
-                                    ? Container(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .surface,
-                                        alignment: Alignment.center,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 65),
-                                        child: Text(
-                                          title,
-                                          style: TextStyle(
-                                              fontSize: 21,
-                                              fontWeight: FontWeight.w300,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      )
-                                    : SizedBox(),
+                              //   title != null
+                              //       ? Container(
+                              //           color: Theme.of(context)
+                              //               .colorScheme
+                              //               .surface,
+                              //           alignment: Alignment.center,
+                              //           padding: const EdgeInsets.symmetric(
+                              //               horizontal: 25, vertical: 65),
+                              //           child: Text(
+                              //             title,
+                              //             style: TextStyle(
+                              //                 fontSize: 21,
+                              //                 fontWeight: FontWeight.w300,
+                              //                 color: Theme.of(context)
+                              //                     .colorScheme
+                              //                     .onSurface),
+                              //             textAlign: TextAlign.center,
+                              //           ),
+                              //         )
+                              //       : SizedBox(),
 
-                                ...pageContent.map((e) => e)
+                              //   ...pageContent.map((e) => e)
 
-                                /// THIS IS WHERE THE CONTENT IT LOADED
-                              ],
+                              //   /// THIS IS WHERE THE CONTENT IT LOADED
+                              // ],
                             ),
                             // USED TO BE THE CODE FOR TO SUPPORT A SLIVER HEADER BUT CAUSED PERFORMANCE ISSUES. NOW NO MORE HEADER
 
@@ -180,9 +183,8 @@ class DraggableBottomSheet extends StatelessWidget {
   }
 }
 
-class SheetHeader extends StatelessWidget {
-  const SheetHeader({this.headerWidget});
-  final Widget headerWidget;
+class SearchHeader extends StatelessWidget {
+  const SearchHeader();
   @override
   Widget build(BuildContext context) {
     return
@@ -213,6 +215,27 @@ class SheetHeader extends StatelessWidget {
 //       SearchButton(),
 //       Spacer(),
 //     ];
+
+class SheetTitle extends StatelessWidget {
+  const SheetTitle({this.title});
+  final String title;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 65),
+      child: Text(
+        title,
+        style: TextStyle(
+            fontSize: 21,
+            fontWeight: FontWeight.w300,
+            color: Theme.of(context).colorScheme.onSurface),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
 
 class SmartBackground extends StatefulWidget {
   @override

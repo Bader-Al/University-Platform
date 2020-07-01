@@ -26,7 +26,8 @@ class AcademicPageBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AcademicPageState>(
         builder: (context, academicPageState, child) {
-      buildCoursePagesList(context);
+      // _buildCourseCards(context); TODO WHEN IMPLEMENTED AS FUTURE
+      _buildCoursePagesList(context);
       return Stack(
         children: <Widget>[
           Positioned(
@@ -45,17 +46,44 @@ class AcademicPageBuilder extends StatelessWidget {
     });
   }
 
-  void buildCoursePagesList(context) {
-    final _academicPageState = Provider.of<AcademicPageState>(context);
+  void _buildCourseCards(context) {
+    // TODO:: MAKE WORK WITH FUTURE
+    // TODO:: Make it work with for loop per course fetched
+    // final _academicPageState = Provider.of<AcademicPageState>(context);
+    // final _courseCards = [
+    //   CourseCard(
+    //     courseTitle: "Introduction To Artificial Intelligence",
+    //   ),
+    //   CourseCard(
+    //     courseTitle: "Human Computer Interaction",
+    //   ),
+    //   CourseCard(
+    //     courseTitle: "Introduction To Psychology",
+    //   ),
+    // ];
+    // _academicPageState.setCourseCards(_courseCards);
+
+    _buildCoursePagesList(context);
+  }
+
+  void _buildCoursePagesList(context) {
     _pages = [
       // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
-      AcademicDraggableSheet(
-        children: stuffs,
-        pageIndex: 0,
-        title: "Introduction To Artificial Intelligence",
+      Container(
+        key: ValueKey(0),
+        child: AcademicDraggableSheet(
+          children: stuffs,
+          pageIndex: 0,
+          title: "Introduction To Artificial Intelligence",
+        ),
       ),
-      AcademicDraggableSheet(
-          children: stuffs, pageIndex: 1, title: "Human Computer Interaction"),
+      Container(
+        key: ValueKey(1),
+        child: AcademicDraggableSheet(
+            children: stuffs,
+            pageIndex: 1,
+            title: "Human Computer Interaction"),
+      ),
     ];
   }
 }
@@ -84,13 +112,20 @@ class AcademicPageState extends ChangeNotifier {
   static int _selectedPageIndex = 0;
   Widget _selectedPage;
   double backgroundWidth;
-  double backgroundHeight = 100;
-  double initialExtent;
+  // double backgroundHeight = 100;
+  double initialExtent = 0.2;
   double currentExtent = 0;
+
+  List courseCards = _courseCards; // TODO : IMPLEEMNT FUTURE
 
   bool showSheetPage = false;
 
   // static List _pages =
+
+  void setCourseCards(List cards) {
+    this.courseCards = cards;
+    notifyListeners();
+  }
 
   void setSelectedPageIndex(int index) {
     _selectedPageIndex = index;
@@ -180,4 +215,48 @@ List<Grade> _grades = [
       gradePossible: 10,
       isSeen: true),
   Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),
+];
+
+final _courseCards = [
+  // TODO  ::  ALL THESE ARE TEMP FOR UI DEVELOPMENT... LATER SHOULD BE FUTURE THAT'S BUILT
+  CourseCard(
+    courseTitle: "Introduction To Artificial Intelligence",
+    courseCode: "CS410",
+  ),
+  CourseCard(
+    courseTitle: "Human Computer Interaction",
+    courseCode: "CS 201",
+  ),
+  CourseCard(
+    courseTitle: "Introduction To Psychology",
+    courseCode: "PSY 101",
+  ),
+  CourseCard(
+    courseTitle: "Introduction To Artificial Intelligence",
+    courseCode: "CS410",
+  ),
+  CourseCard(
+    courseTitle: "Human Computer Interaction",
+    courseCode: "CS 201",
+  ),
+  CourseCard(
+    courseTitle: "Introduction To Psychology",
+    courseCode: "PSY 101",
+  ),
+  CourseCard(
+    courseTitle: "Introduction To Artificial Intelligence",
+    courseCode: "CS410",
+  ),
+  CourseCard(
+    courseTitle: "Human Computer Interaction",
+    courseCode: "CS 201",
+  ),
+  CourseCard(
+    courseTitle: "Introduction To Psychology",
+    courseCode: "PSY 101",
+  ),
+  CourseCard(
+    courseTitle: "Introduction To Artificial Intelligence",
+    courseCode: "CS410",
+  ),
 ];

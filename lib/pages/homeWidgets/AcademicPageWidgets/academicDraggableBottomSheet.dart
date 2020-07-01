@@ -15,23 +15,23 @@ class AcademicDraggableSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _academicPageState = Provider.of<AcademicPageState>(context);
-    return Container(
-      key: ValueKey(pageIndex),
-      child: NotificationListener(
-        onNotification: (notification) {
-          if (notification is DraggableScrollableNotification) {
-            _academicPageState.updateExtent(notification.extent);
-            // print(notification.initialExtent);
-            // print(notification.maxExtent);
-            // print(notification.extent);
-          }
-        },
-        child: DraggableBottomSheet(
-          headerWidget: header ?? ColorBasedTabs(),
-          pageContent: children,
-          pageIndex: 0,
-          title: title,
-        ),
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is DraggableScrollableNotification) {
+          _academicPageState.updateExtent(notification.extent);
+          // print(notification.initialExtent);
+          // print(notification.maxExtent);
+          // print(notification.extent);
+        }
+      },
+      child: DraggableBottomSheet(
+        headerWidget: header ?? ColorBasedTabs(),
+        pageContent: children,
+        pageIndex: pageIndex,
+        title: title,
+        initialExtent: Provider.of<AcademicPageState>(context).initialExtent,
+        minExtent:
+            0.1, // DONT REMOVE THIS.. IF U NEED TO SELECT THE SAME THING ALREADY SELECTED IN PROVIDER.. JUST MAKE CURRENT EXTENT = 0.2
       ),
     );
   }

@@ -37,12 +37,15 @@ class DraggableBottomSheet extends StatelessWidget {
       this.pageContent,
       this.pageIndex,
       this.title,
-      this.horizontalPadding = 0});
+      this.horizontalPadding = 0,
+      this.minExtent = 0.2,
+      this.initialExtent = 0.2});
   final List pageContent;
   final int pageIndex;
   final String title;
   final double horizontalPadding;
   final Widget headerWidget;
+  final double minExtent, initialExtent;
   @override
   //  List colors = [Colors.red, Colors.green, Colors.yellow, Colors.cyan, Colors.indigoAccent]; // JUST FOR DEBUGGING PURPOSES
   Widget build(BuildContext context) {
@@ -68,8 +71,8 @@ class DraggableBottomSheet extends StatelessWidget {
               },
               child: DraggableScrollableSheet(
                   key: ValueKey(pageIndex),
-                  initialChildSize: 0.2,
-                  minChildSize: 0.2,
+                  initialChildSize: initialExtent,
+                  minChildSize: minExtent,
                   maxChildSize: 1,
                   builder: (context, scrollController) {
                     return Stack(
@@ -93,7 +96,8 @@ class DraggableBottomSheet extends StatelessWidget {
                                   top: Radius.circular(15)),
                             ),
                             child: ListView(
-                              cacheExtent: 900,
+                              cacheExtent:
+                                  MediaQuery.of(context).size.height * 3,
                               physics: ScrollPhysics(
                                   parent: BouncingScrollPhysics()),
                               controller: scrollController,

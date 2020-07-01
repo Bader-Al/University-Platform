@@ -86,8 +86,6 @@ class GradeChart extends StatelessWidget {
             verticalIndicatorStrokeWidth: 1.0,
             backgroundColor: Theme.of(context).colorScheme.background,
             verticalIndicatorColor: Theme.of(context).colorScheme.primary,
-            verticalIndicatorFixedPosition: true,
-            showVerticalIndicator: true,
             verticalLineFullHeight: true,
             showDataPoints: true,
             pinchZoom: true,
@@ -107,7 +105,7 @@ class GradeChart extends StatelessWidget {
             // backgroundColor: Theme.of(context).colorScheme.primary,
             snap: false,
             displayYAxis: true,
-            stepsYAxis: 15,
+            stepsYAxis: 10,
             yAxisTextStyle:
                 TextStyle(color: Theme.of(context).colorScheme.primary),
             physics: ScrollPhysics(parent: BouncingScrollPhysics()),

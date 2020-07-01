@@ -54,6 +54,7 @@ class UniversityTab extends StatelessWidget {
         DraggableBottomSheet(
           pageIndex: 0,
           pageContent: [
+            SearchHeader(),
             GenericPost(
                 postImage: PostImage(
               imageUrl:

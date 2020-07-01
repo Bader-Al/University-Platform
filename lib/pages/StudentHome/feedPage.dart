@@ -167,24 +167,3 @@ class SoloTextBlock extends StatelessWidget {
 ///
 
 ///////////////////////// Common ListView For All
-
-class PageContentBuilder extends StatelessWidget {
-  PageContentBuilder({@required this.items, this.reverse = true});
-  final List<Widget> items;
-  final bool reverse;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-      //will be switched from StreamBuilder
-      child: ListView.builder(
-        cacheExtent: MediaQuery.of(context).size.width * 3,
-        reverse: this.reverse,
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return items[index];
-        },
-      ),
-    );
-  }
-}

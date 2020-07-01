@@ -37,35 +37,9 @@ class _ColorBasedTabsState extends State<ColorBasedTabs>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 30,
       color: Colors.transparent,
-      child:
-          //  ClipPath(
-          //   clipper: ConcentricClipper(
-          //     progress: 0.1, // from 0.0 to 1.0
-          //     reverse: false,
-          //     radius: 30.0,
-          //     verticalPosition: 0.82,
-          //   ),
-          //   child: Container(
-          //     color: Colors.green,
-          //   ),
-          // )
-
-          // ConcentricPageView(
-          //   colors: <Color>[Colors.white, Colors.blue, Colors.red],
-          //   itemCount: 1, // null = infinity
-          //   physics: NeverScrollableScrollPhysics(),
-          //   itemBuilder: (int index, double value) {
-          //     return Center(
-          //       child: Container(
-          //         child: Text('Page $index'),
-          //       ),
-          //     );
-          //   },
-          // )
-
-          Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CircleAvatar(

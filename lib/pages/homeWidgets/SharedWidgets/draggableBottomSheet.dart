@@ -96,8 +96,10 @@ class DraggableBottomSheet extends StatelessWidget {
                                   top: Radius.circular(15)),
                             ),
                             child: ListView.builder(
+                              itemCount: pageContent.length,
                               cacheExtent:
                                   MediaQuery.of(context).size.height * 3,
+
                               physics: ScrollPhysics(
                                   parent: BouncingScrollPhysics()),
                               controller: scrollController,

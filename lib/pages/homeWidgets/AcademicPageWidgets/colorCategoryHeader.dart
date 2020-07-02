@@ -39,43 +39,45 @@ class _ColorBasedTabsState extends State<ColorBasedTabs>
     return Container(
       height: 30,
       color: Colors.transparent,
+      padding: EdgeInsets.symmetric(horizontal: 25),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           CircleAvatar(
             // foregroundColor: Colors.red,
             backgroundColor: Theme.of(context).colorScheme.primary,
 
             radius:
-                9, // TODO TODO TODO TODO resize to fit number when user picks up the card after certain extent
-            child: Text(
-              "2",
-              style: TextStyle(color: Colors.white, fontSize: 12),
-            ),
+                6, // TODO TODO TODO TODO resize to fit number when user picks up the card after certain extent
+
+            // child: Text(
+            //   "2",
+            //   style: TextStyle(color: Colors.white, fontSize: 12),
+            // ),
           ),
           SizedBox(
-            width: 13,
+            width: 9,
           ),
           CircleAvatar(
             // foregroundColor: Colors.yellow,
-            backgroundColor: Colors.redAccent,
-            radius: 9,
-            child: Text(
-              "2",
-              style: TextStyle(color: Colors.white, fontSize: 12),
-            ),
+            backgroundColor: Colors.redAccent.withAlpha(35),
+            radius: 6,
+            // child: Text(
+            //   "2",
+            //   style: TextStyle(color: Colors.white, fontSize: 12),
+            // ),
           ),
           SizedBox(
-            width: 13,
+            width: 9,
           ),
           CircleAvatar(
             // foregroundColor: Colors.green,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            radius: 9,
-            child: Text(
-              "2",
-              style: TextStyle(color: Colors.white, fontSize: 12),
-            ),
+            backgroundColor: kYellowIndication.withAlpha(150),
+            radius: 6,
+            // child: Text(
+            //   "2",
+            //   style: TextStyle(color: Colors.white, fontSize: 12),
+            // ),
           ),
         ],
       ),

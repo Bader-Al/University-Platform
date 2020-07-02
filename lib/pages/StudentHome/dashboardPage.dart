@@ -65,7 +65,7 @@ class DashboardPageSliver extends StatelessWidget {
   // template.. later these blocks should take data from actual
   // const DashboardPageSliver();
 
-  List pageContent = [
+  final List pageContent = [
     SizedBox(
       height: 100,
     ),
@@ -97,8 +97,6 @@ class DashboardPageSliver extends StatelessWidget {
         childCount: pageContent.length,
       ),
     );
-
-    // return SliverList(delegate: SliverChildListDelegate(pageContent) );
   }
 }
 

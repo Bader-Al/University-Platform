@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
-// import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/bodyInBackground.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/academicDraggableBottomSheet.dart';
 import 'package:concentric_transition/concentric_transition.dart';
@@ -69,27 +69,42 @@ class AcademicPageBuilder extends StatelessWidget {
 
   void _buildCoursePagesList(context) {
     _pages = [
-      // There might be a better widget to use than container. But, wrapping DBS in something that takes a valuekey() here is essential. for now using container till sol found
       Container(
         key: ValueKey(0),
-        child: AcademicDraggableSheet(
-          children: stuffs,
+        child: DraggableBottomSheet(
+          headerWidget: ColorBasedTabs(),
+          minExtent: 0.1,
+          initialExtent: 0.4,
           pageIndex: 0,
-          title: "Introduction To Artificial Intelligence",
+          title: "JustDraggable",
+          pageContent: stuffs,
         ),
       ),
       Container(
         key: ValueKey(1),
-        child: AcademicDraggableSheet(
-            children: stuffs,
-            pageIndex: 1,
-            title: "Human Computer Interaction"),
+        child: DraggableBottomSheet(
+          headerWidget: ColorBasedTabs(),
+          minExtent: 0.1,
+          initialExtent: 0.4,
+          pageIndex: 1,
+          title: "JustDraggable",
+          pageContent: stuffs,
+        ),
       ),
+      AcademicDraggableSheet(
+        children: stuffs,
+        header: Container(
+          color: Colors.red,
+          child: Text("AcademicSheet"),
+        ),
+        pageIndex: 2,
+      )
     ];
   }
 }
 
 class DraggableSheetInTheForeground extends StatelessWidget {
+  const DraggableSheetInTheForeground();
   @override
   Widget build(BuildContext context) {
     final _academicPageState = Provider.of<AcademicPageState>(context);
@@ -110,7 +125,7 @@ class DraggableSheetInTheForeground extends StatelessWidget {
 }
 
 class AcademicPageState extends ChangeNotifier {
-  static int _selectedPageIndex = 0;
+  int _selectedPageIndex = 0;
   Widget _selectedPage;
   double backgroundWidth;
   // double backgroundHeight = 100;
@@ -136,6 +151,7 @@ class AcademicPageState extends ChangeNotifier {
 
   void setSelectedPage(index) {
     _selectedPage = _pages[index];
+    _selectedPageIndex = index;
     notifyListeners();
   }
 
@@ -178,18 +194,6 @@ List stuffs = [
     title: "Introduction To Artificial Intelligence",
   ),
   GradeViewer(gradesList: _grades),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
-  AcademicItem(),
   AcademicItem(),
   AcademicItem(),
   AcademicItem(),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
@@ -12,10 +13,13 @@ import './pages/StudentHome/studentHomeHandler.dart';
 
 import './constants.dart';
 
-void main() => runApp(ChangeNotifierProvider<AppState>(
-      create: (context) => AppState(),
-      child: Platform(),
-    ));
+void main() {
+  debugRepaintRainbowEnabled = true;
+  runApp(ChangeNotifierProvider<AppState>(
+    create: (context) => AppState(),
+    child: Platform(),
+  ));
+}
 
 //put back in homepage class
 // TODO:: USE DEFAULTTABCONTROLLER INSIDE HOME BOTTOM NAVIGATION
@@ -29,15 +33,19 @@ class _PlatformState extends State<Platform> {
   Widget build(BuildContext context) {
     return Consumer<AppState>(
       builder: (context, appState, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'PSU Smart Platform',
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+        return ExcludeSemantics(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            showPerformanceOverlay: true,
 
-          home:
-              StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
+            title: 'PSU Smart Platform',
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+
+            home:
+                StudentScreen(), // later make routes with initial to login screen and other routes of student, professor, and even navigation screen which is common between users
+          ),
         );
       },
     );

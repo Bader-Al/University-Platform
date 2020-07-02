@@ -32,14 +32,15 @@ import 'package:provider/provider.dart';
 ///////////////////////////////////// above is not in a class because it's used by two classes that are not linked
 
 class DraggableBottomSheet extends StatelessWidget {
-  const DraggableBottomSheet(
-      {this.headerWidget,
-      this.pageContent,
-      this.pageIndex,
-      this.title,
-      this.horizontalPadding = 0,
-      this.minExtent = 0.2,
-      this.initialExtent = 0.2});
+  const DraggableBottomSheet({
+    this.headerWidget,
+    this.pageContent,
+    this.pageIndex,
+    this.title,
+    this.horizontalPadding = 0,
+    this.minExtent = 0.2,
+    this.initialExtent = 0.2,
+  });
   final List pageContent;
   final int pageIndex;
   final String title;
@@ -51,137 +52,136 @@ class DraggableBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     print(pageIndex);
 
-    return ChangeNotifierProvider(
-        create: (context) => BackgroundState(),
-        child: Consumer<BackgroundState>(
-          builder: (context, bgState, child) {
-            return NotificationListener(
-              onNotification: (notification) {
-                // print(notification);
-                if (notification is ScrollUpdateNotification) {
-                  // print(notification.metrics.extentBefore);
-                  // bgState.showBG();
-                  // notification.metrics.atEdge &&
-                  notification.metrics.extentBefore > 0
-                      ? bgState.showBG()
-                      : bgState.hideBG();
-                } else if (notification is DraggableScrollableNotification) {
-                  bgState.hideBG();
-                }
-              },
-              child: DraggableScrollableSheet(
-                  key: ValueKey(pageIndex),
-                  initialChildSize: initialExtent,
-                  minChildSize: minExtent,
-                  maxChildSize: 1,
-                  builder: (context, scrollController) {
-                    return Stack(
-                      children: <Widget>[
-                        Positioned(
-                          child: SmartBackground(),
-                          left: -10,
-                          right: -10,
-                          bottom: 0,
-                          top: 0,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: horizontalPadding,
+    return ExcludeSemantics(
+      child: ChangeNotifierProvider(
+          create: (context) => BackgroundState(),
+          child: Consumer<BackgroundState>(
+            builder: (context, bgState, child) {
+              return NotificationListener(
+                onNotification: (notification) {
+                  // print(notification);
+                  if (notification is ScrollUpdateNotification) {
+                    notification.metrics.extentBefore > 0
+                        ? bgState.showBG()
+                        : bgState.hideBG();
+                  } else if (notification is DraggableScrollableNotification) {
+                    bgState.hideBG();
+                  }
+                },
+                child: DraggableScrollableSheet(
+                    key: ValueKey(pageIndex),
+                    initialChildSize: initialExtent ?? 0.2,
+                    minChildSize: minExtent ?? 0.2,
+                    maxChildSize: 1,
+                    builder: (context, scrollController) {
+                      return Stack(
+                        children: <Widget>[
+                          Positioned(
+                            child: SmartBackground(),
+                            left: -10,
+                            right: -10,
+                            bottom: 0,
+                            top: 0,
                           ),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(15)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: horizontalPadding,
                             ),
-                            child: ListView.builder(
-                              itemCount: pageContent.length,
-                              cacheExtent:
-                                  MediaQuery.of(context).size.height * 3,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.surface,
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15)),
+                              ),
+                              child: ListView.builder(
+                                itemCount: pageContent.length,
 
-                              physics: ScrollPhysics(
-                                  parent: BouncingScrollPhysics()),
-                              controller: scrollController,
-                              padding: EdgeInsets.only(left: 0, top: 10),
-                              itemBuilder: (context, index) {
-                                return pageContent[index];
-                              },
-                              // children: <Widget>[
-                              //   Center(child: headerWidget ?? SheetHeader()),
+                                cacheExtent: MediaQuery.of(context).size.height,
 
-                              //   title != null
-                              //       ? Container(
-                              //           color: Theme.of(context)
-                              //               .colorScheme
-                              //               .surface,
-                              //           alignment: Alignment.center,
-                              //           padding: const EdgeInsets.symmetric(
-                              //               horizontal: 25, vertical: 65),
-                              //           child: Text(
-                              //             title,
-                              //             style: TextStyle(
-                              //                 fontSize: 21,
-                              //                 fontWeight: FontWeight.w300,
-                              //                 color: Theme.of(context)
-                              //                     .colorScheme
-                              //                     .onSurface),
-                              //             textAlign: TextAlign.center,
-                              //           ),
-                              //         )
-                              //       : SizedBox(),
+                                physics: ScrollPhysics(
+                                    parent: BouncingScrollPhysics()),
+                                controller: scrollController,
+                                padding: EdgeInsets.only(left: 0, top: 10),
+                                itemBuilder: (context, index) {
+                                  return pageContent[index];
+                                },
+                                // children: <Widget>[
+                                //   Center(child: headerWidget ?? SheetHeader()),
 
-                              //   ...pageContent.map((e) => e)
+                                //   title != null
+                                //       ? Container(
+                                //           color: Theme.of(context)
+                                //               .colorScheme
+                                //               .surface,
+                                //           alignment: Alignment.center,
+                                //           padding: const EdgeInsets.symmetric(
+                                //               horizontal: 25, vertical: 65),
+                                //           child: Text(
+                                //             title,
+                                //             style: TextStyle(
+                                //                 fontSize: 21,
+                                //                 fontWeight: FontWeight.w300,
+                                //                 color: Theme.of(context)
+                                //                     .colorScheme
+                                //                     .onSurface),
+                                //             textAlign: TextAlign.center,
+                                //           ),
+                                //         )
+                                //       : SizedBox(),
 
-                              //   /// THIS IS WHERE THE CONTENT IT LOADED
-                              // ],
+                                //   ...pageContent.map((e) => e)
+
+                                //   /// THIS IS WHERE THE CONTENT IT LOADED
+                                // ],
+                              ),
+                              // USED TO BE THE CODE FOR TO SUPPORT A SLIVER HEADER BUT CAUSED PERFORMANCE ISSUES. NOW NO MORE HEADER
+
+                              // CustomScrollView(
+                              //     controller: scrollController,
+                              //     physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                              //     slivers: [
+                              //       SheetHeader(),
+                              //       SliverFillRemaining(
+                              //         hasScrollBody: true,
+                              //         child: ListView(
+                              //           physics:
+                              //               ScrollPhysics(parent: BouncingScrollPhysics()),
+                              //           controller: scrollController,
+                              //           padding: EdgeInsets.only(left: 15),
+                              //           children: <Widget>[
+                              //             if (title != null)
+                              //               Container(
+                              //                 alignment: Alignment.center,
+                              //                 padding: const EdgeInsets.symmetric(
+                              //                     horizontal: 25, vertical: 65),
+                              //                 child: Text(
+                              //                   title,
+                              //                   style: TextStyle(
+                              //                       fontSize: 21,
+                              //                       fontWeight: FontWeight.w300,
+                              //                       color: Theme.of(context)
+                              //                           .colorScheme
+                              //                           .onSurface),
+                              //                   textAlign: TextAlign.center,
+                              //                 ),
+                              //               ),
+                              //             ...pageContent.map((e) => e)
+
+                              //             /// THIS IS WHERE THE CONTENT IT LOADED
+                              //           ],
+                              //         ),
+                              //       )
+                              //     ])
                             ),
-                            // USED TO BE THE CODE FOR TO SUPPORT A SLIVER HEADER BUT CAUSED PERFORMANCE ISSUES. NOW NO MORE HEADER
-
-                            // CustomScrollView(
-                            //     controller: scrollController,
-                            //     physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-                            //     slivers: [
-                            //       SheetHeader(),
-                            //       SliverFillRemaining(
-                            //         hasScrollBody: true,
-                            //         child: ListView(
-                            //           physics:
-                            //               ScrollPhysics(parent: BouncingScrollPhysics()),
-                            //           controller: scrollController,
-                            //           padding: EdgeInsets.only(left: 15),
-                            //           children: <Widget>[
-                            //             if (title != null)
-                            //               Container(
-                            //                 alignment: Alignment.center,
-                            //                 padding: const EdgeInsets.symmetric(
-                            //                     horizontal: 25, vertical: 65),
-                            //                 child: Text(
-                            //                   title,
-                            //                   style: TextStyle(
-                            //                       fontSize: 21,
-                            //                       fontWeight: FontWeight.w300,
-                            //                       color: Theme.of(context)
-                            //                           .colorScheme
-                            //                           .onSurface),
-                            //                   textAlign: TextAlign.center,
-                            //                 ),
-                            //               ),
-                            //             ...pageContent.map((e) => e)
-
-                            //             /// THIS IS WHERE THE CONTENT IT LOADED
-                            //           ],
-                            //         ),
-                            //       )
-                            //     ])
                           ),
-                        ),
-                      ],
-                    );
-                  }),
-            );
-          },
-        ));
+                        ],
+                      );
+                    }),
+              );
+            },
+          )),
+    );
   }
 }
 
@@ -245,20 +245,6 @@ class SmartBackground extends StatefulWidget {
 }
 
 class _SmartBackgroundState extends State<SmartBackground> {
-  bool visibile = true;
-
-  void hideBG() {
-    setState(() {
-      visibile = false;
-    });
-  }
-
-  void showBG() {
-    setState(() {
-      visibile = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Visibility(

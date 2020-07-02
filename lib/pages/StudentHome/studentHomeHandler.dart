@@ -45,11 +45,12 @@ class StudentHomeState extends State<StudentHome> {
     //navBarRoutes[_pageIndex]
 
     return Scaffold(
-        body: PageView(
+        body: PageView.builder(
           controller: _pageController,
           physics: ScrollPhysics(parent: NeverScrollableScrollPhysics()),
+          itemCount: navBarRoutes.length,
           // physics:  ScrollPhysics(parent:Provider.of<AppState>(context).sideBarIsCollapsed? NeverScrollableScrollPhysics(): AlwaysScrollableScrollPhysics),
-          children: <Widget>[...navBarRoutes],
+          itemBuilder: (context, index) => navBarRoutes[index],
           onPageChanged: (index) {
             setState(() {
               _pageIndex = index;

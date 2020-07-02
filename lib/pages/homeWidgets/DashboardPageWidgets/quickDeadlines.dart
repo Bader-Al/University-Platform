@@ -44,9 +44,9 @@ class QuickDeadlines extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
-  Body(this.deadLines);
+  const Body(this.deadLines);
 
-  List deadLines;
+  final List deadLines;
 
   // GlobalKey _mainFrameKey = GlobalKey();
 

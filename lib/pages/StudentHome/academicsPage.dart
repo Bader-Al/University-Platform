@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
 import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/bodyInBackground.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/courseSelectionGrid.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/academicDraggableBottomSheet.dart';
-import 'package:concentric_transition/concentric_transition.dart';
+
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/tabbedOverview.dart';
 
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/HorizontalExpandingGradeViewer.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 
 class AcademicsPage extends StatelessWidget {
   @override
@@ -31,16 +31,8 @@ class AcademicPageBuilder extends StatelessWidget {
       _buildCoursePagesList(context);
       return Stack(
         children: <Widget>[
-          Positioned(
-            bottom: 0,
-            top: 0,
-            right: 0,
-            left: 0,
-            child: Container(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ), // BG COLOR
-          BodyInTheBackground(),
+          TabbedAcademicOverView(),
+          CouseSelectionGrid(),
           DraggableSheetInTheForeground(),
         ],
       );
@@ -71,34 +63,37 @@ class AcademicPageBuilder extends StatelessWidget {
     _pages = [
       Container(
         key: ValueKey(0),
-        child: DraggableBottomSheet(
-          headerWidget: ColorBasedTabs(),
-          minExtent: 0.1,
-          initialExtent: 0.4,
+        child: AcademicDraggableSheet(
+          children: stuffs,
+          header: Container(
+            color: Colors.red,
+            child: Text("AcademicSheet"),
+          ),
           pageIndex: 0,
-          title: "JustDraggable",
-          pageContent: stuffs,
         ),
       ),
       Container(
         key: ValueKey(1),
-        child: DraggableBottomSheet(
-          headerWidget: ColorBasedTabs(),
-          minExtent: 0.1,
-          initialExtent: 0.4,
+        child: AcademicDraggableSheet(
+          children: stuffs,
+          header: Container(
+            color: Colors.red,
+            child: Text("AcademicSheet"),
+          ),
           pageIndex: 1,
-          title: "JustDraggable",
-          pageContent: stuffs,
         ),
       ),
-      AcademicDraggableSheet(
-        children: stuffs,
-        header: Container(
-          color: Colors.red,
-          child: Text("AcademicSheet"),
+      Container(
+        key: ValueKey(2),
+        child: AcademicDraggableSheet(
+          children: stuffs,
+          header: Container(
+            color: Colors.red,
+            child: Text("AcademicSheet"),
+          ),
+          pageIndex: 2,
         ),
-        pageIndex: 2,
-      )
+      ),
     ];
   }
 }
@@ -129,7 +124,7 @@ class AcademicPageState extends ChangeNotifier {
   Widget _selectedPage;
   double backgroundWidth;
   // double backgroundHeight = 100;
-  double initialExtent = 0.2;
+  double initialExtent = 0.3;
   double currentExtent = 0;
 
   List courseCards = _courseCards; // TODO : IMPLEEMNT FUTURE
@@ -149,9 +144,8 @@ class AcademicPageState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedPage(index) {
-    _selectedPage = _pages[index];
-    _selectedPageIndex = index;
+  void setSelectedPage(Widget page) {
+    _selectedPage = page;
     notifyListeners();
   }
 

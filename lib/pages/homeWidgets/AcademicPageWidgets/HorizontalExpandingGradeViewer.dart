@@ -70,7 +70,7 @@ class GradeViewer extends StatelessWidget implements SheetItem {
                               color: Theme.of(context).colorScheme.background,
                               child: Stack(
                                 children: <Widget>[
-                                  // GradeChart(),
+                                  GradeChart(),
                                   Positioned(
                                       top: 25,
                                       left: 15,

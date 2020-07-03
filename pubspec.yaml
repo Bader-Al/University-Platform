@@ -17,7 +17,7 @@ environment:
   sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
-  provider: ^3.1.0+1 #using.. don't remove
+  provider: ^4.0.4 #using.. don't remove
   flutter_swiper: ^1.1.6 #idk yet
   carousel_slider: ^1.3.1 #might remove it.. but currently using
   bubble_bottom_bar: ^1.2.0 #using.. don't remove
@@ -31,8 +31,9 @@ dependencies:
   lite_rolling_switch: ^0.1.1 # for dark mode/ lightmode switch
   fl_chart: ^0.10.0 # temp till i figure out what chart to use
   bezier_chart: ^1.0.17+1 #using.. don't remove
+  liquid_swipe: ^1.4.3
+  smooth_page_indicator: ^0.1.5
 
-  concentric_transition: ^0.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

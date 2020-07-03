@@ -2,43 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 
-class BodyInTheBackground extends StatelessWidget {
+class CouseSelectionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _academicPageState = Provider.of<AcademicPageState>(context);
     final List<CourseCard> courseCardList = _academicPageState.courseCards;
     return Positioned(
       top: 0,
-      bottom: 0,
       right: 0,
       left: 0,
       child: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.6,
-              color: Theme.of(context).colorScheme.background,
-              padding: EdgeInsets.symmetric(
-                vertical: 15,
-              ),
-              child: GridView.count(
-                cacheExtent: 25,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                childAspectRatio: 4 / 6,
-                scrollDirection: Axis.horizontal,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.6,
+        color: Theme.of(context).colorScheme.background,
+        padding: EdgeInsets.symmetric(
+          vertical: 15,
+        ),
+        child: GridView.count(
+          cacheExtent: 25,
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          childAspectRatio: 4 / 6,
+          scrollDirection: Axis.horizontal,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
 
-                crossAxisCount: (MediaQuery.of(context).size.height /
-                        (MediaQuery.of(context).size.height / 3.toInt()))
-                    .floor()
-                    .toInt(), // 200 is the target height im trying to acheive.. so basically the height will stay 200 and if there's room for more. the count grows
-                children: courseCardList,
-              ),
-            ),
-          ],
+          crossAxisCount:
+              3, // 200 is the target height im trying to acheive.. so basically the height will stay 200 and if there's room for more. the count grows
+          children: courseCardList,
         ),
       ),
     );

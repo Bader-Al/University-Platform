@@ -17,8 +17,14 @@ class AcademicDraggableSheet extends StatelessWidget {
     final _academicPageState = Provider.of<AcademicPageState>(context);
     return NotificationListener(
       onNotification: (notification) {
-        if (notification is DraggableScrollableNotification) {
-          _academicPageState.updateExtent(notification.extent);
+        // print(notification);
+        if (notification is ScrollUpdateNotification &&
+            notification.metrics.extentBefore == 0) {
+          if (notification.scrollDelta < -50) {
+            // print(notification);
+            _academicPageState.setSelectedPage(SizedBox());
+          }
+          // _academicPageState.updateExtent(notification.extent);
           // print(notification.initialExtent);
           // print(notification.maxExtent);
           // print(notification.extent);

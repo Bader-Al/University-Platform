@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/rendering.dart';
 import 'package:psu_platform/constants.dart';
-import 'package:concentric_transition/concentric_transition.dart';
 
 class ColorBasedTabs extends StatefulWidget {
   @override

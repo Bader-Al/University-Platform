@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +15,16 @@ import './pages/StudentHome/studentHomeHandler.dart';
 void main() {
   //debugRepaintRainbowEnabled = true;
 
-  runApp(ChangeNotifierProvider<AppState>(
-    create: (context) => AppState(),
-    child: Platform(),
-  ));
+  // runApp(DevicePreview(
+  //   builder: (context) => StarterApp(),
+  // ));
+
+  runApp(
+    ChangeNotifierProvider<AppState>(
+      create: (context) => AppState(),
+      child: Platform(),
+    ),
+  );
 }
 
 class Platform extends StatefulWidget {
@@ -33,7 +40,8 @@ class _PlatformState extends State<Platform> {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             showPerformanceOverlay: false,
-
+            // locale: DevicePreview.of(context).locale,
+            // builder: DevicePreview.appBuilder,
             title: 'PSU Smart Platform',
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

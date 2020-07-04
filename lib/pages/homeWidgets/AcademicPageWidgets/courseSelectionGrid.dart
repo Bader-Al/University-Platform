@@ -13,7 +13,7 @@ class CouseSelectionGrid extends StatelessWidget {
       left: 0,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.6,
+        height: MediaQuery.of(context).size.height * 0.55,
         color: Theme.of(context).colorScheme.background,
         padding: EdgeInsets.symmetric(
           vertical: 15,

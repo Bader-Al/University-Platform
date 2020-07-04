@@ -15,30 +15,14 @@ class AcademicDraggableSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _academicPageState = Provider.of<AcademicPageState>(context);
-    return NotificationListener(
-      onNotification: (notification) {
-        // print(notification);
-        if (notification is ScrollUpdateNotification &&
-            notification.metrics.extentBefore == 0) {
-          if (notification.scrollDelta < -50) {
-            // print(notification);
-            _academicPageState.setSelectedPage(SizedBox());
-          }
-          // _academicPageState.updateExtent(notification.extent);
-          // print(notification.initialExtent);
-          // print(notification.maxExtent);
-          // print(notification.extent);
-        }
-      },
-      child: DraggableBottomSheet(
-        headerWidget: header ?? ColorBasedTabs(),
-        pageContent: children,
-        pageIndex: pageIndex,
-        title: title,
-        initialExtent: Provider.of<AcademicPageState>(context).initialExtent,
-        minExtent:
-            0.1, // DONT REMOVE THIS.. IF U NEED TO SELECT THE SAME THING ALREADY SELECTED IN PROVIDER.. JUST MAKE CURRENT EXTENT = 0.2
-      ),
+    return DraggableBottomSheet(
+      headerWidget: header ?? ColorBasedTabs(),
+      pageContent: children,
+      pageIndex: pageIndex,
+      title: title,
+      initialExtent: Provider.of<AcademicPageState>(context).initialExtent,
+      minExtent:
+          0, // DONT REMOVE THIS.. IF U NEED TO SELECT THE SAME THING ALREADY SELECTED IN PROVIDER.. JUST MAKE CURRENT EXTENT = 0.2
     );
   }
 }

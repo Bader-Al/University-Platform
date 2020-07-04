@@ -124,7 +124,7 @@ class AcademicPageState extends ChangeNotifier {
   Widget _selectedPage;
   double backgroundWidth;
   // double backgroundHeight = 100;
-  double initialExtent = 0.3;
+  double initialExtent = 0.35;
   double currentExtent = 0;
 
   List courseCards = _courseCards; // TODO : IMPLEEMNT FUTURE

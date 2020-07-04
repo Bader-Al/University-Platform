@@ -139,7 +139,8 @@ class SecondaryAppBarRow extends StatelessWidget {
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.menu),
-            onPressed: () => Provider.of<AppState>(context).toggleSidebar(),
+            onPressed: () =>
+                Provider.of<AppState>(context, listen: false).toggleSidebar(),
             padding: EdgeInsets.zero,
           ),
           // Container(

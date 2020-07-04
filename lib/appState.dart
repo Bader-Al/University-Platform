@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import './pages/StudentHome/studentHomeHandler.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkMode = false;
   bool isAutoModeForBrightness = true;
   Function toggleSidebar;
+  Widget selectedSidebarPage = StudentHome();
 
   bool sideBarIsCollapsed = true;
 
@@ -30,5 +32,14 @@ class AppState extends ChangeNotifier {
   void toggleSideBarCollapseMode() {
     sideBarIsCollapsed = !sideBarIsCollapsed;
     notifyListeners();
+  }
+
+  void setSelectedSidebarPage(Widget page) {
+    selectedSidebarPage = page;
+    notifyListeners();
+  }
+
+  Widget getSelectedSidebarPage() {
+    return selectedSidebarPage;
   }
 }

@@ -57,7 +57,7 @@ class _DashboardPageState extends State<DashboardPage>
   void afterFirstLayout(BuildContext context) {
     // TODO: implement afterFirstLayout
     scrollController.animateTo(MediaQuery.of(context).size.height * 0.8 - 90,
-        curve: Curves.easeOut, duration: Duration(milliseconds: 550));
+        curve: Curves.easeOut, duration: Duration(milliseconds: 700));
   }
 }
 

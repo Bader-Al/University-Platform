@@ -4,14 +4,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
-import 'appState.dart';
+import 'package:psu_platform/pages/StudentHome/studentHomeHandler.dart';
+import 'package:psu_platform/pages/StudentSidebar/peopleDirectory.dart';
+import 'package:psu_platform/pages/StudentSidebar/studentCalendar.dart';
+import '../../appState.dart';
 
 class StudentSidebar extends StatelessWidget {
   // const StudentSidebar();
 
   double screenWidth, screenHeight;
 
-  final Duration duration = const Duration(milliseconds: 550);
+  final Duration duration = const Duration(milliseconds: 400);
 
   AppState appState;
 
@@ -28,43 +31,50 @@ class StudentSidebar extends StatelessWidget {
     return Stack(
       children: <Widget>[
         sideBarBackgroundScenary(context),
-        AnimatedPadding(
-          padding: appState.sideBarIsCollapsed
-              ? EdgeInsets.zero
-              : EdgeInsets.only(left: 30),
+        AnimatedOpacity(
           duration: duration,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Spacer(
-                flex: 6,
-              ),
-              SizedBox(
-                  // height: ((0.2 * screenHeight) / 2),
-                  ),
-              sideBarItems(),
-              Spacer(
-                flex: 2,
-              ),
-              darkModeWidget(phonesCurrentBrightnessMode),
-              SizedBox(
-                height: (screenHeight * 0.2) / 2,
-              )
-            ],
+          opacity: appState.sideBarIsCollapsed ? 0 : 1,
+          curve: Curves.fastOutSlowIn,
+          child: AnimatedPadding(
+            curve: Curves.ease,
+            padding: appState.sideBarIsCollapsed
+                ? EdgeInsets.zero
+                : EdgeInsets.only(left: 30),
+            duration: duration,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Spacer(
+                  flex: 6,
+                ),
+                SizedBox(
+                    // height: ((0.2 * screenHeight) / 2),
+                    ),
+                sideBarItems(),
+                Spacer(
+                  flex: 2,
+                ),
+                darkModeWidget(phonesCurrentBrightnessMode),
+                SizedBox(
+                  height: (screenHeight * 0.2) / 2,
+                )
+              ],
+            ),
           ),
         ),
         sideBarHeader(context),
         Positioned(
           child: Container(
             // height: (((0.2 * screenHeight) / 2)),
+            // color: Colors.red,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   "Sign Out",
                   style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(context).colorScheme.onBackground,
                       fontSize: 11),
                 ),
                 SizedBox(
@@ -72,14 +82,14 @@ class StudentSidebar extends StatelessWidget {
                 ),
                 Icon(
                   Icons.exit_to_app,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.onBackground,
                   size: 21,
                 ),
               ],
             ),
           ),
           right: 15,
-          top: 15,
+          bottom: 25,
         ),
       ],
     );
@@ -92,8 +102,11 @@ class StudentSidebar extends StatelessWidget {
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
           image: DecorationImage(
-              image: CachedNetworkImageProvider(
-                  "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg"),
+              image: appState.isDarkMode
+                  ? CachedNetworkImageProvider(
+                      "https://images.unsplash.com/photo-1511553677255-ba939e5537e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2641&q=80")
+                  : CachedNetworkImageProvider(
+                      "https://lenadealmeida.files.wordpress.com/2013/02/dsc_0117.jpg"),
               fit: BoxFit.cover)),
     );
   }
@@ -163,19 +176,28 @@ class StudentSidebar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Spacer(flex: 1),
-          Text(
-            "Home",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+          GestureDetector(
+            onTap: () => appState.setSelectedSidebarPage(StudentHome()),
+            child: Text(
+              "Home",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
           ),
           SizedBox(height: 50),
-          Text(
-            "Calendar",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+          GestureDetector(
+            onTap: () => appState.setSelectedSidebarPage(StudentCalendarPage()),
+            child: Text(
+              "Calendar",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
           ),
           SizedBox(height: 50),
-          Text(
-            "People",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+          GestureDetector(
+            onTap: () => appState.setSelectedSidebarPage(PeopleDirectoryPage()),
+            child: Text(
+              "People",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
           ),
 
           SizedBox(height: 50),

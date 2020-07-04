@@ -5,7 +5,9 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
-import 'package:psu_platform/studentSideBar.dart';
+import 'package:psu_platform/pages/StudentSidebar/studentSideBar.dart';
+
+import 'package:psu_platform/pages/StudentSidebar/studentCalendar.dart';
 
 import './pages/StudentHome/studentHomeHandler.dart';
 
@@ -46,17 +48,37 @@ class _PlatformState extends State<Platform> {
   }
 }
 
-class StudentScreen extends StatefulWidget {
+class StudentScreen extends StatelessWidget {
+  // bool isCollapsed;
+
   @override
-  StudentScreenState createState() => StudentScreenState();
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        body: Stack(
+          children: <Widget>[
+            RepaintBoundary(child: StudentSidebar()),
+            MainScreen(),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class StudentScreenState extends State<StudentScreen>
+class MainScreen extends StatefulWidget {
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
-  // bool isCollapsed;
   double screenWidth, screenHeight;
   final Duration duration = const Duration(milliseconds: 400);
   AnimationController _controller;
+
+  AppState appState;
   Animation<double> _scaleAnimation;
   var queryData;
 
@@ -66,6 +88,8 @@ class StudentScreenState extends State<StudentScreen>
     super.initState();
     _controller = AnimationController(vsync: this, duration: duration);
     _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
+    Provider.of<AppState>(context, listen: false).toggleSidebar =
+        _toggleSideBar;
   }
 
   void dispose() {
@@ -74,48 +98,63 @@ class StudentScreenState extends State<StudentScreen>
     super.dispose();
   }
 
+  void _toggleSideBar() {
+    setState(() {
+      if (Provider.of<AppState>(context, listen: false).sideBarIsCollapsed) {
+        Provider.of<AppState>(context, listen: false)
+            .setSideBarCollapseMode(true);
+        _controller.forward();
+      } else {
+        Provider.of<AppState>(context, listen: false)
+            .setSideBarCollapseMode(false);
+        _controller.reverse();
+      }
+
+      Provider.of<AppState>(context, listen: false).toggleSideBarCollapseMode();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // appState.setSelectedSidebarPage(StudentHome());
+    appState = Provider.of<AppState>(context, listen: false);
+
     Size size = MediaQuery.of(context).size;
 
     screenHeight = size.height;
     screenWidth = size.width;
-
-    Provider.of<AppState>(context, listen: false).toggleSidebar =
-        _toggleSideBar;
-
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        body: Stack(
-          children: <Widget>[
-            RepaintBoundary(child: StudentSidebar()),
-            mainScreen(context)
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget mainScreen(context) {
     return AnimatedPositioned(
-      curve: Curves.fastLinearToSlowEaseIn,
+      curve: Curves.easeOutCirc,
       child: GestureDetector(
           onHorizontalDragUpdate: (offset) => {_slideSideBar(offset.delta.dx)},
           child: ScaleTransition(
               scale: _scaleAnimation,
               child: Stack(children: [
-                ClipRRect(
-                  child: Consumer<AppState>(
-                    builder: (context, appState, child) {
-                      return child;
-                    },
-                    child: StudentHome(),
+                GestureDetector(
+                  child: RepaintBoundary(
+                    child: AnimatedSwitcher(
+                      switchOutCurve: Curves.bounceIn,
+                      switchInCurve: Curves.bounceOut,
+                      transitionBuilder: (child, animation) {
+                        return PositionedTransition(
+                            rect: RelativeRectTween(
+                                    begin: RelativeRect.fromLTRB(
+                                        MediaQuery.of(context).size.width,
+                                        0,
+                                        0,
+                                        0),
+                                    end: RelativeRect.fromLTRB(0, 0, 0, 0))
+                                .animate(animation),
+                            child: ClipRRect(
+                              child: child,
+                              borderRadius: BorderRadius.circular(
+                                  appState.sideBarIsCollapsed ? 0 : 25),
+                            ));
+                      },
+                      duration: Duration(milliseconds: 900),
+                      child: appState.selectedSidebarPage,
+                    ),
                   ),
-                  borderRadius: Provider.of<AppState>(context, listen: false)
-                          .sideBarIsCollapsed
-                      ? BorderRadius.circular(0)
-                      : BorderRadius.circular(25),
                 ),
                 Visibility(
                   visible: !Provider.of<AppState>(context).sideBarIsCollapsed,
@@ -140,24 +179,8 @@ class StudentScreenState extends State<StudentScreen>
     );
   }
 
-  void _toggleSideBar() {
-    setState(() {
-      if (Provider.of<AppState>(context, listen: false).sideBarIsCollapsed) {
-        Provider.of<AppState>(context, listen: false)
-            .setSideBarCollapseMode(true);
-        _controller.forward();
-      } else {
-        Provider.of<AppState>(context, listen: false)
-            .setSideBarCollapseMode(false);
-        _controller.reverse();
-      }
-
-      Provider.of<AppState>(context, listen: false).toggleSideBarCollapseMode();
-    });
-  }
-
   void _slideSideBar(dx) {
-    print(dx);
+    // print(dx);
     setState(() {
       if (dx > 7) {
         _controller.forward();
@@ -172,6 +195,7 @@ class StudentScreenState extends State<StudentScreen>
       }
     });
   }
+}
 
 //   Widget sideBar(
 //     context,
@@ -499,4 +523,3 @@ class StudentScreenState extends State<StudentScreen>
 // //     );
 
 // //   }
-}

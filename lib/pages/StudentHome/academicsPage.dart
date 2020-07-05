@@ -21,17 +21,20 @@ class AcademicsPage extends StatelessWidget {
 }
 
 List _pages;
+PageController mainPageController;
+Curve switchPageCurve = Curves.ease;
 
 class AcademicPageBuilder extends StatelessWidget {
   final List _pages = [PrimaryPage(), AnnouncementsPage(), CalendarPage()];
 
-  PageController _pageController = new PageController(
+  final PageController _pageController = new PageController(
     initialPage: 0,
     keepPage: true,
   );
 
   @override
   Widget build(BuildContext context) {
+    mainPageController = _pageController;
     return Consumer<AcademicPageState>(
         builder: (context, academicPageState, child) {
       // _buildCourseCards(context); TODO WHEN IMPLEMENTED AS FUTURE
@@ -55,11 +58,83 @@ class AcademicPageBuilder extends StatelessWidget {
                   child: ColorBasedTabs(
                     pageController: _pageController,
                   )),
-            )
+            ),
+            // Positioned(
+            //               child: Row(
+            //     children: <Widget>[
+            //       Flexible(child: PrevPageButton()),
+            //       Flexible(child: NextPageButton()),
+            //     ],
+            //   ),
+            // )
           ],
         ),
       );
     });
+  }
+}
+
+class NextPageButton extends StatelessWidget {
+  NextPageButton({this.color});
+  final Color color;
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      child: GestureDetector(
+        onTap: () => mainPageController.animateToPage(
+          mainPageController.page.toInt() + 1,
+          duration: Duration(milliseconds: 350),
+          curve: switchPageCurve,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            // borderRadius: BorderRadius.horizontal(le),
+            color: Theme.of(context).colorScheme.background,
+          ),
+          child: Center(
+              child: Icon(
+            Icons.keyboard_arrow_right,
+            color: color,
+          )),
+          width: 25,
+          height: 25,
+        ),
+      ),
+      bottom: 0,
+      right: 0,
+    );
+  }
+}
+
+class PrevPageButton extends StatelessWidget {
+  PrevPageButton({this.color});
+  final Color color;
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      child: GestureDetector(
+        onTap: () => mainPageController.animateToPage(
+          mainPageController.page.toInt() - 1,
+          duration: Duration(milliseconds: 350),
+          curve: switchPageCurve,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            // borderRadius: BorderRadius.horizontal(le),
+            color: Theme.of(context).colorScheme.background,
+          ),
+          child: Center(
+              child: Icon(
+            Icons.keyboard_arrow_left,
+            color: color,
+          )),
+          width: 25,
+          height: 25,
+        ),
+      ),
+      bottom: 0,
+      left: 0,
+    );
   }
 }
 
@@ -74,6 +149,9 @@ class PrimaryPage extends StatelessWidget {
           TabbedAcademicOverView(),
           CouseSelectionGrid(),
           DraggableSheetInTheForeground(),
+          NextPageButton(
+            color: Theme.of(context).colorScheme.secondaryVariant,
+          )
         ],
       ),
     );
@@ -133,19 +211,27 @@ class AnnouncementsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(bottom: 25),
-        width: double.infinity,
-        height: double.infinity,
-        color: Theme.of(context).colorScheme.secondaryVariant,
-        child: Container(
-            color: Theme.of(context).colorScheme.surface,
-            child: Center(
-                child: Text(
-              "Announcements and Absences",
-              style:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
-            ))),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(bottom: 25),
+            // width: double.infinity,
+            // height: double.infinity,
+            color: Theme.of(context).colorScheme.secondaryVariant,
+            child: Container(
+                color: Theme.of(context).colorScheme.surface,
+                child: Center(
+                    child: Text(
+                  "Announcements and Absences",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground),
+                ))),
+          ),
+          NextPageButton(color: Colors.redAccent),
+          PrevPageButton(
+            color: Theme.of(context).colorScheme.primaryVariant,
+          )
+        ],
       ),
     );
   }
@@ -155,19 +241,26 @@ class CalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(bottom: 25),
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.red,
-        child: Container(
-            color: Theme.of(context).colorScheme.surface,
-            child: Center(
-                child: Text(
-              "Announcements and Absences",
-              style:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
-            ))),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(bottom: 25),
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.redAccent,
+            child: Container(
+                color: Theme.of(context).colorScheme.surface,
+                child: Center(
+                    child: Text(
+                  "Announcements and Absences",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground),
+                ))),
+          ),
+          PrevPageButton(
+            color: Theme.of(context).colorScheme.secondaryVariant,
+          )
+        ],
       ),
     );
   }

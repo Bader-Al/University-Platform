@@ -24,19 +24,16 @@ class UniversityEventsHighlightsBanner extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      "Events",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w300,
-                          letterSpacing: 1),
-                    ),
+                  Text(
+                    "Events",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 1),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 10, bottom: 5),
+                    padding: const EdgeInsets.only(right: 25, bottom: 5),
                     child: Icon(
                       Icons.add_alert,
                       color: Theme.of(context)
@@ -64,11 +61,13 @@ class EventsListView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 0.0),
       child: ClipRRect(
         borderRadius: BorderRadius.horizontal(
-            left: Radius.circular(15), right: Radius.circular(7)),
+            left: Radius.circular(10), right: Radius.circular(7)),
         child: ListView.builder(
           physics: ScrollPhysics(parent: BouncingScrollPhysics()),
           itemCount: eventItems.length,
-          itemExtent: 175,
+          itemExtent: MediaQuery.of(context).size.width < 950
+              ? MediaQuery.of(context).size.width / 3
+              : MediaQuery.of(context).size.width / 4,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return eventItems[index];
@@ -101,12 +100,13 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        right: 7.0,
+        right: 5.0,
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
         child: Stack(children: [
           Container(
+            width: double.infinity,
             color: Theme.of(context).colorScheme.surface,
             child: Image(
               height: double.infinity,
@@ -118,7 +118,6 @@ class EventCard extends StatelessWidget {
           Positioned(
             child: Container(
               height: 65,
-              width: 175,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               color: Theme.of(context).colorScheme.surface.withAlpha(200),
               child: Container(
@@ -139,6 +138,8 @@ class EventCard extends StatelessWidget {
               ),
             ),
             bottom: 0,
+            right: 0,
+            left: 0,
           )
         ]),
       ),

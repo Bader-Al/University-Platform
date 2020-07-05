@@ -11,7 +11,9 @@ class UniversityTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double distanceFromBottom = MediaQuery.of(context).size.height * 0.2 + 40;
+    double distanceFromBottom = MediaQuery.of(context).size.height < 1000
+        ? MediaQuery.of(context).size.height * 0.2
+        : MediaQuery.of(context).size.height * 0.25;
 
     return Stack(
       children: <Widget>[
@@ -37,19 +39,19 @@ class UniversityTab extends StatelessWidget {
         ), // value added to the right is like padding between this and tabselector
 
         Positioned(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.center,
-            child: Text(
-              "University".toUpperCase(),
-              style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.onPrimary),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              child: Text(
+                "University".toUpperCase(),
+                style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize:
+                        MediaQuery.of(context).size.height < 750 ? 14 : 16,
+                    color: Theme.of(context).colorScheme.onPrimary),
+              ),
             ),
-          ),
-          bottom: MediaQuery.of(context).size.height * 0.2 + 5,
-        ),
+            bottom: distanceFromBottom * 0.93),
 
         DraggableBottomSheet(
           pageIndex: 0,

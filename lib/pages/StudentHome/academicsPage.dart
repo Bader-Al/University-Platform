@@ -43,6 +43,9 @@ class AcademicPageBuilder extends StatelessWidget {
             PageView.builder(
                 controller: _pageController,
                 itemCount: _pages.length,
+                physics: academicPageState.aCourseIsSelected
+                    ? NeverScrollableScrollPhysics()
+                    : BouncingScrollPhysics(),
                 itemBuilder: (context, index) => _pages[index]),
             AnimatedOpacity(
               opacity: academicPageState.aCourseIsSelected ? 0 : 1,

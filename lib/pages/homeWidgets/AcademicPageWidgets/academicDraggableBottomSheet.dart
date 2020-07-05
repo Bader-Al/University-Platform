@@ -17,7 +17,7 @@ class AcademicDraggableSheet extends StatelessWidget {
     this.title,
     this.horizontalPadding = 0,
     this.minExtent = 0,
-    this.initialExtent = 0.2,
+    this.initialExtent = 0.35,
   });
   final List pageContent;
   final int pageIndex;

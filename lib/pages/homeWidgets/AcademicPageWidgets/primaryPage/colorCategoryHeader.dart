@@ -27,7 +27,9 @@ class ColorBasedTabs extends StatelessWidget {
                   dotHeight: 12,
                   dotWidth: 12,
                   activeDotColor: Theme.of(context).colorScheme.background,
-                  dotColor: Theme.of(context).colorScheme.primary),
+                  dotColor: Theme.of(context).colorScheme.primary, // the rest
+                  secondaryColor: Theme.of(context).colorScheme.secondary,
+                  primaryColor: Theme.of(context).colorScheme.primary),
             ),
           )
         ],

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
+import 'colorCategoryHeader.dart';
 import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 
 import 'package:flutter/material.dart';
-import 'searchBarForSheetHeader.dart';
 import 'package:provider/provider.dart';
 
 class AcademicDraggableSheet extends StatelessWidget {
@@ -17,7 +16,7 @@ class AcademicDraggableSheet extends StatelessWidget {
     this.title,
     this.horizontalPadding = 0,
     this.minExtent = 0,
-    this.initialExtent = 0.35,
+    this.initialExtent = 0.85,
   });
   final List pageContent;
   final int pageIndex;
@@ -112,22 +111,22 @@ class AcademicDraggableSheet extends StatelessWidget {
   }
 }
 
-class SearchHeader extends StatelessWidget {
-  const SearchHeader();
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-          decoration: BoxDecoration(),
-          height: 60,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-              padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-              child: Center(child: SearchButton()))),
-    );
-    // );
-  }
-}
+// class SearchHeader extends StatelessWidget {
+//   const SearchHeader();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Container(
+//           decoration: BoxDecoration(),
+//           height: 60,
+//           width: MediaQuery.of(context).size.width,
+//           child: Padding(
+//               padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+//               child: Center(child: SearchButton()))),
+//     );
+//     // );
+//   }
+// }
 
 class SheetTitle extends StatelessWidget {
   const SheetTitle({this.title});

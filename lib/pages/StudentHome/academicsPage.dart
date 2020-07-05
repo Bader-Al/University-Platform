@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/pageContentItem.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/colorCategoryHeader.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/courseSelectionGrid.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/academicDraggableBottomSheet.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/courseSelectionGrid.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/pageContentItem.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/colorCategoryHeader.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/academicDraggableBottomSheet.dart';
 
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/tabbedOverview.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/tabbedOverview.dart';
 
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/HorizontalExpandingGradeViewer.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/HorizontalExpandingGradeViewer.dart';
 
 class AcademicsPage extends StatelessWidget {
   @override
@@ -22,7 +22,7 @@ class AcademicsPage extends StatelessWidget {
 
 List _pages;
 PageController mainPageController;
-Curve switchPageCurve = Curves.ease;
+Curve switchPageCurve = Curves.fastLinearToSlowEaseIn;
 
 class AcademicPageBuilder extends StatelessWidget {
   final List _pages = [PrimaryPage(), AnnouncementsPage(), CalendarPage()];
@@ -88,15 +88,15 @@ class NextPageButton extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            // borderRadius: BorderRadius.horizontal(le),
-            color: Theme.of(context).colorScheme.background,
-          ),
+              // borderRadius: BorderRadius.horizontal(le),
+              // color: Theme.of(context).colorScheme.background,
+              ),
           child: Center(
               child: Icon(
             Icons.keyboard_arrow_right,
-            color: color,
+            // color: color,
           )),
-          width: 25,
+          width: 47,
           height: 25,
         ),
       ),
@@ -120,15 +120,15 @@ class PrevPageButton extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            // borderRadius: BorderRadius.horizontal(le),
-            color: Theme.of(context).colorScheme.background,
-          ),
+              // borderRadius: BorderRadius.horizontal(le),
+              // color: Theme.of(context).colorScheme.background,
+              ),
           child: Center(
               child: Icon(
             Icons.keyboard_arrow_left,
-            color: color,
+            // color: color,
           )),
-          width: 25,
+          width: 47,
           height: 25,
         ),
       ),
@@ -215,17 +215,60 @@ class AnnouncementsPage extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(bottom: 25),
-            // width: double.infinity,
-            // height: double.infinity,
             color: Theme.of(context).colorScheme.secondaryVariant,
             child: Container(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.background,
                 child: Center(
                     child: Text(
                   "Announcements and Absences",
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground),
                 ))),
+          ),
+          Positioned(
+            bottom: 25,
+            left: 0,
+            right: 0,
+            child: Container(
+              color: Theme.of(context).colorScheme.surface,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: PageView(
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  AbsenceViewer(),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    color: Theme.of(context).colorScheme.secondaryVariant,
+                    child: Stack(
+                      children: <Widget>[
+                        Text(
+                          "Where you expecting something useful?",
+                          style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.background),
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: -5,
+                          child: FlatButton(
+                              onPressed: () {},
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Text("Tap To Submit Suggestion"))),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
           NextPageButton(color: Colors.redAccent),
           PrevPageButton(
@@ -245,8 +288,6 @@ class CalendarPage extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(bottom: 25),
-            width: double.infinity,
-            height: double.infinity,
             color: Colors.redAccent,
             child: Container(
                 color: Theme.of(context).colorScheme.surface,

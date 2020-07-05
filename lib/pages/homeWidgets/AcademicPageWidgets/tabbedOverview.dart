@@ -31,8 +31,8 @@ class TabbedAcademicOverView extends StatelessWidget {
     ];
 
     return Positioned(
-        bottom: 0,
-        top: MediaQuery.of(context).size.height * 0.55,
+        bottom: 25,
+        top: MediaQuery.of(context).size.height * 0.56,
         right: 0,
         left: 0,
         child: Stack(
@@ -77,7 +77,10 @@ class PrimaryPage extends StatelessWidget {
     return buildRecentFileAccess(context);
   }
 
+  MediaQueryData _queryData;
+
   Widget buildRecentFileAccess(context) {
+    _queryData = MediaQuery.of(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: Container(
@@ -88,24 +91,28 @@ class PrimaryPage extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             reverse: true,
             physics: BouncingScrollPhysics(),
-            crossAxisCount: 2,
+            crossAxisCount: _queryData.size.height < 650
+                ? 1
+                : _queryData.size.height < 1110 ? 2 : 3,
             children: recentFilesAccessed,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
             childAspectRatio: 4 / 6,
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            padding: EdgeInsets.only(top: 20, bottom: 10, left: 15, right: 15),
           )),
     );
   }
 }
 
 final List<Widget> recentFilesAccessed = [
+  FileItem(
+    isDownloaded: true,
+  ),
+  FileItem(isDownloaded: true),
+  FileItem(isDownloaded: true),
   FileItem(),
   FileItem(),
-  FileItem(),
-  FileItem(),
-  FileItem(),
-  FileItem(),
+  FileItem(isDownloaded: true),
   FileItem(),
   FileItem(),
   FileItem(),
@@ -115,11 +122,13 @@ final List<Widget> recentFilesAccessed = [
 ];
 
 class FileItem extends StatelessWidget {
+  FileItem({this.isDownloaded = false});
+  final isDownloaded;
   @override
   Widget build(BuildContext context) {
     return Consumer<AppState>(builder: (context, appState, child) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
         decoration: BoxDecoration(
             // border: appState.isDarkMode
             //     ? Border.all(
@@ -131,7 +140,9 @@ class FileItem extends StatelessWidget {
                 // appState.isDarkMode
                 //     ? null
                 //     :
-                Theme.of(context).colorScheme.primary,
+                isDownloaded
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.primaryVariant,
             borderRadius: BorderRadius.circular(appState.isDarkMode ? 5 : 5)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -23,20 +23,57 @@ class AcademicsPage extends StatelessWidget {
 List _pages;
 
 class AcademicPageBuilder extends StatelessWidget {
+  final List _pages = [PrimaryPage(), AnnouncementsPage(), CalendarPage()];
+
+  PageController _pageController = new PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AcademicPageState>(
         builder: (context, academicPageState, child) {
       // _buildCourseCards(context); TODO WHEN IMPLEMENTED AS FUTURE
-      _buildCoursePagesList(context);
-      return Stack(
+
+      return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: Stack(
+          children: <Widget>[
+            PageView.builder(
+                controller: _pageController,
+                itemCount: _pages.length,
+                itemBuilder: (context, index) => _pages[index]),
+            AnimatedOpacity(
+              opacity: academicPageState.aCourseIsSelected ? 0 : 1,
+              duration: Duration(milliseconds: 400),
+              child: Container(
+                  padding: EdgeInsets.only(top: 5),
+                  child: ColorBasedTabs(
+                    pageController: _pageController,
+                  )),
+            )
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class PrimaryPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    _buildCoursePagesList(context);
+    return Container(
+      color: Theme.of(context).colorScheme.primaryVariant,
+      child: Stack(
         children: <Widget>[
           TabbedAcademicOverView(),
           CouseSelectionGrid(),
           DraggableSheetInTheForeground(),
         ],
-      );
-    });
+      ),
+    );
   }
 
   void _buildCourseCards(context) {
@@ -64,37 +101,72 @@ class AcademicPageBuilder extends StatelessWidget {
       Container(
         key: ValueKey(0),
         child: AcademicDraggableSheet(
-          children: stuffs,
-          header: Container(
-            color: Colors.red,
-            child: Text("AcademicSheet"),
-          ),
+          pageContent: stuffs,
           pageIndex: 0,
+          title: "Intro To Artificial Intelligence",
         ),
       ),
       Container(
         key: ValueKey(1),
         child: AcademicDraggableSheet(
-          children: stuffs,
-          header: Container(
-            color: Colors.red,
-            child: Text("AcademicSheet"),
-          ),
+          pageContent: stuffs,
           pageIndex: 1,
+          title: "Intro To Artificial Intelligence",
         ),
       ),
       Container(
         key: ValueKey(2),
         child: AcademicDraggableSheet(
-          children: stuffs,
-          header: Container(
-            color: Colors.red,
-            child: Text("AcademicSheet"),
-          ),
+          pageContent: stuffs,
           pageIndex: 2,
+          title: "Intro To Artificial Intelligence",
         ),
       ),
     ];
+  }
+}
+
+class AnnouncementsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(bottom: 25),
+        width: double.infinity,
+        height: double.infinity,
+        color: Theme.of(context).colorScheme.secondaryVariant,
+        child: Container(
+            color: Theme.of(context).colorScheme.surface,
+            child: Center(
+                child: Text(
+              "Announcements and Absences",
+              style:
+                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            ))),
+      ),
+    );
+  }
+}
+
+class CalendarPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(bottom: 25),
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.red,
+        child: Container(
+            color: Theme.of(context).colorScheme.surface,
+            child: Center(
+                child: Text(
+              "Announcements and Absences",
+              style:
+                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            ))),
+      ),
+    );
   }
 }
 
@@ -103,18 +175,27 @@ class DraggableSheetInTheForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _academicPageState = Provider.of<AcademicPageState>(context);
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 350),
-      switchInCurve: Curves.elasticInOut,
-      switchOutCurve: Curves.slowMiddle,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return SlideTransition(
-          child: child,
-          position: Tween<Offset>(begin: Offset(0, 1), end: Offset(0, 0))
-              .animate(animation),
-        );
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is DraggableScrollableNotification) {
+          if (notification.extent < 0.05) {
+            _academicPageState.closeSelectedCourse();
+          }
+        }
       },
-      child: _academicPageState._selectedPage,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 350),
+        switchInCurve: Curves.elasticInOut,
+        switchOutCurve: Curves.slowMiddle,
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return SlideTransition(
+            child: child,
+            position: Tween<Offset>(begin: Offset(0, 1), end: Offset(0, 0))
+                .animate(animation),
+          );
+        },
+        child: _academicPageState._selectedPage,
+      ),
     );
   }
 }
@@ -122,6 +203,7 @@ class DraggableSheetInTheForeground extends StatelessWidget {
 class AcademicPageState extends ChangeNotifier {
   int _selectedPageIndex = 0;
   Widget _selectedPage;
+  bool aCourseIsSelected = false;
   double backgroundWidth;
   // double backgroundHeight = 100;
   double initialExtent = 0.35;
@@ -141,13 +223,22 @@ class AcademicPageState extends ChangeNotifier {
   void setSelectedPageIndex(int index) {
     _selectedPageIndex = index;
     _selectedPage = _pages[index];
+    aCourseIsSelected = true;
     notifyListeners();
   }
 
-  void setSelectedPage(Widget page) {
-    _selectedPage = page;
+  void closeSelectedCourse() {
+    _selectedPage = SizedBox();
+    _selectedPageIndex = 0;
+    aCourseIsSelected = false;
     notifyListeners();
   }
+
+  // void setSelectedPage(Widget page) {
+  //   _selectedPage = page;
+
+  //   notifyListeners();
+  // }
 
   void incrementPageIndex() {
     print("selected index was: $_selectedPageIndex");
@@ -160,6 +251,8 @@ class AcademicPageState extends ChangeNotifier {
       _selectedPage = _pages[_selectedPageIndex];
     }
     print("selected index is: $_selectedPageIndex");
+
+    aCourseIsSelected = true;
     notifyListeners();
   }
 
@@ -183,11 +276,362 @@ class AcademicPageState extends ChangeNotifier {
 }
 
 List stuffs = [
-  ColorBasedTabs(),
-  SheetTitle(
-    title: "Introduction To Artificial Intelligence",
-  ),
+  // SheetTitle(
+  //   title: "Introduction To Artificial Intelligence",
+  // ),
   GradeViewer(gradesList: _grades),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
+  AcademicItem(),
   AcademicItem(),
   AcademicItem(),
   AcademicItem(),

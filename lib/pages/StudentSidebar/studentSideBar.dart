@@ -46,18 +46,15 @@ class StudentSidebar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Spacer(
-                  flex: 6,
+                  flex: 8,
                 ),
-                SizedBox(
-                    // height: ((0.2 * screenHeight) / 2),
-                    ),
-                sideBarItems(),
+                sideBarItems(context),
                 Spacer(
-                  flex: 2,
+                  flex: 6,
                 ),
                 darkModeWidget(phonesCurrentBrightnessMode),
                 SizedBox(
-                  height: (screenHeight * 0.2) / 2,
+                  height: ((screenHeight * 0.2) / 2) - 2,
                 )
               ],
             ),
@@ -167,7 +164,7 @@ class StudentSidebar extends StatelessWidget {
     );
   }
 
-  Widget sideBarItems() {
+  Widget sideBarItems(context) {
     return Container(
       height: 350,
       width: 0.45 * screenWidth,
@@ -183,7 +180,7 @@ class StudentSidebar extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
-          SizedBox(height: 50),
+          SizedBox(height: MediaQuery.of(context).size.height < 1300 ? 35 : 50),
           GestureDetector(
             onTap: () => appState.setSelectedSidebarPage(StudentCalendarPage()),
             child: Text(
@@ -191,7 +188,7 @@ class StudentSidebar extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
-          SizedBox(height: 50),
+          SizedBox(height: MediaQuery.of(context).size.height < 1300 ? 35 : 50),
           GestureDetector(
             onTap: () => appState.setSelectedSidebarPage(PeopleDirectoryPage()),
             child: Text(
@@ -200,7 +197,7 @@ class StudentSidebar extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 50),
+          SizedBox(height: MediaQuery.of(context).size.height < 1300 ? 35 : 50),
           Text(
             "Tools",
             style: TextStyle(color: Colors.white, fontSize: 18),

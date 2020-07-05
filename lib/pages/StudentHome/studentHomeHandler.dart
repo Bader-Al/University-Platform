@@ -57,25 +57,28 @@ class StudentHomeState extends State<StudentHome> {
             });
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
-          onPressed: !fabEnabled
-              ? null
-              : () {/* Should depend on navBarRoute[index] */},
-          child: Icon(
-            Icons.arrow_drop_up,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-          // _pageIndex == 0
-          //   ? Icons.navigation
-          //   : _pageIndex == 1
-          //       ? Icons.add
-          //       : Icons
-          //           .help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
-          backgroundColor:
-              fabEnabled ? Theme.of(context).colorScheme.primary : Colors.grey,
-          elevation: fabEnabled ? 6 : 0,
-        ),
+        floatingActionButton: fabEnabled
+            ? FloatingActionButton(
+                // To get rid of fab where neccassary.. Use ?Iterator: checking for navBarRoute [index]
+                onPressed: !fabEnabled
+                    ? null
+                    : () {/* Should depend on navBarRoute[index] */},
+                child: Icon(
+                  Icons.arrow_drop_up,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                // _pageIndex == 0
+                //   ? Icons.navigation
+                //   : _pageIndex == 1
+                //       ? Icons.add
+                //       : Icons
+                //           .help), // Dynamically change. HomeScreen : Red Navigation.  FeedScreen : POST where Authorized (Accent Color), not authorized (GRAY)
+                backgroundColor: fabEnabled
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.grey,
+                elevation: fabEnabled ? 6 : 0,
+              )
+            : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: homeBottomNavigationBar());
   }

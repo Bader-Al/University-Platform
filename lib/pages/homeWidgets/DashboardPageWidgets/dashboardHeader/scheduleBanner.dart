@@ -39,6 +39,7 @@ class ScheduleBanner extends StatelessWidget {
           titleSpacing: 0,
           elevation: 0,
           title: PrimaryAppBarRow(
+            color: Theme.of(context).colorScheme.primary,
             isFlipped: true,
           ),
           shape: kAppBarShape,

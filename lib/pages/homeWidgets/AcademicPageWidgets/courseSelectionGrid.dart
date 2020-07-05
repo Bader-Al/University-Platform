@@ -3,20 +3,23 @@ import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 
 class CouseSelectionGrid extends StatelessWidget {
+  MediaQueryData _queryData;
   @override
   Widget build(BuildContext context) {
     final _academicPageState = Provider.of<AcademicPageState>(context);
     final List<CourseCard> courseCardList = _academicPageState.courseCards;
+
+    _queryData = MediaQuery.of(context);
     return Positioned(
       top: 0,
       right: 0,
       left: 0,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.55,
+        height: MediaQuery.of(context).size.height * 0.57,
         color: Theme.of(context).colorScheme.background,
-        padding: EdgeInsets.symmetric(
-          vertical: 15,
+        padding: EdgeInsets.only(
+          top: 50,
         ),
         child: GridView.count(
           cacheExtent: 25,
@@ -26,9 +29,9 @@ class CouseSelectionGrid extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
-
-          crossAxisCount:
-              3, // 200 is the target height im trying to acheive.. so basically the height will stay 200 and if there's room for more. the count grows
+          crossAxisCount: _queryData.size.height < 650
+              ? 2
+              : _queryData.size.height < 1110 ? 3 : 4,
           children: courseCardList,
         ),
       ),

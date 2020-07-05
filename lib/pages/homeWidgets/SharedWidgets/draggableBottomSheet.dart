@@ -84,7 +84,7 @@ class DraggableBottomSheet extends StatelessWidget {
                             top: 0,
                           ),
                           Positioned(
-                            child: headerWidget,
+                            child: headerWidget ?? SearchHeader(),
                             top: 10,
                           ),
                           Padding(

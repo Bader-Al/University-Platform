@@ -47,13 +47,18 @@ class AcademicPageBuilder extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: Stack(
           children: <Widget>[
-            PageView.builder(
-                controller: _pageController,
-                itemCount: _pages.length,
-                physics: academicPageState.aCourseIsSelected
-                    ? NeverScrollableScrollPhysics()
-                    : BouncingScrollPhysics(),
-                itemBuilder: (context, index) => _pages[index]),
+            NotificationListener(
+              onNotification: (notification) {
+                onNotification(notification);
+              },
+              child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: _pages.length,
+                  physics: academicPageState.aCourseIsSelected
+                      ? NeverScrollableScrollPhysics()
+                      : BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => _pages[index]),
+            ),
             AnimatedOpacity(
               opacity: academicPageState.aCourseIsSelected ? 0 : 1,
               duration: Duration(milliseconds: 200),
@@ -75,6 +80,29 @@ class AcademicPageBuilder extends StatelessWidget {
         ),
       );
     });
+  }
+
+  bool onNotification(notification) {
+    if (notification is ScrollUpdateNotification) {
+      if (notification.dragDetails != null &&
+          (notification.metrics.extentAfter == 0 ||
+              notification.metrics.extentBefore == 0)) {
+        if (notification.dragDetails.delta.dx < 0 &&
+            notification.dragDetails.delta.distance > 15 &&
+            mainPageController.page < 2) {
+          print(notification.dragDetails.delta.distance);
+          mainPageController.animateToPage(mainPageController.page.toInt() + 1,
+              duration: Duration(milliseconds: 250), curve: Curves.decelerate);
+        } else if (notification.dragDetails.delta.dx > 0 &&
+            notification.dragDetails.delta.distance > 15 &&
+            mainPageController.page > 0) {
+          print(notification.dragDetails.delta.distance);
+          mainPageController.animateToPage(mainPageController.page.toInt() - 1,
+              duration: Duration(milliseconds: 250), curve: Curves.decelerate);
+        }
+      }
+    }
+    return true;
   }
 }
 

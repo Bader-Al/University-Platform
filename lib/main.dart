@@ -20,11 +20,9 @@ void main() {
   // ));
 
   runApp(
-    DevicePreview(
-      builder: (context) => ChangeNotifierProvider<AppState>(
-        create: (context) => AppState(),
-        child: Platform(),
-      ),
+    ChangeNotifierProvider<AppState>(
+      create: (context) => AppState(),
+      child: Platform(),
     ),
   );
 }
@@ -42,8 +40,6 @@ class _PlatformState extends State<Platform> {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             showPerformanceOverlay: false,
-            locale: DevicePreview.of(context).locale,
-            builder: DevicePreview.appBuilder,
             title: 'PSU Smart Platform',
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/announcementsPage.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/courseSelectionGrid.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/pageContentItem.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/colorCategoryHeader.dart';
@@ -213,17 +214,18 @@ class AnnouncementsPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(bottom: 25),
-            color: Theme.of(context).colorScheme.secondaryVariant,
+          Positioned(
+            bottom: 0,
+            top: 0,
+            right: 0,
+            left: 0,
             child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: Center(
-                    child: Text(
-                  "Announcements and Absences",
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground),
-                ))),
+                padding: EdgeInsets.only(bottom: 25),
+                color: Theme.of(context).colorScheme.secondaryVariant,
+                child: Container(
+                  color: Theme.of(context).colorScheme.background,
+                  child: AnnouncementsBody(),
+                )),
           ),
           Positioned(
             bottom: 25,

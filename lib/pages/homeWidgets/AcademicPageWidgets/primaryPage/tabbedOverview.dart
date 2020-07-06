@@ -6,25 +6,25 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TabbedAcademicOverView extends StatelessWidget {
-  PageController controller = PageController();
+  final PageController controller = PageController();
   @override
   Widget build(BuildContext context) {
     final pages = [
       Container(
         color: Theme.of(context).colorScheme.background,
-        child: PrimaryPage(),
+        child: Center(child: Text("Assignments")),
         height: double.infinity,
         width: double.infinity,
       ),
       Container(
-        color: Colors.red,
-        child: Text("Hello"),
+        color: Theme.of(context).colorScheme.background,
+        child: RecentFileAccess(),
         height: double.infinity,
         width: double.infinity,
       ),
       Container(
         color: kYellowIndication,
-        child: Text("Hello"),
+        child: Text("Idk"),
         height: double.infinity,
         width: double.infinity,
       ),
@@ -44,45 +44,21 @@ class TabbedAcademicOverView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return pages[index];
                 }),
-            // Positioned(
-            //   right: 45,
-            //   top: 10,
-            //   child: Stack(
-            //     children: <Widget>[
-            //       SmoothPageIndicator(
-            //         controller: controller, // PageController
-            //         count: 3,
-            //         effect: WormEffect(
-            //             dotHeight: 12,
-            //             dotWidth: 12,
-            //             strokeWidth: 0,
-            //             dotColor: Theme.of(context)
-            //                 .colorScheme
-            //                 .primary, // treat this as first dot cz dot the second and third are explicit
-            //             activeDotColor: Theme.of(context)
-            //                 .colorScheme
-            //                 .background), // your preferred effect
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ));
   }
 }
 
-class PrimaryPage extends StatelessWidget {
+class RecentFileAccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return buildRecentFileAccess(context);
   }
 
-  MediaQueryData _queryData;
-
   Widget buildRecentFileAccess(context) {
-    _queryData = MediaQuery.of(context);
+    final _queryData = MediaQuery.of(context);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(2),
       child: Container(
           alignment: Alignment.center,
           // height: 200,
@@ -130,19 +106,9 @@ class FileItem extends StatelessWidget {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
         decoration: BoxDecoration(
-            // border: appState.isDarkMode
-            //     ? Border.all(
-            //         width: 1,
-            //         color: Theme.of(context).colorScheme.primary,
-            //       )
-            //     : null,
-            color:
-                // appState.isDarkMode
-                //     ? null
-                //     :
-                isDownloaded
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.primaryVariant,
+            color: isDownloaded
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.primaryVariant,
             borderRadius: BorderRadius.circular(appState.isDarkMode ? 5 : 5)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

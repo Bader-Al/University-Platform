@@ -2,33 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class AbsenceViewer extends StatelessWidget {
+  AbsenceViewer({this.sized = false});
+  final bool sized;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 0, bottom: 0),
-      child: ListView.builder(
-        itemCount: _absences.length,
-        scrollDirection: Axis.horizontal,
-        reverse: true,
-        physics: BouncingScrollPhysics(),
-        itemExtent: MediaQuery.of(context).size.height / 6.5,
-        padding: EdgeInsets.only(right: 15),
-        itemBuilder: (BuildContext context, int index) {
-          return _absences[index];
-        },
+    return sized
+        ? Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Container(
+              height: MediaQuery.of(context).size.height / 6.5,
+              child: absencesListViewBuilder(context),
+            ),
+          )
+        : absencesListViewBuilder(context);
+  }
+
+  Widget absencesListViewBuilder(context) {
+    return ListView.builder(
+      itemCount: _absences.length,
+      scrollDirection: Axis.horizontal,
+      reverse: true,
+      physics: BouncingScrollPhysics(),
+      itemExtent: MediaQuery.of(context).size.height / 6.5,
+      padding: EdgeInsets.only(
+        right: 25,
       ),
+      itemBuilder: (BuildContext context, int index) {
+        return _absences[index];
+      },
     );
   }
 }
 
 List _absences = [
   AbsenceContainer(
-    title: "ENG 201",
-    currentCount: 7,
+    title: "ETHC 303",
+    currentCount: 11,
     maxCount: 12,
     isSeen: false,
   ),
-  AbsenceContainer(),
+  AbsenceContainer(
+    title: "PHY 105 ",
+    currentCount: 9,
+    maxCount: 12,
+    isSeen: false,
+  ),
   AbsenceContainer(),
   AbsenceContainer(),
   AbsenceContainer(),

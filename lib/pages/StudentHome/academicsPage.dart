@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/announcementsPage.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/courseSelectionGrid.dart';
@@ -23,7 +26,7 @@ class AcademicsPage extends StatelessWidget {
 
 List _pages;
 PageController mainPageController;
-Curve switchPageCurve = Curves.fastLinearToSlowEaseIn;
+Curve switchPageCurve = Curves.decelerate;
 
 class AcademicPageBuilder extends StatelessWidget {
   final List _pages = [PrimaryPage(), AnnouncementsPage(), CalendarPage()];
@@ -53,7 +56,7 @@ class AcademicPageBuilder extends StatelessWidget {
                 itemBuilder: (context, index) => _pages[index]),
             AnimatedOpacity(
               opacity: academicPageState.aCourseIsSelected ? 0 : 1,
-              duration: Duration(milliseconds: 400),
+              duration: Duration(milliseconds: 200),
               child: Container(
                   padding: EdgeInsets.only(top: 5),
                   child: ColorBasedTabs(
@@ -209,8 +212,10 @@ class PrimaryPage extends StatelessWidget {
 }
 
 class AnnouncementsPage extends StatelessWidget {
+  AcademicPageState _academicPageState;
   @override
   Widget build(BuildContext context) {
+    _academicPageState = Provider.of<AcademicPageState>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -224,51 +229,83 @@ class AnnouncementsPage extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondaryVariant,
                 child: Container(
                   color: Theme.of(context).colorScheme.background,
-                  child: AnnouncementsBody(),
+                  child: NotificationListener(
+                    child: AnnouncementsBody(),
+                    onNotification: (notification) {
+                      if (notification is ScrollUpdateNotification) {
+                        if (notification.metrics.extentBefore > 100) {
+                          _academicPageState.setUserIsOnStartOfScreen(false);
+                        } else {
+                          _academicPageState.setUserIsOnStartOfScreen(true);
+                        }
+                      }
+                      // else { GIVES COOL EFFECT AT START OF DRAG UP
+                      //   _academicPageState.setUserIsOnStartOfScreen(true);
+                      // }
+                    },
+                  ),
                 )),
           ),
-          Positioned(
-            bottom: 25,
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            bottom: _academicPageState.userIsOnStartOfScreen
+                ? 25
+                : -MediaQuery.of(context).size.height / 5,
             left: 0,
             right: 0,
-            child: Container(
-              color: Theme.of(context).colorScheme.surface,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: PageView(
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  AbsenceViewer(),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                    color: Theme.of(context).colorScheme.secondaryVariant,
-                    child: Stack(
-                      children: <Widget>[
-                        Text(
-                          "Where you expecting something useful?",
-                          style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w400,
-                              color: Theme.of(context).colorScheme.background),
+            child: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 21, sigmaY: 25),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(
+                            color: Theme.of(context).colorScheme.surface,
+                            width: 1)),
+                    color: Theme.of(context).colorScheme.surface.withAlpha(100),
+                  ),
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: PageView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      AbsenceViewer(),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                        color: Theme.of(context).colorScheme.secondaryVariant,
+                        child: Stack(
+                          children: <Widget>[
+                            Text(
+                              "Where you expecting something useful?",
+                              style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      Theme.of(context).colorScheme.background),
+                            ),
+                            Positioned(
+                              right: 0,
+                              bottom: -5,
+                              child: FlatButton(
+                                  onPressed: () {},
+                                  child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: Text("Tap To Submit Suggestion"))),
+                            )
+                          ],
                         ),
-                        Positioned(
-                          right: 0,
-                          bottom: -5,
-                          child: FlatButton(
-                              onPressed: () {},
-                              child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Text("Tap To Submit Suggestion"))),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -347,6 +384,8 @@ class AcademicPageState extends ChangeNotifier {
   // double backgroundHeight = 100;
   double initialExtent = 0.35;
   double currentExtent = 0;
+  bool userIsOnStartOfScreen =
+      true; //for whatever reason, this could be useful.. currently being used for announcements page// kept it here instead of making another provider cz it may be used elsewhere
 
   List courseCards = _courseCards; // TODO : IMPLEEMNT FUTURE
 
@@ -373,11 +412,10 @@ class AcademicPageState extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void setSelectedPage(Widget page) {
-  //   _selectedPage = page;
-
-  //   notifyListeners();
-  // }
+  void setUserIsOnStartOfScreen(bool value) {
+    userIsOnStartOfScreen = value;
+    notifyListeners();
+  }
 
   void incrementPageIndex() {
     print("selected index was: $_selectedPageIndex");

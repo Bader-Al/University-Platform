@@ -1,18 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
 
 class AnnouncementsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.surface,
+      color: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.only(
           top: 45.0,
         ),
         child: ListView.builder(
           itemCount: _announcements.length,
-          padding: EdgeInsets.only(bottom: 350),
+          physics: BouncingScrollPhysics(),
+          reverse: false,
+          padding: EdgeInsets.only(bottom: 350, top: 0),
           // itemExtent: 200,
           itemBuilder: (BuildContext context, int index) {
             return _announcements[index];
@@ -39,7 +42,7 @@ class AnnouncementContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 15, right: 15, top: 25, bottom: 5),
+      padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(3),
         child: Container(
@@ -72,74 +75,87 @@ class AnnouncementContainer extends StatelessWidget {
   }
 
   Widget returnAnnouncementPosterDetails(context, isSeen) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      fit: BoxFit.fitHeight,
-                      image: CachedNetworkImageProvider(
-                          "http://southparkstudios.mtvnimages.com/shared/characters/kids/eric-cartman.png"))),
+    return Container(
+      height: 80,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        fit: BoxFit.fitHeight,
+                        image: CachedNetworkImageProvider(
+                            "http://southparkstudios.mtvnimages.com/shared/characters/kids/eric-cartman.png"))),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              returnPosterNameAndCourse(context, isSeen)
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 7),
+            height: 80,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  "12 min ago",
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  "12/32/1997",
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontWeight: FontWeight.w300),
+                ),
+              ],
             ),
-            SizedBox(
-              width: 10,
-            ),
-            returnPosterNameAndCourse(context, isSeen)
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "12 minutes ago",
-              style: TextStyle(
-                  fontSize: 12,
-                  color: isSeen
-                      ? Theme.of(context).colorScheme.onBackground
-                      : Theme.of(context).colorScheme.secondary,
-                  fontWeight: FontWeight.w400),
-            ),
-            Text(
-              "12/32/1997",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget returnPosterNameAndCourse(context, isSeen) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 7),
+      // color: Colors.red,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: 100,
+            child: Text(
+              "Dr Gregory Hashem Khan",
+              softWrap: true,
               style: TextStyle(
                   fontSize: 12,
                   color: Theme.of(context).colorScheme.onBackground,
                   fontWeight: FontWeight.w300),
             ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget returnPosterNameAndCourse(context, isSeen) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "Dr Gregory Hashem Khan",
-          style: TextStyle(
-              fontSize: 12,
-              color: Theme.of(context).colorScheme.onBackground,
-              fontWeight: FontWeight.w300),
-        ),
-        Text(
-          "LAW 111",
-          style: TextStyle(
-            color: isSeen
-                ? Theme.of(context).colorScheme.onBackground
-                : Theme.of(context).colorScheme.secondary,
-            fontSize: 14,
           ),
-        )
-      ],
+          Text(
+            "LAW 111",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onBackground,
+              fontSize: 14,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

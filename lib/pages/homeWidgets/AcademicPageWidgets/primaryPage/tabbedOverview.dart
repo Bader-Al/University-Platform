@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -9,13 +10,11 @@ class TabbedAcademicOverView extends StatelessWidget {
   final PageController controller = PageController();
   @override
   Widget build(BuildContext context) {
+    AcademicPageState _academicPageState =
+        Provider.of<AcademicPageState>(context, listen: false);
+
     final pages = [
-      Container(
-        color: Theme.of(context).colorScheme.background,
-        child: Center(child: Text("Assignments")),
-        height: double.infinity,
-        width: double.infinity,
-      ),
+      AssignmentsOverView(),
       Container(
         color: Theme.of(context).colorScheme.background,
         child: RecentFileAccess(),
@@ -38,6 +37,10 @@ class TabbedAcademicOverView extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             PageView.builder(
+                onPageChanged: (value) {
+                  print(value);
+                  _academicPageState.setFocusedWidget(value);
+                },
                 scrollDirection: Axis.vertical,
                 itemCount: pages.length,
                 controller: controller,
@@ -49,6 +52,18 @@ class TabbedAcademicOverView extends StatelessWidget {
   }
 }
 
+class AssignmentsOverView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: Center(child: Text("Assignments")),
+      height: double.infinity,
+      width: double.infinity,
+    );
+  }
+}
+
 class RecentFileAccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,6 +72,7 @@ class RecentFileAccess extends StatelessWidget {
 
   Widget buildRecentFileAccess(context) {
     final _queryData = MediaQuery.of(context);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(2),
       child: Container(

@@ -52,6 +52,10 @@ class AcademicPageBuilder extends StatelessWidget {
                 onNotification(notification);
               },
               child: PageView.builder(
+                  onPageChanged: (value) {
+                    Provider.of<AcademicPageState>(context, listen: false)
+                        .setFocusedWidget(value * 10);
+                  },
                   controller: _pageController,
                   itemCount: _pages.length,
                   physics: academicPageState.aCourseIsSelected
@@ -68,14 +72,6 @@ class AcademicPageBuilder extends StatelessWidget {
                     pageController: _pageController,
                   )),
             ),
-            // Positioned(
-            //               child: Row(
-            //     children: <Widget>[
-            //       Flexible(child: PrevPageButton()),
-            //       Flexible(child: NextPageButton()),
-            //     ],
-            //   ),
-            // )
           ],
         ),
       );
@@ -170,6 +166,28 @@ class PrevPageButton extends StatelessWidget {
   }
 }
 
+class FocusIdentifier extends StatelessWidget {
+  FocusIdentifier({this.textColor});
+  final textColor;
+  @override
+  Widget build(BuildContext context) {
+    AcademicPageState _academicPageState =
+        Provider.of<AcademicPageState>(context, listen: true);
+    return Positioned(
+        bottom: 5,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.center,
+          child: Text(
+            _academicPageState.focusedWidget,
+            style: TextStyle(
+                fontSize: 14,
+                color: textColor ?? Theme.of(context).colorScheme.onPrimary),
+          ),
+        ));
+  }
+}
+
 class PrimaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -180,6 +198,7 @@ class PrimaryPage extends StatelessWidget {
         children: <Widget>[
           TabbedAcademicOverView(),
           CouseSelectionGrid(),
+          FocusIdentifier(),
           DraggableSheetInTheForeground(),
           NextPageButton(
             color: Theme.of(context).colorScheme.secondaryVariant,
@@ -243,7 +262,7 @@ class AnnouncementsPage extends StatelessWidget {
   AcademicPageState _academicPageState;
   @override
   Widget build(BuildContext context) {
-    _academicPageState = Provider.of<AcademicPageState>(context);
+    _academicPageState = Provider.of<AcademicPageState>(context, listen: true);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -263,8 +282,11 @@ class AnnouncementsPage extends StatelessWidget {
                       if (notification is ScrollUpdateNotification) {
                         if (notification.metrics.extentBefore > 100) {
                           _academicPageState.setUserIsOnStartOfScreen(false);
+                          _academicPageState.setFocusedWidget(11);
                         } else {
                           _academicPageState.setUserIsOnStartOfScreen(true);
+
+                          _academicPageState.setFocusedWidget(10);
                         }
                       }
                       // else { GIVES COOL EFFECT AT START OF DRAG UP
@@ -273,6 +295,9 @@ class AnnouncementsPage extends StatelessWidget {
                     },
                   ),
                 )),
+          ),
+          FocusIdentifier(
+            textColor: Theme.of(context).colorScheme.onSecondary,
           ),
           AnimatedPositioned(
             duration: Duration(milliseconds: 300),
@@ -365,6 +390,7 @@ class CalendarPage extends StatelessWidget {
                       color: Theme.of(context).colorScheme.onBackground),
                 ))),
           ),
+          FocusIdentifier(),
           PrevPageButton(
             color: Theme.of(context).colorScheme.secondaryVariant,
           )
@@ -378,7 +404,8 @@ class DraggableSheetInTheForeground extends StatelessWidget {
   const DraggableSheetInTheForeground();
   @override
   Widget build(BuildContext context) {
-    final _academicPageState = Provider.of<AcademicPageState>(context);
+    final _academicPageState =
+        Provider.of<AcademicPageState>(context, listen: true);
     return NotificationListener(
       onNotification: (notification) {
         if (notification is DraggableScrollableNotification) {
@@ -414,7 +441,7 @@ class AcademicPageState extends ChangeNotifier {
   double currentExtent = 0;
   bool userIsOnStartOfScreen =
       true; //for whatever reason, this could be useful.. currently being used for announcements page// kept it here instead of making another provider cz it may be used elsewhere
-
+  String focusedWidget = "Assignments"; //
   List courseCards = _courseCards; // TODO : IMPLEEMNT FUTURE
 
   bool showSheetPage = false;
@@ -468,6 +495,24 @@ class AcademicPageState extends ChangeNotifier {
 
   void updateExtent(draggableSheetExtent) {
     currentExtent = draggableSheetExtent;
+    notifyListeners();
+  }
+
+  void setFocusedWidget(int x) {
+    // DID THIS HERE CZ ASSIGNING FROM ELSEWHERE IS INCONSISTENT
+    x == 0
+        ? focusedWidget = "Assignments"
+        : x == 1
+            ? focusedWidget = "Recent File Access"
+            : x == 2
+                ? focusedWidget = "somethingElse"
+                : x == 10
+                    ? focusedWidget = "Absences"
+                    : x == 11
+                        ? focusedWidget = "Announcements"
+                        : x == 20
+                            ? focusedWidget = "Academic Calendar"
+                            : focusedWidget = "uncaught";
     notifyListeners();
   }
 

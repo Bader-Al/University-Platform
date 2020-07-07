@@ -47,7 +47,7 @@ class AppTheme {
         background: _darkSurfaceColor,
         error: Colors.red, //TODO:: change
         onPrimary: _darkSurfaceVariantColor,
-        onSecondary: _darkOnSurfaceColor,
+        onSecondary: _darkSurfaceColor,
         onSurface: _darkOnSurfaceColor,
         onBackground: _darkOnSurfaceColor,
         onError: _darkSurfaceColor,

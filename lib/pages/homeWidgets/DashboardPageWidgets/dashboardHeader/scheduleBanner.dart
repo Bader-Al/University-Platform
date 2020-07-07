@@ -39,11 +39,11 @@ class ScheduleBanner extends StatelessWidget {
           titleSpacing: 0,
           elevation: 0,
           title: PrimaryAppBarRow(
-            color: Theme.of(context).colorScheme.primary,
-            isFlipped: true,
+            color: Theme.of(context).colorScheme.surface,
+            isFlipped: false,
           ),
           shape: kAppBarShape,
-          backgroundColor: Theme.of(context).colorScheme.background),
+          backgroundColor: Theme.of(context).colorScheme.primary),
       flexibleSpace: FlexibleSpaceBar(
         // title: Container(height: 100, width: 100, color: Colors.red,child: Text("data")),
         collapseMode: CollapseMode.parallax,
@@ -161,6 +161,12 @@ class SecondaryAppBarRow extends StatelessWidget {
                   color: color ?? Theme.of(context).colorScheme.background,
                   fontWeight: FontWeight.w300),
             ),
+          ),
+          IconButton(
+            icon: Icon(Icons.keyboard_arrow_down),
+            onPressed: () =>
+                Provider.of<AppState>(context, listen: false).toggleSidebar(),
+            padding: EdgeInsets.zero,
           ),
         ],
       ),

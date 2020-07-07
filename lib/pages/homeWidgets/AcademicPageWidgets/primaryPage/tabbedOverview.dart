@@ -53,13 +53,33 @@ class TabbedAcademicOverView extends StatelessWidget {
 }
 
 class AssignmentsOverView extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.background,
-      child: Center(child: Text("Assignments")),
-      height: double.infinity,
-      width: double.infinity,
+    return buildAssignmentsOverview(context);
+  }
+
+  Widget buildAssignmentsOverview(context) {
+    final _queryData = MediaQuery.of(context);
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(2),
+      child: Container(
+          alignment: Alignment.center,
+          // height: 200,
+          width: MediaQuery.of(context).size.width,
+          child: GridView.count(
+            scrollDirection: Axis.horizontal,
+            reverse: true,
+            physics: BouncingScrollPhysics(),
+            crossAxisCount: _queryData.size.height < 650
+                ? 1
+                : _queryData.size.height < 1110 ? 2 : 3,
+            children: assignmentsOverview,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            childAspectRatio:
+                MediaQuery.of(context).size.width < 360 ? 3 / 7 : 2 / 5,
+            padding: EdgeInsets.only(top: 20, bottom: 10, left: 15, right: 15),
+          )),
     );
   }
 }
@@ -89,7 +109,7 @@ class RecentFileAccess extends StatelessWidget {
             children: recentFilesAccessed,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
-            childAspectRatio: 4 / 6,
+            childAspectRatio: 1 / 2,
             padding: EdgeInsets.only(top: 20, bottom: 10, left: 15, right: 15),
           )),
     );
@@ -113,6 +133,32 @@ final List<Widget> recentFilesAccessed = [
   FileItem(),
 ];
 
+final List<Widget> assignmentsOverview = [
+  AssignmentItem(),
+  AssignmentItem(),
+  AssignmentItem(
+    isComplete: true,
+    deadlineIsSoon: true,
+  ),
+  AssignmentItem(
+    isSubmitted: true,
+    deadlineIsSoon: true,
+  ),
+  AssignmentItem(
+    deadlineIsSoon: true,
+  ),
+  AssignmentItem(
+    deadlineIsSoon: true,
+  ),
+  AssignmentItem(),
+  AssignmentItem(
+    isMissed: true,
+  ),
+  AssignmentItem(
+    isMissed: true,
+  ),
+];
+
 class FileItem extends StatelessWidget {
   FileItem({this.isDownloaded = false});
   final isDownloaded;
@@ -125,7 +171,7 @@ class FileItem extends StatelessWidget {
             color: isDownloaded
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.primaryVariant,
-            borderRadius: BorderRadius.circular(appState.isDarkMode ? 5 : 5)),
+            borderRadius: BorderRadius.circular(3)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,6 +205,91 @@ class FileItem extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       color: Theme.of(context).colorScheme.background),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class AssignmentItem extends StatelessWidget {
+  AssignmentItem(
+      {this.isSubmitted = false,
+      this.isComplete = false,
+      this.isMissed = false,
+      this.deadlineIsSoon = false});
+  final isSubmitted, isMissed, deadlineIsSoon, isComplete;
+  @override
+  Widget build(BuildContext context) {
+    final isHighlighted = (isSubmitted || isComplete || isMissed);
+    return Consumer<AppState>(builder: (context, appState, child) {
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+        decoration: BoxDecoration(
+            color: isComplete
+                ? kGreenIndication
+                : isSubmitted
+                    ? kYellowIndication
+                    : isMissed
+                        ? Colors.red[500]
+                        : Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(3)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    "Due in 12 days",
+                    softWrap: true,
+                    textAlign: TextAlign.end,
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: isHighlighted
+                            ? Theme.of(context).colorScheme.background
+                            : deadlineIsSoon
+                                ? Colors.redAccent
+                                : Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("CS 112",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        color: isHighlighted
+                            ? Theme.of(context).colorScheme.background
+                            : Theme.of(context).colorScheme.primary,
+                        fontSize: 12)),
+                SizedBox(
+                  height: 2,
+                ),
+                Container(
+                  width: double.maxFinite,
+                  // color: Colors.red,
+                  child: Text(
+                    "Chapter 17 Assignment3333333333333333333333333333333333333333333333333.pdf",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: isHighlighted
+                            ? Theme.of(context).colorScheme.background
+                            : Theme.of(context).colorScheme.primary),
+                  ),
                 ),
               ],
             ),

@@ -111,7 +111,7 @@ class NextPageButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () => mainPageController.animateToPage(
           mainPageController.page.toInt() + 1,
-          duration: Duration(milliseconds: 350),
+          duration: Duration(milliseconds: 150),
           curve: switchPageCurve,
         ),
         child: Container(
@@ -143,7 +143,7 @@ class PrevPageButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () => mainPageController.animateToPage(
           mainPageController.page.toInt() - 1,
-          duration: Duration(milliseconds: 350),
+          duration: Duration(milliseconds: 150),
           curve: switchPageCurve,
         ),
         child: Container(
@@ -167,16 +167,19 @@ class PrevPageButton extends StatelessWidget {
 }
 
 class FocusIdentifier extends StatelessWidget {
-  FocusIdentifier({this.textColor});
+  FocusIdentifier({this.textColor, this.bgColor});
   final textColor;
+  final bgColor;
   @override
   Widget build(BuildContext context) {
     AcademicPageState _academicPageState =
         Provider.of<AcademicPageState>(context, listen: true);
     return Positioned(
-        bottom: 5,
+        bottom: 0,
         child: Container(
           width: MediaQuery.of(context).size.width,
+          color: bgColor ?? Colors.transparent,
+          height: 25,
           alignment: Alignment.center,
           child: Text(
             _academicPageState.focusedWidget,
@@ -193,12 +196,14 @@ class PrimaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _buildCoursePagesList(context);
     return Container(
-      color: Theme.of(context).colorScheme.primaryVariant,
+      color: Theme.of(context).colorScheme.background,
       child: Stack(
         children: <Widget>[
           TabbedAcademicOverView(),
           CouseSelectionGrid(),
-          FocusIdentifier(),
+          FocusIdentifier(
+            bgColor: Theme.of(context).colorScheme.primaryVariant,
+          ),
           DraggableSheetInTheForeground(),
           NextPageButton(
             color: Theme.of(context).colorScheme.secondaryVariant,
@@ -259,10 +264,10 @@ class PrimaryPage extends StatelessWidget {
 }
 
 class AnnouncementsPage extends StatelessWidget {
-  AcademicPageState _academicPageState;
   @override
   Widget build(BuildContext context) {
-    _academicPageState = Provider.of<AcademicPageState>(context, listen: true);
+    final _academicPageState =
+        Provider.of<AcademicPageState>(context, listen: true);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -275,7 +280,7 @@ class AnnouncementsPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 25),
                 color: Theme.of(context).colorScheme.secondaryVariant,
                 child: Container(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.surface,
                   child: NotificationListener(
                     child: AnnouncementsBody(),
                     onNotification: (notification) {
@@ -289,9 +294,6 @@ class AnnouncementsPage extends StatelessWidget {
                           _academicPageState.setFocusedWidget(10);
                         }
                       }
-                      // else { GIVES COOL EFFECT AT START OF DRAG UP
-                      //   _academicPageState.setUserIsOnStartOfScreen(true);
-                      // }
                     },
                   ),
                 )),
@@ -300,8 +302,8 @@ class AnnouncementsPage extends StatelessWidget {
             textColor: Theme.of(context).colorScheme.onSecondary,
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeOut,
+            duration: Duration(milliseconds: 150),
+            curve: Curves.decelerate,
             bottom: _academicPageState.userIsOnStartOfScreen
                 ? 25
                 : -MediaQuery.of(context).size.height / 5,
@@ -316,7 +318,8 @@ class AnnouncementsPage extends StatelessWidget {
                         top: BorderSide(
                             color: Theme.of(context).colorScheme.surface,
                             width: 1)),
-                    color: Theme.of(context).colorScheme.surface.withAlpha(100),
+                    color:
+                        Theme.of(context).colorScheme.secondary.withAlpha(15),
                   ),
                   height: MediaQuery.of(context).size.height * 0.2,
                   child: PageView(
@@ -329,13 +332,16 @@ class AnnouncementsPage extends StatelessWidget {
                         color: Theme.of(context).colorScheme.secondaryVariant,
                         child: Stack(
                           children: <Widget>[
-                            Text(
-                              "Where you expecting something useful?",
-                              style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w400,
-                                  color:
-                                      Theme.of(context).colorScheme.background),
+                            Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Text(
+                                "Where you expecting something useful?",
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w400,
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
                             ),
                             Positioned(
                               right: 0,
@@ -385,7 +391,7 @@ class CalendarPage extends StatelessWidget {
                 color: Theme.of(context).colorScheme.surface,
                 child: Center(
                     child: Text(
-                  "Announcements and Absences",
+                  "Academic Calendar",
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground),
                 ))),

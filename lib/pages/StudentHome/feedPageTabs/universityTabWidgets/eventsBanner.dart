@@ -61,7 +61,7 @@ class EventsListView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 0.0),
       child: ClipRRect(
         borderRadius: BorderRadius.horizontal(
-            left: Radius.circular(10), right: Radius.circular(7)),
+            left: Radius.circular(7), right: Radius.circular(7)),
         child: ListView.builder(
           physics: ScrollPhysics(parent: BouncingScrollPhysics()),
           itemCount: eventItems.length,
@@ -103,7 +103,7 @@ class EventCard extends StatelessWidget {
         right: 5.0,
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(7),
         child: Stack(children: [
           Container(
             width: double.infinity,

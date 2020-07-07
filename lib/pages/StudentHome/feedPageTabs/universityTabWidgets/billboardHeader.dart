@@ -16,10 +16,11 @@ class BillBoardHeader extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(right: 15.0, left: 15),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(9),
           child: Stack(children: [
             Positioned(
-              bottom: 0,top: 0,
+              bottom: 0,
+              top: 0,
               child: Container(
                 width: boxWidth - 30,
                 child: Image(

@@ -7,9 +7,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:psu_platform/pages/homeWidgets/feedWidgets/feedPageContentItems.dart';
 
 class UniversityTab extends StatelessWidget {
-  const UniversityTab({this.distanceFromBottom, @required this.dbsExtent});
+  const UniversityTab(
+      {this.distanceFromBottom,
+      @required this.dbsExtent,
+      @required this.dbsHeadingTextStyle,
+      this.paddingFromTop = 15});
   final double distanceFromBottom, dbsExtent;
-
+  final TextStyle dbsHeadingTextStyle;
+  final paddingFromTop;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -30,7 +35,7 @@ class UniversityTab extends StatelessWidget {
             ),
           ),
           bottom: distanceFromBottom + 70,
-          top: 15,
+          top: paddingFromTop,
           left: 0,
           right: 0,
         ), // value added to the right is like padding between this and tabselector
@@ -39,14 +44,8 @@ class UniversityTab extends StatelessWidget {
             child: Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
-              child: Text(
-                "University".toUpperCase(),
-                style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize:
-                        MediaQuery.of(context).size.height < 750 ? 14 : 16,
-                    color: Theme.of(context).colorScheme.onBackground),
-              ),
+              child:
+                  Text("University".toUpperCase(), style: dbsHeadingTextStyle),
             ),
             bottom: distanceFromBottom * 0.9),
 

@@ -31,10 +31,13 @@ dependencies:
   lite_rolling_switch: ^0.1.1 # for dark mode/ lightmode switch
   fl_chart: ^0.10.0 # temp till i figure out what chart to use
   bezier_chart: ^1.0.17+1 #using.. don't remove
-  liquid_swipe: ^1.4.3
-  smooth_page_indicator: ^0.1.5
-  device_preview: ^0.4.5
+  liquid_swipe: ^1.4.3 #STILL NOT USING
+  smooth_page_indicator: ^0.1.5 # USING!!!!
+  device_preview: ^0.4.5 # USING!!!!
+  flutter_staggered_grid_view: ^0.3.0
+  flutter_stories: ^0.2.1+1
 
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

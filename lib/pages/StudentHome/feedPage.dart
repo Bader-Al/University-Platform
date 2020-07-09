@@ -5,6 +5,8 @@ import 'feedPageTabs/clubsTab.dart';
 import 'feedPageTabs/universityTab.dart';
 
 class FeedPage extends StatelessWidget {
+  final paddingFromTop = 15.0;
+
   final List<Widget> tabTitles = [
     Icon(Icons.business),
     Icon(Icons.people),
@@ -17,6 +19,11 @@ class FeedPage extends StatelessWidget {
         ? MediaQuery.of(context).size.height * 0.2
         : MediaQuery.of(context).size.height * 0.25;
 
+    final dbsHeadingTextStyle = TextStyle(
+        fontWeight: FontWeight.w300,
+        fontSize: MediaQuery.of(context).size.height < 750 ? 14 : 16,
+        color: Theme.of(context).colorScheme.primary);
+
     final draggableSheetExtent = MediaQuery.of(context).size.height < 960
         ? (distanceFromBottom * 0.90) / MediaQuery.of(context).size.height
         : (distanceFromBottom * 0.93) / MediaQuery.of(context).size.height;
@@ -25,15 +32,21 @@ class FeedPage extends StatelessWidget {
       UniversityTab(
         distanceFromBottom: distanceFromBottom,
         dbsExtent: draggableSheetExtent,
+        dbsHeadingTextStyle: dbsHeadingTextStyle,
+        paddingFromTop: this.paddingFromTop,
       ),
       ClubsTab(
         distanceFromBottom: distanceFromBottom,
         dbsExtent: draggableSheetExtent,
+        dbsHeadingTextStyle: dbsHeadingTextStyle,
+        paddingFromTop: this.paddingFromTop,
       ),
       ColabTab(
         distanceFromBottom: distanceFromBottom,
         dbsExtent: draggableSheetExtent,
-      ),
+        dbsHeadingTextStyle: dbsHeadingTextStyle,
+        paddingFromTop: this.paddingFromTop,
+      )
     ];
     return SafeArea(
       child: DefaultTabController(

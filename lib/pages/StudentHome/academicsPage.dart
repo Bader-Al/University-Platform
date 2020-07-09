@@ -311,7 +311,7 @@ class AnnouncementsPage extends StatelessWidget {
             right: 0,
             child: ClipRect(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 21, sigmaY: 25),
+                filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border(
@@ -319,7 +319,7 @@ class AnnouncementsPage extends StatelessWidget {
                             color: Theme.of(context).colorScheme.surface,
                             width: 1)),
                     color:
-                        Theme.of(context).colorScheme.secondary.withAlpha(15),
+                        Theme.of(context).colorScheme.secondary.withAlpha(25),
                   ),
                   height: MediaQuery.of(context).size.height * 0.2,
                   child: PageView(

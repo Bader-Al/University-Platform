@@ -19,6 +19,7 @@ class _DashboardPageState extends State<DashboardPage>
     with AfterLayoutMixin<DashboardPage> {
   final List courses = [];
   ScrollController scrollController;
+  double headerExpandedHeight;
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _DashboardPageState extends State<DashboardPage>
 
   @override
   Widget build(BuildContext context) {
+    headerExpandedHeight = MediaQuery.of(context).size.height * 0.8;
     return Scaffold(
       body: CustomScrollView(
         physics: ScrollPhysics(parent: BouncingScrollPhysics()),
@@ -45,7 +47,9 @@ class _DashboardPageState extends State<DashboardPage>
         slivers: <Widget>[
           Consumer<AppState>(
             builder: (context, appState, child) => child,
-            child: ScheduleBanner(),
+            child: ScheduleBanner(
+              height: headerExpandedHeight,
+            ),
           ),
           DashboardPageSliver(), // TODO: maybe change to sliverlist fill remaining and us listview builder... test for performance diff
         ],
@@ -56,8 +60,8 @@ class _DashboardPageState extends State<DashboardPage>
   @override
   void afterFirstLayout(BuildContext context) {
     // TODO: implement afterFirstLayout
-    scrollController.animateTo(MediaQuery.of(context).size.height * 0.8 - 90,
-        curve: Curves.easeOut, duration: Duration(milliseconds: 700));
+    scrollController.animateTo(MediaQuery.of(context).size.height * 0.85,
+        curve: Curves.decelerate, duration: Duration(milliseconds: 850));
   }
 }
 

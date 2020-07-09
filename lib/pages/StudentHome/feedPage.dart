@@ -5,12 +5,7 @@ import 'feedPageTabs/clubsTab.dart';
 import 'feedPageTabs/universityTab.dart';
 
 class FeedPage extends StatelessWidget {
-  static const List<Widget> tabs = [
-    UniversityTab(),
-    ClubsTab(),
-    ColabTab(),
-  ];
-  static const List<Widget> tabTitles = [
+  final List<Widget> tabTitles = [
     Icon(Icons.business),
     Icon(Icons.people),
     Icon(Icons.forum)
@@ -20,13 +15,31 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double distanceFromBottom = MediaQuery.of(context).size.height < 1000
         ? MediaQuery.of(context).size.height * 0.2
-        : MediaQuery.of(context).size.height *
-            0.25; // TODO :: WARNING!! :: IF CHANGED THIS VALUE ALSO CHANGE IT IN OTHER AREAS {UNIVERSITY_TAB , }
+        : MediaQuery.of(context).size.height * 0.25;
+
+    final draggableSheetExtent = MediaQuery.of(context).size.height < 960
+        ? (distanceFromBottom * 0.90) / MediaQuery.of(context).size.height
+        : (distanceFromBottom * 0.93) / MediaQuery.of(context).size.height;
+
+    final List<Widget> tabs = [
+      UniversityTab(
+        distanceFromBottom: distanceFromBottom,
+        dbsExtent: draggableSheetExtent,
+      ),
+      ClubsTab(
+        distanceFromBottom: distanceFromBottom,
+        dbsExtent: draggableSheetExtent,
+      ),
+      ColabTab(
+        distanceFromBottom: distanceFromBottom,
+        dbsExtent: draggableSheetExtent,
+      ),
+    ];
     return SafeArea(
       child: DefaultTabController(
         length: tabs.length,
         child: Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             body: Stack(
               children: <Widget>[
                 centeredTabBar(tabTitles, context, distanceFromBottom),
@@ -51,12 +64,15 @@ Widget centeredTabBar(tabTitles, context, distanceFromBottom) {
           //color: Colors.yellow, // TODO :: ANIMATED SCALE AND ANIMATED OPACITY
           child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onPrimary.withAlpha(50),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onBackground
+                    .withOpacity(0.05),
                 borderRadius: BorderRadius.circular(50),
               ),
               alignment: Alignment.center,
-              child: tabBar(tabTitles, Theme.of(context).colorScheme.onPrimary,
-                  Theme.of(context).colorScheme.onPrimary.withAlpha(75)))),
+              child: tabBar(tabTitles, Theme.of(context).colorScheme.primary,
+                  Theme.of(context).colorScheme.primary.withAlpha(75)))),
     ),
   );
 }

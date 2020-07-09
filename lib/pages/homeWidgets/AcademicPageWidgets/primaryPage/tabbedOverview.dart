@@ -76,8 +76,7 @@ class AssignmentsOverView extends StatelessWidget {
             children: assignmentsOverview,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
-            childAspectRatio:
-                MediaQuery.of(context).size.width < 360 ? 3 / 7 : 2 / 5,
+            childAspectRatio: _queryData.size.width < 360 ? 4 / 6 : 3 / 8,
             padding: EdgeInsets.only(top: 20, bottom: 10, left: 15, right: 15),
           )),
     );
@@ -229,21 +228,35 @@ class AssignmentItem extends StatelessWidget {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 7, vertical: 3),
         decoration: BoxDecoration(
-            color: isComplete
-                ? kGreenIndication
-                : isSubmitted
-                    ? kYellowIndication
-                    : isMissed
-                        ? Colors.red[500]
-                        : Theme.of(context).colorScheme.surface,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(3)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                Container(
+                  child: Text(
+                    isSubmitted
+                        ? "Submitted"
+                        : isComplete ? "Complete" : "No Attmept",
+                    style: TextStyle(
+                      color: isComplete
+                          ? kGreenIndication
+                          : isSubmitted
+                              ? kYellowIndication
+                              : deadlineIsSoon
+                                  ? Colors.redAccent
+                                  : isMissed
+                                      ? Colors.red[500]
+                                      : Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
                 Flexible(
                   child: Text(
                     "Due in 12 days",
@@ -251,11 +264,9 @@ class AssignmentItem extends StatelessWidget {
                     textAlign: TextAlign.end,
                     maxLines: 2,
                     style: TextStyle(
-                        color: isHighlighted
-                            ? Theme.of(context).colorScheme.background
-                            : deadlineIsSoon
-                                ? Colors.redAccent
-                                : Theme.of(context).colorScheme.primary,
+                        color: deadlineIsSoon
+                            ? Colors.redAccent
+                            : Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w400,
                         fontSize: 10),
                   ),
@@ -269,9 +280,7 @@ class AssignmentItem extends StatelessWidget {
                 Text("CS 112",
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
-                        color: isHighlighted
-                            ? Theme.of(context).colorScheme.background
-                            : Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 12)),
                 SizedBox(
                   height: 2,
@@ -280,15 +289,13 @@ class AssignmentItem extends StatelessWidget {
                   width: double.maxFinite,
                   // color: Colors.red,
                   child: Text(
-                    "Chapter 17 Assignment3333333333333333333333333333333333333333333333333.pdf",
+                    "Chapter 17 Lorem Ipsum Something Buffing.pdf",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
-                        color: isHighlighted
-                            ? Theme.of(context).colorScheme.background
-                            : Theme.of(context).colorScheme.primary),
+                        color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
               ],

@@ -7,14 +7,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:psu_platform/pages/homeWidgets/feedWidgets/feedPageContentItems.dart';
 
 class UniversityTab extends StatelessWidget {
-  const UniversityTab();
+  const UniversityTab({this.distanceFromBottom, @required this.dbsExtent});
+  final double distanceFromBottom, dbsExtent;
 
   @override
   Widget build(BuildContext context) {
-    double distanceFromBottom = MediaQuery.of(context).size.height < 1000
-        ? MediaQuery.of(context).size.height * 0.2
-        : MediaQuery.of(context).size.height * 0.25;
-
     return Stack(
       children: <Widget>[
         //  Positioned(child: BillBoardHeader() , top: 50,),
@@ -48,13 +45,15 @@ class UniversityTab extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                     fontSize:
                         MediaQuery.of(context).size.height < 750 ? 14 : 16,
-                    color: Theme.of(context).colorScheme.onPrimary),
+                    color: Theme.of(context).colorScheme.onBackground),
               ),
             ),
-            bottom: distanceFromBottom * 0.93),
+            bottom: distanceFromBottom * 0.9),
 
         DraggableBottomSheet(
           pageIndex: 0,
+          minExtent: dbsExtent,
+          initialExtent: dbsExtent,
           pageContent: [
             SearchHeader(),
             GenericPost(

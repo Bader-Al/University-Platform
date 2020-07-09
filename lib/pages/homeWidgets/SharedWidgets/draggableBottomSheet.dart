@@ -94,7 +94,7 @@ class DraggableBottomSheet extends StatelessWidget {
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
+                                color: Theme.of(context).colorScheme.background,
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(15)),
                               ),

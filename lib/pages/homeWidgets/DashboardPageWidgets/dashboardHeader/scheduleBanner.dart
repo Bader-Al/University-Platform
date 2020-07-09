@@ -5,14 +5,13 @@ import '../../../../constants.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleBanner extends StatelessWidget {
-  const ScheduleBanner();
+  const ScheduleBanner({this.height});
+  final height;
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData;
-    queryData = MediaQuery.of(context);
     return SliverAppBar(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      expandedHeight: queryData.size.height * 0.80,
+      expandedHeight: height,
       floating: false,
       pinned: true,
       snap: false,

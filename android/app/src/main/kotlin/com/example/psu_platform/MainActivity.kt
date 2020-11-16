@@ -1,13 +1,21 @@
 package com.example.psu_platform
+import io.flutter.embedding.android.FlutterActivity;
 
-import android.os.Bundle
-
-import io.flutter.app.FlutterActivity
-import io.flutter.plugins.GeneratedPluginRegistrant
 
 class MainActivity: FlutterActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    GeneratedPluginRegistrant.registerWith(this)
-  }
+
+
+
+// IF U NEED TO DO SOMETHING ONCREATE NEW METHOD CHANNEL
+
+//  @Override
+//    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+//        GeneratedPluginRegistrant.registerWith(flutterEngine);
+//        new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
+//                .setMethodCallHandler(
+//                    (call, result) -> {
+//                        // Your existing code
+//                }
+//        );
+//    }
 }

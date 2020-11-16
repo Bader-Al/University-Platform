@@ -26,14 +26,17 @@ class ClubsGrid extends StatelessWidget {
                   child: StaggeredGridView.countBuilder(
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    crossAxisCount:
-                        phoneHeight < 800 ? 2 : phoneHeight < 1200 ? 3 : 4,
+                    crossAxisCount: phoneHeight < 800
+                        ? 1
+                        : phoneHeight < 1200
+                            ? 2
+                            : 3,
                     itemCount: 24,
                     itemBuilder: (BuildContext context, int index) => ClubCard(
                       index: index,
                     ),
                     staggeredTileBuilder: (int index) =>
-                        StaggeredTile.extent(1, index.isEven ? 100 : 300),
+                        StaggeredTile.extent(1, index.isEven ? 275 : 325),
                     mainAxisSpacing: 4.0,
                     crossAxisSpacing: 4.0,
                   ),
@@ -69,20 +72,21 @@ class _ClubCardState extends State<ClubCard> {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(3),
+      clipBehavior: Clip.hardEdge,
       child: GestureDetector(
         child: Container(
           color: Theme.of(context).colorScheme.background,
           child: Stack(children: [
-            returnCardImage(
+            _returnCardImage(
                 "https://picsum.photos/20${widget.index}/30${widget.index}"),
-            returnClubText("Cyber Security Club ${widget.index}", context),
+            _returnClubText("Cyber Security Club ${widget.index}", context),
           ]),
         ),
       ),
     );
   }
 
-  Widget returnCardImage(imageUrl) {
+  Widget _returnCardImage(imageUrl) {
     return Positioned(
       child: Container(
         decoration: BoxDecoration(
@@ -99,7 +103,7 @@ class _ClubCardState extends State<ClubCard> {
     );
   }
 
-  Widget returnClubText(clubTitle, context) {
+  Widget _returnClubText(clubTitle, context) {
     return Positioned(
       bottom: 0,
       right: 0,

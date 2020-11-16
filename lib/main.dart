@@ -8,10 +8,6 @@ import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
 import 'package:psu_platform/pages/StudentSidebar/studentSideBar.dart';
 
-import 'package:psu_platform/pages/StudentSidebar/studentCalendar.dart';
-
-import './pages/StudentHome/studentHomeHandler.dart';
-
 void main() {
   //debugRepaintRainbowEnabled = true;
 

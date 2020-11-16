@@ -3,48 +3,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ClubsGrid extends StatelessWidget {
-  ClubsGrid({this.flexFactor = 13});
-  final flexFactor;
   @override
   Widget build(BuildContext context) {
     final phoneHeight = MediaQuery.of(context).size.height;
-    return Expanded(
-        flex: flexFactor,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 15.0,
-            top: 15,
-          ),
-          child: Container(
-            // color: Colors.red,
-            child: Stack(
-              children: <Widget>[
-                returnSidePanel(),
-                ClipRRect(
-                  borderRadius:
-                      BorderRadius.horizontal(left: Radius.circular(4)),
-                  child: StaggeredGridView.countBuilder(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    crossAxisCount: phoneHeight < 800
-                        ? 1
-                        : phoneHeight < 1200
-                            ? 2
-                            : 3,
-                    itemCount: 24,
-                    itemBuilder: (BuildContext context, int index) => ClubCard(
-                      index: index,
-                    ),
-                    staggeredTileBuilder: (int index) =>
-                        StaggeredTile.extent(1, index.isEven ? 275 : 325),
-                    mainAxisSpacing: 4.0,
-                    crossAxisSpacing: 4.0,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 15.0,
+        top: 15,
+      ),
+      child: Container(
+        // color: Colors.red,
+        child: Stack(
+          children: <Widget>[
+            returnSidePanel(),
+            ClipRRect(
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(4)),
+              child: StaggeredGridView.countBuilder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                crossAxisCount: phoneHeight < 800
+                    ? 1
+                    : phoneHeight < 1200
+                        ? 2
+                        : 3,
+                itemCount: 24,
+                itemBuilder: (BuildContext context, int index) => ClubCard(
+                  index: index,
                 ),
-              ],
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.extent(1, index.isEven ? 275 : 325),
+                mainAxisSpacing: 4.0,
+                crossAxisSpacing: 4.0,
+              ),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 
   Widget returnSidePanel() {
@@ -78,7 +73,7 @@ class _ClubCardState extends State<ClubCard> {
           color: Theme.of(context).colorScheme.background,
           child: Stack(children: [
             _returnCardImage(
-                "https://picsum.photos/20${widget.index}/30${widget.index}"),
+                "https://picsum.photos/seed/${widget.index + 13}/200/300/"),
             _returnClubText("Cyber Security Club ${widget.index}", context),
           ]),
         ),

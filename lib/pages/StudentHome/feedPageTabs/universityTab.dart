@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 import 'package:psu_platform/pages/homeWidgets/feedWidgets/universityTabWidgets/billboardHeader.dart';
 import 'package:psu_platform/pages/homeWidgets/feedWidgets/universityTabWidgets/eventsBanner.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:psu_platform/pages/homeWidgets/feedWidgets/feedPageContentItems.dart';
 

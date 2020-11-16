@@ -22,9 +22,7 @@ class ClubsTab extends StatelessWidget {
           child: Container(
             width: 500,
             height: 700,
-            child: ClubsGrid(
-              flexFactor: majorFlexFactor,
-            ),
+            child: ClubsGrid(),
           ),
           bottom: distanceFromBottom + 70,
           top: paddingFromTop,

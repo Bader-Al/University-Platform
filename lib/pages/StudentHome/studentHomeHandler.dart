@@ -15,7 +15,7 @@ class StudentHome extends StatefulWidget {
 class StudentHomeState extends State<StudentHome> {
   List<Widget> navBarRoutes;
   int _pageIndex = 0;
-  bool fabEnabled = true;
+  bool fabEnabled = false;
   PageController _pageController;
 
   @override
@@ -77,7 +77,7 @@ class StudentHomeState extends State<StudentHome> {
                 elevation: fabEnabled ? 6 : 0,
               )
             : null,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: homeBottomNavigationBar());
   }
 
@@ -87,10 +87,10 @@ class StudentHomeState extends State<StudentHome> {
         _pageController.jumpToPage(index);
         setState(() {
           _pageIndex = index;
-          if (_pageIndex == 1) {
-            fabEnabled = false;
-          } else
-            fabEnabled = true;
+          // if (_pageIndex == 1) {
+          //   fabEnabled = false;
+          // } else
+          //   fabEnabled = true;
         });
       },
       backgroundColor: Theme.of(context).colorScheme.surface,

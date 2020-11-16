@@ -122,12 +122,10 @@ class _ExpansionTileState extends State<CustomExpansionTile>
                 iconColor: _iconColor.value,
                 textColor: _headerColor.value,
                 child: Container(
-                  
                   child: widget.title,
                 ),
               ),
               ClipRRect(
-
                 // borderRadius:
                 //     BorderRadius.only(bottomLeft: Radius.circular(15), topLeft: Radius.circular(25)),
                 child: Align(
@@ -167,4 +165,3 @@ class _ExpansionTileState extends State<CustomExpansionTile>
     );
   }
 }
-

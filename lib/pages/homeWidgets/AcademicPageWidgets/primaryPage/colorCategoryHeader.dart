@@ -24,12 +24,13 @@ class ColorBasedTabs extends StatelessWidget {
               controller: pageController,
               count: 3,
               effect: WormEffect(
-                  dotHeight: 12,
-                  dotWidth: 12,
-                  activeDotColor: Theme.of(context).colorScheme.background,
-                  dotColor: Theme.of(context).colorScheme.primary, // the rest
-                  secondaryColor: Theme.of(context).colorScheme.secondary,
-                  primaryColor: Theme.of(context).colorScheme.primary),
+                dotHeight: 12,
+                dotWidth: 12,
+                activeDotColor: Theme.of(context).colorScheme.background,
+                dotColor: Theme.of(context).colorScheme.primary, // the rest
+                // secondaryColor: Theme.of(context).colorScheme.secondary,
+                // primaryColor: Theme.of(context).colorScheme.primary
+              ),
             ),
           )
         ],

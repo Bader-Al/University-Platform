@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 import 'dashboardPage.dart';
 import 'feedPage.dart';
-import 'chatsPage.dart';
 
 class StudentHome extends StatefulWidget {
   StudentHome();
@@ -27,7 +26,6 @@ class StudentHomeState extends State<StudentHome> {
     navBarRoutes = [
       DashboardPage(),
       AcademicsPage(),
-      ChatsPage(),
       FeedPage(), //feedpage is social page
     ];
   }
@@ -139,25 +137,6 @@ class StudentHomeState extends State<StudentHome> {
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ))),
-        BubbleBottomBarItem(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          icon: Icon(
-            Icons.chat_bubble,
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(95),
-            size: 24,
-          ),
-          activeIcon: Icon(
-            Icons.chat_bubble,
-            color: Theme.of(context).colorScheme.onPrimary,
-            size: 30,
-          ),
-          title: Text(
-            "Chats",
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-          ),
-        ),
         BubbleBottomBarItem(
           backgroundColor: Theme.of(context).colorScheme.primary,
           icon: Icon(

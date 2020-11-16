@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
-import 'clubsTabWidgets/clubStories.dart';
-import 'clubsTabWidgets/clubsGrid.dart';
+import 'package:psu_platform/pages/homeWidgets/feedWidgets/clubsTabWidgets/clubsGrid.dart';
 
 class ClubsTab extends StatelessWidget {
   const ClubsTab(
@@ -23,14 +22,8 @@ class ClubsTab extends StatelessWidget {
           child: Container(
             width: 500,
             height: 700,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                ClubsStories(flexFactor: minorFlexFactor),
-                ClubsGrid(
-                  flexFactor: majorFlexFactor,
-                ),
-              ],
+            child: ClubsGrid(
+              flexFactor: majorFlexFactor,
             ),
           ),
           bottom: distanceFromBottom + 70,

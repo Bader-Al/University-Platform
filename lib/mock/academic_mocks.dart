@@ -31,4 +31,16 @@ final List<Map<String, String>> mockCourses = [
           courseTitle: 'Human Computer Interaction',
           courseCode: 'CS201')
       .toMap(),
+  CourseModel(
+          courseId: '7',
+          courseTitle: 'Intermediate Weight Training',
+          courseCode: 'PE211')
+      .toMap(),
+  CourseModel(
+          courseId: '8',
+          courseTitle: 'Data Structures and Algorithms',
+          courseCode: 'CS210')
+      .toMap(),
+  CourseModel(courseId: '9', courseTitle: 'Discrete Math', courseCode: 'CS285')
+      .toMap(),
 ];

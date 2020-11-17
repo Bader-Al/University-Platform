@@ -107,7 +107,7 @@ class CourseCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          _courseModel.courseId,
+          _courseModel.courseCode,
           style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
         ),
         SizedBox(

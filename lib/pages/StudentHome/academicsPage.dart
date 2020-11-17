@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/mock/academic_mocks.dart';
+import 'package:psu_platform/mock/grade_mocks.dart';
 import 'package:psu_platform/models/course_model.dart';
+import 'package:psu_platform/models/grade_model.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/announcementsPage.dart';
 import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/courseSelectionGrid.dart';
@@ -544,36 +546,9 @@ List stuffs = [
   )
 ];
 
-List<Grade> _grades = [
-  Grade(
-      examType: "Quiz".toUpperCase(),
-      earnedGrade: 7,
-      gradePossible: 10,
-      isSeen: false),
-  Grade(
-      examType: "Quiz".toUpperCase(),
-      earnedGrade: 7,
-      gradePossible: 10,
-      isSeen: false),
-  Grade(
-      examType: "Major".toUpperCase(),
-      earnedGrade: 16,
-      gradePossible: 20,
-      isSeen: false),
-  Grade(examType: "Project".toUpperCase(), earnedGrade: 7, gradePossible: 15),
-  Grade(
-      examType: "Quiz".toUpperCase(),
-      earnedGrade: 7,
-      gradePossible: 10,
-      isSeen: true),
-  Grade(examType: "Major".toUpperCase(), earnedGrade: 9, gradePossible: 20),
-  Grade(
-      examType: "Quiz".toUpperCase(),
-      earnedGrade: 7,
-      gradePossible: 10,
-      isSeen: true),
-  Grade(examType: "Quiz".toUpperCase(), earnedGrade: 7, gradePossible: 10),
-];
+List<Grade> _grades = mockGrades
+    .map((mockGrade) => Grade.fromModel(GradeModel.fromMap(mockGrade)))
+    .toList();
 
 // final _courseCards = List.generate(mockCourses.length, (index) => CourseCard());
 

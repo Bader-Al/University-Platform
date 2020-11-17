@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:psu_platform/models/grade_model.dart';
 import 'package:psu_platform/pages/homeWidgets/AbstractWidgets/sheetItem.dart';
 import 'charts.dart';
 
 class Grade {
   Grade({
-    @required this.examType,
+    @required this.courseId,
+    @required this.gradeType,
     @required this.earnedGrade,
     @required this.gradePossible,
-    this.date,
-    this.isSeen = true,
+    @required this.date = '00/00/00',
+    this.isSeen = false,
   });
-  String examType;
-  int earnedGrade, gradePossible;
-  String date = "19 Jan 2021"; // TODO ":" change this later to be functional
+  String courseId;
+  String gradeType, date;
+  double earnedGrade, gradePossible;
   bool isSeen;
+
+  factory Grade.fromModel(GradeModel _gradeModel) => Grade(
+      gradeType: _gradeModel.gradeType,
+      earnedGrade: double.parse(_gradeModel.earnedGrade),
+      gradePossible: double.parse(_gradeModel.gradePossible),
+      date: _gradeModel.gradeDate,
+      courseId: _gradeModel.courseId);
 }
 
 class GradeViewer extends StatelessWidget implements SheetItem {
@@ -38,7 +47,7 @@ class GradeViewer extends StatelessWidget implements SheetItem {
     return ChangeNotifierProvider<GradeSelectionData>(
         create: (context) => GradeSelectionData(),
         child: Consumer<GradeSelectionData>(
-          builder: (context, gradeSelectionData, child) {
+          builder: (context, GradeSelectionData gradeSelectionData, child) {
             gradeSelectionData.selectedGradeList = gradesList;
             return Container(
               color: backGroundColor,
@@ -187,7 +196,8 @@ class GradeViewer extends StatelessWidget implements SheetItem {
         ));
   }
 
-  Widget returnCardIndexIndicator(context, gradeSelectionData, index) {
+  Widget returnCardIndexIndicator(
+      context, GradeSelectionData gradeSelectionData, index) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 10),
       child: Container(
@@ -207,18 +217,16 @@ class GradeViewer extends StatelessWidget implements SheetItem {
     );
   }
 
-  Widget returnGradeCard(gradeSelectionData, index) {
+  Widget returnGradeCard(GradeSelectionData gradeSelectionData, index) {
     return GradeCard(
       onPressed: () {
-        // TODO::: HANDLE WHEN ITEMS FALL DOWN TO ZERO::
-        gradeSelectionData
-            .popLastItem(); // TODO ::  JUST FOR TESTING AND DEBUGGING. GET RID OF
         gradeSelectionData.setSelectedIndex(
             index, gradeSelectionData.selectedGradeList[index]);
       },
+      gradeDate: gradeSelectionData.selectedGradeList[index].date,
       gradeAttained: gradeSelectionData.selectedGradeList[index].earnedGrade,
       gradePossible: gradeSelectionData.selectedGradeList[index].gradePossible,
-      examType: gradeSelectionData.selectedGradeList[index].examType,
+      gradeType: gradeSelectionData.selectedGradeList[index].gradeType,
       isWeaklyHighlighted: !gradeSelectionData.selectedGradeList[index].isSeen,
       isHighlighted: gradeSelectionData.selectedIndex == index,
     );
@@ -289,7 +297,7 @@ class GradeTypeTabs extends StatelessWidget {
 ///
 class GradeSelectionData extends ChangeNotifier {
   bool isExpanded = false;
-  List selectedGradeList;
+  List<Grade> selectedGradeList;
 
   int selectedIndex = 0;
 
@@ -322,13 +330,14 @@ class GradeCard extends StatelessWidget {
   GradeCard(
       {@required this.gradeAttained,
       @required this.gradePossible,
-      @required this.examType,
+      @required this.gradeType,
+      @required this.gradeDate,
       this.isHighlighted = false,
       this.isWeaklyHighlighted = false,
       this.onPressed});
 
-  final int gradeAttained, gradePossible;
-  final examType;
+  final double gradeAttained, gradePossible;
+  final String gradeType, gradeDate;
   final bool isHighlighted;
   final bool isWeaklyHighlighted;
   final onPressed;
@@ -354,18 +363,19 @@ class GradeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                circleIndicator(context, gradeAttained, gradePossible,
+                _topDetails(context, gradeType, isHighlighted),
+                _circleIndicator(context, gradeAttained, gradePossible,
                     isHighlighted, isWeaklyHighlighted),
                 SizedBox(height: 5),
-                bottomDetails(
-                    context, examType, isHighlighted || isWeaklyHighlighted)
+                _bottomDetails(
+                    context, gradeDate, isHighlighted || isWeaklyHighlighted)
               ],
             )),
       ),
     );
   }
 
-  Widget circleIndicator(context, gradeAttained, gradePossible, isHighlighted,
+  Widget _circleIndicator(context, gradeAttained, gradePossible, isHighlighted,
       isWeaklyHighlighted) {
     return Expanded(
         child: CircularPercentIndicator(
@@ -423,7 +433,7 @@ class GradeCard extends StatelessWidget {
     ));
   }
 
-  Widget bottomDetails(context, examType, isHighlighted) {
+  Widget _bottomDetails(context, String gradeDate, bool isHighlighted) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 7),
       child: Row(
@@ -436,7 +446,7 @@ class GradeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "18 Jan 2018",
+                gradeDate,
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight:
@@ -450,20 +460,34 @@ class GradeCard extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            "$examType",
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 13,
-              color: isHighlighted
-                  ? Theme.of(context).colorScheme.surface
-                  : Theme.of(context).colorScheme.onSurface,
-            ),
-          )
+          SizedBox()
         ],
       ),
     );
   }
+}
+
+Widget _topDetails(BuildContext context, String gradeType, bool isHighlighted) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 7),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        SizedBox(),
+        Text(
+          "$gradeType",
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 13,
+            color: isHighlighted
+                ? Theme.of(context).colorScheme.surface
+                : Theme.of(context).colorScheme.onSurface,
+          ),
+        )
+      ],
+    ),
+  );
 }
 
 ///

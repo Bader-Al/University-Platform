@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/appState.dart';
 import 'quickCalendar.dart';
-import '../../../../constants.dart';
+import '../../../../theme_constants.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleBanner extends StatelessWidget {

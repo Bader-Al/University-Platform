@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/constants.dart';
-import 'package:psu_platform/pages/StudentHome/dashboardPage.dart';
+import 'package:psu_platform/theme_constants.dart';
 
 //IMPORTANT~!!!!!
 // sticky.remove(); WHEN NAVIGATING AWAY FROM HOME SCREEN
@@ -290,7 +289,9 @@ class CompactFileViewer extends StatelessWidget {
           ? 1
           : MediaQuery.of(context).size.longestSide < 1700
               ? 2
-              : MediaQuery.of(context).size.longestSide < 1900 ? 3 : 4,
+              : MediaQuery.of(context).size.longestSide < 1900
+                  ? 3
+                  : 4,
       scrollDirection: Axis.horizontal,
       children: <Widget>[
         buildFileItem(context, false),

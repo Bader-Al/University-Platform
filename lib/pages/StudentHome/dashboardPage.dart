@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/appState.dart';
-import 'package:psu_platform/constants.dart';
 import 'package:psu_platform/pages/homeWidgets/DashboardPageWidgets/horizontal_viewers/postedGrades.dart';
 import '../homeWidgets/DashboardPageWidgets/dashboardHeader/scheduleBanner.dart';
-import '../homeWidgets/DashboardPageWidgets/billboard.dart';
 import '../homeWidgets/DashboardPageWidgets/quickDeadlines.dart';
 import '../homeWidgets/DashboardPageWidgets/horizontal_viewers/upComingExams.dart';
 import 'package:after_layout/after_layout.dart';

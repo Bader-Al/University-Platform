@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/appState.dart';
-import 'package:psu_platform/constants.dart';
+import 'package:psu_platform/theme_constants.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
-
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TabbedAcademicOverView extends StatelessWidget {
   final PageController controller = PageController();
@@ -72,7 +70,9 @@ class AssignmentsOverView extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             crossAxisCount: _queryData.size.height < 650
                 ? 1
-                : _queryData.size.height < 1110 ? 2 : 3,
+                : _queryData.size.height < 1110
+                    ? 2
+                    : 3,
             children: assignmentsOverview,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
@@ -104,7 +104,9 @@ class RecentFileAccess extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             crossAxisCount: _queryData.size.height < 650
                 ? 1
-                : _queryData.size.height < 1110 ? 2 : 3,
+                : _queryData.size.height < 1110
+                    ? 2
+                    : 3,
             children: recentFilesAccessed,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
@@ -241,7 +243,9 @@ class AssignmentItem extends StatelessWidget {
                   child: Text(
                     isSubmitted
                         ? "Submitted"
-                        : isComplete ? "Complete" : "No Attmept",
+                        : isComplete
+                            ? "Complete"
+                            : "No Attmept",
                     style: TextStyle(
                       color: isComplete
                           ? kGreenIndication

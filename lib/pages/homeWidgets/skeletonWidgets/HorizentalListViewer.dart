@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psu_platform/constants.dart';
+import 'package:psu_platform/theme_constants.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'customExpansionTile.dart';
@@ -31,9 +31,12 @@ class HorizentalDataListViewer extends StatelessWidget {
                   children: [
                     Text(
                       "$title",
-                      style: kDashboardHeading.copyWith(color:Theme.of(context).colorScheme.onBackground),
+                      style: kDashboardHeading.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground),
                     ),
-                    Icon(Icons.add, ),
+                    Icon(
+                      Icons.add,
+                    ),
                   ]),
             ),
             SizedBox(height: 10),
@@ -127,16 +130,35 @@ class _DataBlockState extends State<DataBlock> {
                             child: CircularPercentIndicator(
                           radius: 75,
                           lineWidth: 4,
-                          backgroundColor: Theme.of(context).colorScheme.background,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.background,
                           percent: 0.75,
                           circularStrokeCap: CircularStrokeCap.round,
                           progressColor: Theme.of(context).colorScheme.primary,
                           center: Column(
-                            mainAxisAlignment: MainAxisAlignment.center ,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text("4", textAlign: TextAlign.center, style: TextStyle(color:Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.w300, fontSize: 24),),
-                              Text("Days Left", textAlign: TextAlign.center, style: TextStyle(color:Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.w300, fontSize: 12),),
-                              SizedBox(height:7)
+                              Text(
+                                "4",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 24),
+                              ),
+                              Text(
+                                "Days Left",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12),
+                              ),
+                              SizedBox(height: 7)
                             ],
                           ),
                         )),
@@ -156,15 +178,19 @@ class _DataBlockState extends State<DataBlock> {
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).colorScheme.onBackground),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground),
                                 ),
                                 Text(
                                   "18 Jan 2018",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w300,
-                                      color:
-                                          Theme.of(context).colorScheme.onBackground.withAlpha(150)),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withAlpha(150)),
                                 ),
                               ],
                             ),
@@ -175,7 +201,9 @@ class _DataBlockState extends State<DataBlock> {
                                 "Quiz",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    color: Theme.of(context).colorScheme.background),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
                               ),
                               decoration: BoxDecoration(
                                   color: kGreenIndication,
@@ -258,7 +286,14 @@ class CourseTile extends StatefulWidget {
 class _CourseTileState extends State<CourseTile> with TickerProviderStateMixin {
   TabController _tabController;
 
-  final courseContentPages = [Container(child: Text("FINDME 1"),), Container(child: Text("FINDME 1"),)];
+  final courseContentPages = [
+    Container(
+      child: Text("FINDME 1"),
+    ),
+    Container(
+      child: Text("FINDME 1"),
+    )
+  ];
 
   List<Widget> _tabBarTitles = [Text("Grades"), Text("Material")];
 

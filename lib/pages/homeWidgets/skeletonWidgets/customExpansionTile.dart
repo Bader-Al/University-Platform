@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'HorizentalListViewer.dart';
-import 'package:psu_platform/constants.dart';
+import 'package:psu_platform/theme_constants.dart';
 import 'package:provider/provider.dart';
 
 Duration _kExpand = Duration(milliseconds: 400);

@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:psu_platform/constants.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:psu_platform/theme_constants.dart';
 
 class QuickCalendar extends StatelessWidget {
   @override
@@ -26,21 +25,21 @@ class QuickCalendarSlider extends StatelessWidget {
     queryData = MediaQuery.of(context);
 
     return Container(
-      height: queryData.size.height*0.64,
+      height: queryData.size.height * 0.64,
       width: double.infinity,
-      child: PageView.builder(itemBuilder: (context, index){
-        return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: _quickCalendarItems[index],
-              );
-      } ,
-      physics: ScrollPhysics(parent: BouncingScrollPhysics()) ,
-      
-      itemCount: _quickCalendarItems.length,
+      child: PageView.builder(
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: _quickCalendarItems[index],
+          );
+        },
+        physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+        itemCount: _quickCalendarItems.length,
       ),
     );
-   
-   // OLD CODE BELOW ::: TODO ::: Just get rid of it....
+
+    // OLD CODE BELOW ::: TODO ::: Just get rid of it....
     // return CarouselSlider(
     //   height: queryData.size.height*0.64,
     //   initialPage: 0,
@@ -68,7 +67,6 @@ List _quickCalendarItems = [
   DayBlock(),
   DayBlock(),
   DayBlock(),
-  
 ];
 
 class DayBlock extends StatelessWidget {
@@ -153,7 +151,10 @@ class ClassTimeBlock extends StatelessWidget {
     }
     return Container(
       height: 65,
-      decoration: BoxDecoration(color: isUpcoming ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.background),
+      decoration: BoxDecoration(
+          color: isUpcoming
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.background),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Row(
@@ -167,18 +168,21 @@ class ClassTimeBlock extends StatelessWidget {
                       ? "CS101\nIntro To Software Engineeringrfwergwrgwrgwrgw"
                       : title,
                   style: kQuickCalendarHeader.copyWith(
-                      color:
-                          isHighlighted ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.onBackground,
+                      color: isHighlighted
+                          ? Theme.of(context).colorScheme.background
+                          : Theme.of(context).colorScheme.onBackground,
                       fontWeight: FontWeight.w300,
                       fontSize: 14),
-                      softWrap: true,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 )),
             TimeFrame(
               isHighlighted: isHighlighted,
               textStyle: TextStyle(
-                  color: isHighlighted ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.onBackground,
+                  color: isHighlighted
+                      ? Theme.of(context).colorScheme.background
+                      : Theme.of(context).colorScheme.onBackground,
                   fontWeight: FontWeight.w300),
               timeStart: DateTime(2019, 9, 9, 10, 00),
               timeEnd: DateTime(2019, 9, 9, 11, 30),
@@ -186,7 +190,9 @@ class ClassTimeBlock extends StatelessWidget {
             Text(
               "Major Exam",
               style: TextStyle(
-                  color: isHighlighted ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.onBackground,
+                  color: isHighlighted
+                      ? Theme.of(context).colorScheme.background
+                      : Theme.of(context).colorScheme.onBackground,
                   fontWeight: FontWeight.w300),
             ),
           ],
@@ -227,9 +233,12 @@ class StartToEndIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color indicatorBorderColor =
-        isHighlighted ? Theme.of(context).colorScheme.onPrimary: Theme.of(context).colorScheme.onBackground;
-    Color indicatorSurfaceColor = isHighlighted ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.background;
+    Color indicatorBorderColor = isHighlighted
+        ? Theme.of(context).colorScheme.onPrimary
+        : Theme.of(context).colorScheme.onBackground;
+    Color indicatorSurfaceColor = isHighlighted
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.background;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1),
       child: Column(
@@ -244,14 +253,23 @@ class StartToEndIndicator extends StatelessWidget {
               radius: 4,
             ),
           ),
-          Container(height: 10, width: 1, color: isHighlighted?Theme.of(context).colorScheme.background:Theme.of(context).colorScheme.onBackground,),
+          Container(
+            height: 10,
+            width: 1,
+            color: isHighlighted
+                ? Theme.of(context).colorScheme.background
+                : Theme.of(context).colorScheme.onBackground,
+          ),
           CircleAvatar(
             radius: 5,
             backgroundColor: indicatorBorderColor,
             child: CircleAvatar(
               backgroundColor: indicatorSurfaceColor,
               radius: 4,
-              child: CircleAvatar(radius: 3, backgroundColor: Theme.of(context).colorScheme.background,),
+              child: CircleAvatar(
+                radius: 3,
+                backgroundColor: Theme.of(context).colorScheme.background,
+              ),
             ),
           ),
         ],
@@ -277,7 +295,8 @@ class DayBlockHeader extends StatelessWidget {
             children: <Widget>[
               Text(
                 "Today",
-                style: kQuickCalendarHeader.copyWith(color:Theme.of(context).colorScheme.onBackground),
+                style: kQuickCalendarHeader.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,19 +304,30 @@ class DayBlockHeader extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "Monday ",
-                    style: kQuickCalendarHeader.copyWith(fontSize: 14, letterSpacing: 1.15 ,color:Theme.of(context).colorScheme.onBackground),
+                    style: kQuickCalendarHeader.copyWith(
+                        fontSize: 14,
+                        letterSpacing: 1.15,
+                        color: Theme.of(context).colorScheme.onBackground),
                   ),
-                  SizedBox(width:5),
+                  SizedBox(width: 5),
                   Text(
                     "2nd January 2019",
                     style: kQuickCalendarHeader.copyWith(
-                        fontSize: 14, fontWeight: FontWeight.w300, letterSpacing: 1.25,color:Theme.of(context).colorScheme.onBackground),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 1.25,
+                        color: Theme.of(context).colorScheme.onBackground),
                   ),
                 ],
               ),
             ],
           )),
-          IconButton(icon: Icon(Icons.add_circle, color: Theme.of(context).colorScheme.primary,), onPressed: null),
+          IconButton(
+              icon: Icon(
+                Icons.add_circle,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onPressed: null),
         ],
       ),
     );

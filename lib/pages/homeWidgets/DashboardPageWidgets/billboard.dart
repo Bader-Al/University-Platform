@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:psu_platform/constants.dart';
-
-
+import 'package:psu_platform/theme_constants.dart';
 
 class Billboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Text("Billboard", style: kDashboardHeading.copyWith(color: Theme.of(context).colorScheme.onSurface)),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Body()
-          ],
-        ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Text("Billboard",
+                style: kDashboardHeading.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface)),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Body()
+        ],
+      ),
     );
   }
 }
@@ -57,26 +57,21 @@ class Body extends StatelessWidget {
                   ),
                   width: double.infinity,
                   child: Container(
-                    alignment: AlignmentDirectional.center,
+                      alignment: AlignmentDirectional.center,
                       child: Image(
-
-                    image: NetworkImage(
-                        "http://wallpapersqq.net/wp-content/uploads/2016/01/Trafalgar-Square-8.jpg"),
-                    fit: BoxFit.contain,
-                  )),
+                        image: NetworkImage(
+                            "http://wallpapersqq.net/wp-content/uploads/2016/01/Trafalgar-Square-8.jpg"),
+                        fit: BoxFit.contain,
+                      )),
                 )),
                 Positioned(
-                  
                   bottom: 0,
                   right: 0,
                   left: 0,
                   // flex: 1,
                   child: Container(
-                    
                     decoration: BoxDecoration(
-                      
                         color: Colors.white,
-
                         boxShadow: [
                           BoxShadow(
                               color: Colors.black26, offset: Offset(0, -2))

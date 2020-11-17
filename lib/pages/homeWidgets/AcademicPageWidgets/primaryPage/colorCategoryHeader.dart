@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'dart:ui';
 import 'package:flutter/rendering.dart';
-import 'package:psu_platform/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ColorBasedTabs extends StatelessWidget {

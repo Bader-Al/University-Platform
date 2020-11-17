@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psu_platform/models/course_model.dart';
 import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 
 class CouseSelectionGrid extends StatelessWidget {
@@ -31,7 +32,9 @@ class CouseSelectionGrid extends StatelessWidget {
           mainAxisSpacing: 5,
           crossAxisCount: _queryData.size.height < 650
               ? 2
-              : _queryData.size.height < 1110 ? 3 : 4,
+              : _queryData.size.height < 1110
+                  ? 3
+                  : 4,
           children: courseCardList,
         ),
       ),
@@ -41,12 +44,10 @@ class CouseSelectionGrid extends StatelessWidget {
 // TODO :: probably gona need a layout builder to make responsive grid over horizontal list layout
 
 class CourseCard extends StatelessWidget {
-  CourseCard(
-      {this.courseIndex,
-      this.courseTitle = "Some Course",
-      this.courseCode = "CS101"});
-  final courseIndex;
-  final String courseTitle, courseCode;
+  CourseCard(this._courseModel);
+  final CourseModel _courseModel;
+  // final courseId;
+  // final String courseTitle, courseCode;
   @override
   Widget build(BuildContext context) {
     final _academicPageState = Provider.of<AcademicPageState>(context);
@@ -106,14 +107,14 @@ class CourseCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          courseCode,
+          _courseModel.courseId,
           style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
         ),
         SizedBox(
           height: 5,
         ),
         Text(
-          "$courseTitle",
+          _courseModel.courseTitle,
           style: TextStyle(fontWeight: FontWeight.w300, fontSize: 14),
           // textAlign: TextAlign.center,
         ),

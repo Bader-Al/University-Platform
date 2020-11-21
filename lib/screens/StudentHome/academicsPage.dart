@@ -7,16 +7,15 @@ import 'package:psu_platform/mock/academic_mocks.dart';
 import 'package:psu_platform/mock/grade_mocks.dart';
 import 'package:psu_platform/models/course_model.dart';
 import 'package:psu_platform/models/grade_model.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/announcementsPage.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/courseSelectionGrid.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/pageContentItem.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/colorCategoryHeader.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/academicDraggableBottomSheet.dart';
 
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/tabbedOverview.dart';
-
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/primaryPage/HorizontalExpandingGradeViewer.dart';
+import 'homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
+import 'homeWidgets/AcademicPageWidgets/announcementsPage/announcementsPage.dart';
+import 'homeWidgets/AcademicPageWidgets/primaryPage/HorizontalExpandingGradeViewer.dart';
+import 'homeWidgets/AcademicPageWidgets/primaryPage/academicDraggableBottomSheet.dart';
+import 'homeWidgets/AcademicPageWidgets/primaryPage/colorCategoryHeader.dart';
+import 'homeWidgets/AcademicPageWidgets/primaryPage/courseSelectionGrid.dart';
+import 'homeWidgets/AcademicPageWidgets/primaryPage/pageContentItem.dart';
+import 'homeWidgets/AcademicPageWidgets/primaryPage/tabbedOverview.dart';
 
 class AcademicsPage extends StatelessWidget {
   @override

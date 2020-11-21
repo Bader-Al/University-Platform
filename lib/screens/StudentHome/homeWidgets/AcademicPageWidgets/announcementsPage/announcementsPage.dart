@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:psu_platform/pages/homeWidgets/AcademicPageWidgets/announcementsPage/absenceViewer.dart';
 
 class AnnouncementsBody extends StatelessWidget {
   @override

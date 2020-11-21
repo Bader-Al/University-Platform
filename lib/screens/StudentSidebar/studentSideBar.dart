@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/pages/StudentHome/studentHomeHandler.dart';
-import 'package:psu_platform/pages/StudentSidebar/peopleDirectory.dart';
-import 'package:psu_platform/pages/StudentSidebar/studentCalendar.dart';
+import 'package:psu_platform/screens/StudentHome/studentHomeHandler.dart';
+import 'package:psu_platform/screens/StudentSidebar/peopleDirectory.dart';
+import 'package:psu_platform/screens/StudentSidebar/studentCalendar.dart';
 import '../../appState.dart';
 
 class StudentSidebar extends StatelessWidget {

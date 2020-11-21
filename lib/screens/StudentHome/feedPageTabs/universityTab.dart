@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
-import 'package:psu_platform/pages/homeWidgets/feedWidgets/universityTabWidgets/billboardHeader.dart';
-import 'package:psu_platform/pages/homeWidgets/feedWidgets/universityTabWidgets/eventsBanner.dart';
-
-import 'package:psu_platform/pages/homeWidgets/feedWidgets/feedPageContentItems.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/feedWidgets/feedPageContentItems.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/feedWidgets/universityTabWidgets/billboardHeader.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/feedWidgets/universityTabWidgets/eventsBanner.dart';
 
 class UniversityTab extends StatelessWidget {
   const UniversityTab(

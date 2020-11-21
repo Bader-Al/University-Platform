@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 
 class ColabTab extends StatelessWidget {
   const ColabTab(

@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:psu_platform/appState.dart';
 import 'package:psu_platform/appTheme.dart';
-import 'package:psu_platform/pages/StudentSidebar/studentSideBar.dart';
+import 'package:psu_platform/screens/StudentSidebar/studentSideBar.dart';
 
 void main() {
   //debugRepaintRainbowEnabled = true;

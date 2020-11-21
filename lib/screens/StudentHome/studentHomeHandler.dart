@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/rendering.dart';
-import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
+import 'academicsPage.dart';
 import 'dashboardPage.dart';
 import 'feedPage.dart';
 

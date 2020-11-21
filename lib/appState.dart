@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './pages/StudentHome/studentHomeHandler.dart';
+import './screens/StudentHome/studentHomeHandler.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkMode = false;

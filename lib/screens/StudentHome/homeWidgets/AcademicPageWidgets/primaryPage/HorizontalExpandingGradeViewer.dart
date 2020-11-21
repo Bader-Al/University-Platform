@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:psu_platform/models/grade_model.dart';
-import 'package:psu_platform/pages/homeWidgets/AbstractWidgets/sheetItem.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/AbstractWidgets/sheetItem.dart';
 import 'charts.dart';
 
 class Grade {

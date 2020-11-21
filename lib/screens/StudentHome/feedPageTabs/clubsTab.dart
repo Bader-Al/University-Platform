@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
-import 'package:psu_platform/pages/homeWidgets/feedWidgets/clubsTabWidgets/clubsGrid.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
+import 'package:psu_platform/screens/StudentHome/homeWidgets/feedWidgets/clubsTabWidgets/clubsGrid.dart';
 
 class ClubsTab extends StatelessWidget {
   const ClubsTab(

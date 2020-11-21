@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../theme_constants.dart';
-import 'package:provider/provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:psu_platform/theme_constants.dart';
 
 class PostedGradesViewer extends StatelessWidget {
   const PostedGradesViewer(

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'colorCategoryHeader.dart';
-import 'package:psu_platform/pages/homeWidgets/SharedWidgets/draggableBottomSheet.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

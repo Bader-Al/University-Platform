@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:psu_platform/appState.dart';
+import 'package:psu_platform/screens/StudentHome/academicsPage.dart';
 import 'package:psu_platform/theme_constants.dart';
 import 'package:provider/provider.dart';
-import 'package:psu_platform/pages/StudentHome/academicsPage.dart';
 
 class TabbedAcademicOverView extends StatelessWidget {
   final PageController controller = PageController();
